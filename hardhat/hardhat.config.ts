@@ -37,6 +37,8 @@ const config: HardhatUserConfig = {
             },
         },
     },
+    defaultNetwork: 'hardhat',
+
     networks: {
         ropsten: {
             url: process.env.ROPSTEN_URL || "",

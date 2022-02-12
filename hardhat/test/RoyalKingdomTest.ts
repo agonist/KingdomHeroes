@@ -2,9 +2,7 @@ import {expect} from "chai";
 import {waffle} from "hardhat";
 import {describe} from "mocha";
 import {setup} from "./utils/fixture";
-import {parseCoin} from "./utils/helpers";
-import keccak256 from "keccak256";
-import {MerkleTree} from "merkletreejs";
+import {gp, parseCoin} from "./utils/helpers";
 
 describe('RoyalKingdom', function () {
 
@@ -296,8 +294,3 @@ describe('RoyalKingdom', function () {
         })
     })
 });
-
-
-function gp(tree: MerkleTree, address: string): string[] {
-    return tree.getHexProof(keccak256(address))
-}
