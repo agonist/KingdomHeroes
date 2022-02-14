@@ -40,7 +40,7 @@ contract RoyalKingdom is ERC721A, Ownable {
     /// @param _quantity Quantity to mint
     function mint(
         uint256 _quantity
-    ) public payable {
+    ) external payable {
         require(saleActive, "Sale inactive");
         require(totalSupply() + _quantity <= maxSupply, "Mint exceed max supply");
         require(_quantity <= maxMintAtOnce, "Max mint exceeded");
@@ -52,7 +52,7 @@ contract RoyalKingdom is ERC721A, Ownable {
     /// @notice presale mint function of the contract
     /// @param _quantity Quantity to mint
     /// @param _merkleProof Merkle proof coming from the frontend
-    function mintPresale(uint256 _quantity, bytes32[] calldata _merkleProof) public payable {
+    function mintPresale(uint256 _quantity, bytes32[] calldata _merkleProof) external payable {
         require(presaleActive, "Presale inactive");
         bytes32 leaf = keccak256(abi.encodePacked(msg.sender));
         require(MerkleProof.verify(_merkleProof, whitelistMerkleRoot, leaf), "Not whitelisted");

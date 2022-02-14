@@ -2,6 +2,10 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { Ownable } from "./Ownable";
+export type { ERC20 } from "./ERC20";
+export type { ERC20Burnable } from "./ERC20Burnable";
+export type { IERC20Metadata } from "./IERC20Metadata";
+export type { IERC20 } from "./IERC20";
 export type { IERC721Enumerable } from "./IERC721Enumerable";
 export type { IERC721Metadata } from "./IERC721Metadata";
 export type { IERC721 } from "./IERC721";
@@ -9,9 +13,15 @@ export type { IERC721Receiver } from "./IERC721Receiver";
 export type { ERC165 } from "./ERC165";
 export type { IERC165 } from "./IERC165";
 export type { RoyalKingdom } from "./RoyalKingdom";
+export type { RoyalStaking } from "./RoyalStaking";
+export type { RoyalTokens } from "./RoyalTokens";
 export type { ERC721A } from "./ERC721A";
 
 export { Ownable__factory } from "./factories/Ownable__factory";
+export { ERC20__factory } from "./factories/ERC20__factory";
+export { ERC20Burnable__factory } from "./factories/ERC20Burnable__factory";
+export { IERC20Metadata__factory } from "./factories/IERC20Metadata__factory";
+export { IERC20__factory } from "./factories/IERC20__factory";
 export { IERC721Enumerable__factory } from "./factories/IERC721Enumerable__factory";
 export { IERC721Metadata__factory } from "./factories/IERC721Metadata__factory";
 export { IERC721__factory } from "./factories/IERC721__factory";
@@ -19,4 +29,6 @@ export { IERC721Receiver__factory } from "./factories/IERC721Receiver__factory";
 export { ERC165__factory } from "./factories/ERC165__factory";
 export { IERC165__factory } from "./factories/IERC165__factory";
 export { RoyalKingdom__factory } from "./factories/RoyalKingdom__factory";
+export { RoyalStaking__factory } from "./factories/RoyalStaking__factory";
+export { RoyalTokens__factory } from "./factories/RoyalTokens__factory";
 export { ERC721A__factory } from "./factories/ERC721A__factory";
