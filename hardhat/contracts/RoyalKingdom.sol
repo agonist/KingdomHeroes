@@ -44,7 +44,7 @@ contract RoyalKingdom is ERC721A, Ownable {
         require(saleActive, "Sale inactive");
         require(totalSupply() + _quantity <= maxSupply, "Mint exceed max supply");
         require(_quantity <= maxMintAtOnce, "Max mint exceeded");
-        require(price * _quantity <= msg.value, "Value sent is incorrect");
+        require(price * _quantity == msg.value, "Value sent is incorrect");
 
         _safeMint(msg.sender, _quantity);
     }
@@ -57,7 +57,7 @@ contract RoyalKingdom is ERC721A, Ownable {
         bytes32 leaf = keccak256(abi.encodePacked(msg.sender));
         require(MerkleProof.verify(_merkleProof, whitelistMerkleRoot, leaf), "Not whitelisted");
         require(claimed[msg.sender] + _quantity <= maxMintWhitelist, "Whitelist mint exceeded");
-        require(presalePrice * _quantity <= msg.value, "Value sent is incorrect");
+        require(presalePrice * _quantity == msg.value, "Value sent is incorrect");
 
         claimed[msg.sender] += _quantity;
         _safeMint(msg.sender, _quantity);

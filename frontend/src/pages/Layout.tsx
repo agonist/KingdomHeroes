@@ -4,6 +4,8 @@ import {Box, Stack} from "@mui/material";
 import {useDispatch} from "react-redux";
 import {enableMapSet} from "immer";
 import {useAddress, useWeb3Context} from "../web3/web3-context";
+import MenuBar from "../components/header/AppBar";
+import Footer from "../components/footer/Footer";
 
 interface LayoutProps {
     children: React.ReactNode
@@ -41,13 +43,16 @@ const Layout = ({children}: LayoutProps) => {
     return (
         <Box height="100vh" display="flex" flexDirection="column">
             <Head>
-                <title>Frog Nation DAO</title>
+                <title>Royal Kingdom</title>
                 <meta name="" content="Royal Kingdom"/>
                 <link rel="icon" href="/favicon.ico"/>
+                <link rel="preconnect" href="https://fonts.googleapis.com"/>
+                <link rel="preconnect" href="https://fonts.gstatic.com"/>
+                <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet"/>
             </Head>
 
-            {/*<MenuBar/>*/}
-            <Stack sx={{flexGrow: 1}} marginX={2}>
+            <MenuBar/>
+            <Stack sx={{flexGrow: 1}} >
 
                 <main>
                     {children}
@@ -56,7 +61,7 @@ const Layout = ({children}: LayoutProps) => {
             </Stack>
 
             <footer>
-                {/*<Footer/>*/}
+                <Footer/>
             </footer>
         </Box>
     )
