@@ -47,9 +47,12 @@ function MenuBar(): JSX.Element {
 
 
                 </Container>
-                <Stack width={350}>
-                    <ConnectButton/>
-                </Stack>
+                <Hidden mdDown>
+                    <Stack width={350}>
+                        <ConnectButton/>
+                    </Stack>
+                </Hidden>
+
 
             </ToolbarStyle>
         </AppBar>

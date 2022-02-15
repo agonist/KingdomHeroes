@@ -50,7 +50,7 @@ function MenuDesktop() {
                                         smooth offset={-100} sx={{
                                 cursor: "pointer",
                                 textTransform: "uppercase",
-                            }}>
+                            }} key={index}>
                                 {menu.tabContent}
                             </Typography>
 

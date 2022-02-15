@@ -7,6 +7,7 @@ import {Custom} from "../../styles/Theme";
 import MenuIcon from "@mui/icons-material/Menu";
 import ConnectButton from "./ConnectButton";
 import {useRouter} from "next/router";
+import {Link as ScrollLink} from "react-scroll/modules";
 
 
 function MenuMobile() {
@@ -50,21 +51,13 @@ function MenuMobile() {
 
                     {
                         frgMenuData.map((menu, index) => (
-                            <Link href={menu.href} key={index}>
-                                {router.pathname === menu.href ?
-                                    <a><Typography
-                                    >
-                                        {menu.tabContent}
-                                    </Typography></a>
-
-                                    :
-                                    <a><Typography
-                                    >
-                                        {menu.tabContent}
-                                    </Typography></a>
-                                }
-                            </Link>
-
+                            <Typography variant="h2" color={'black'} component={ScrollLink} to={menu.tabContent} spy
+                                        smooth offset={-100} sx={{
+                                cursor: "pointer",
+                                textTransform: "uppercase",
+                            }} key={index}>
+                                {menu.tabContent}
+                            </Typography>
                         ))
                     }
 
