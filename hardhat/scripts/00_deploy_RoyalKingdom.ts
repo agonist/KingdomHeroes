@@ -37,6 +37,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
         }
     } else {
         const royalKingdom = await deployments.get('RoyalKingdom');
+        
         console.log("Royal Kingdom deployed at: " + royalKingdom.address)
     }
 };

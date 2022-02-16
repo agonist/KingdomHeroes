@@ -14,7 +14,7 @@ export const theme = createTheme({
     },
     typography: {
         h1: {
-            fontSize: 38,
+            fontSize: 42,
             fontFamily: FONT_PRIMARY
         },
         h2: {
@@ -23,6 +23,14 @@ export const theme = createTheme({
         },
         h3: {
             fontSize: 22,
+            fontFamily: FONT_PRIMARY
+        },
+        body1 :{
+            fontSize: 22,
+            fontFamily: FONT_PRIMARY
+        },
+        caption :{
+            fontSize: 18,
             fontFamily: FONT_PRIMARY
         },
         button: {

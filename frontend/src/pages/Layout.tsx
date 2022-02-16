@@ -6,6 +6,8 @@ import {enableMapSet} from "immer";
 import {useAddress, useWeb3Context} from "../web3/web3-context";
 import MenuBar from "../components/header/AppBar";
 import Footer from "../components/footer/Footer";
+import {loadApp} from "../store/app-slice";
+import {Web3Params} from "../store/utils/params";
 
 interface LayoutProps {
     children: React.ReactNode
@@ -34,8 +36,11 @@ const Layout = ({children}: LayoutProps) => {
     useEffect(() => {
         enableMapSet()
 
+        let p: Web3Params = {
+            networkID: chainID, provider: provider, address: address
+        }
         if (connected) {
-            // dispatch(loadAppState({networkID: chainID, provider: provider}))
+            dispatch(loadApp(p))
         }
 
     }, [connected])
@@ -52,7 +57,7 @@ const Layout = ({children}: LayoutProps) => {
             </Head>
 
             <MenuBar/>
-            <Stack sx={{flexGrow: 1}} >
+            <Stack sx={{flexGrow: 1}}>
 
                 <main>
                     {children}

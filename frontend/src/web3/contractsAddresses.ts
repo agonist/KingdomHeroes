@@ -1,14 +1,16 @@
 import {Networks} from "./blockchain";
 
 const LOCALHOST = {
-
+    ROYAL_KINGDOM: "0x5FbDB2315678afecb367f032d93F642f64180aa3"
 }
 
 const RINKEBY = {
+    ROYAL_KINGDOM: ""
 
 }
 
 const MAINNET = {
+    ROYAL_KINGDOM: ""
 
 }
 
