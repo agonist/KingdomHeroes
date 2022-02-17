@@ -7,9 +7,9 @@ function HeadSection() {
     return (
         <Stack sx={{backgroundColor: 'aliceblue'}} height={550} justifyContent="center"
                alignItems="center" id="Home">
-            {/*<Typography>Head section</Typography>*/}
+            <Typography>Head section</Typography>
 
-            <MintRoot/>
+            {/*<MintRoot/>*/}
         </Stack>
     )
 
