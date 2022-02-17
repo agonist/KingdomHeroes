@@ -22,7 +22,7 @@ function ConceptSection() {
 
                     Kingdom Heroes brings back all the feels and nostalgia of your RPG/strategy based games and puts
                     them into a collectible NFT. The game focuses on the strategy of training and battling your team
-                    against wild monsters which will allow you as trainers to improve your team's skills before taking
+                    against wild monsters which will allow you as trainers to improve your team&apos;s skills before taking
                     to the Creeth Tiltyard where Project Tournaments are hosted for Eth prizes!
 
                 </Typography>
