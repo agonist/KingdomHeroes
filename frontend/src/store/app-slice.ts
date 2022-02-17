@@ -4,19 +4,43 @@ import {setAll} from "./utils/set-all";
 import {getAddresses} from "../web3/contractsAddresses";
 import {ethers} from "ethers";
 import {default as RoyalKingdom} from '../../src/abi/RoyalKingdom.json';
+import {RootState} from "./store";
+import {toast} from "react-toastify";
+import {sleep} from "./utils/sleep";
+import {MerkleTree} from "merkletreejs";
+import keccak256 from "keccak256";
+
+
+type Data = {
+    proof: string
+}
+
+const whitelist = ["0xE032d90BE017B57118eAafaA5826De494D73E39b", "0xE032d90BE017B57118eAafaA5826De494D73E392", "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"];
+const leafNodes = whitelist.map((addr) => keccak256(addr));
+const merkleTree = new MerkleTree(leafNodes, keccak256, {
+    sortPairs: true,
+});
 
 export interface AppSlice {
     loading: boolean,
     presaleActive: boolean,
     saleActive: boolean,
-    currentMinted: number
+    currentMinted: number,
+    whitelisted: boolean,
+    mintAmount: number,
+    mintTotalPrice: number,
+    mintPrice: number
 }
 
 const initialState: AppSlice = {
     loading: true,
     presaleActive: false,
     saleActive: false,
-    currentMinted: 0
+    currentMinted: 0,
+    whitelisted: false,
+    mintAmount: 1,
+    mintTotalPrice: 0,
+    mintPrice: 0
 }
 
 export const loadApp = createAsyncThunk("app/init",
@@ -27,6 +51,8 @@ export const loadApp = createAsyncThunk("app/init",
         let presaleActive = false
         let saleActive = false
         let currentMinted = 0
+        let whitelisted = false
+        let mintPrice = 0
 
 
         try {
@@ -34,7 +60,14 @@ export const loadApp = createAsyncThunk("app/init",
 
             presaleActive = await royalKingdomContract.presaleActive()
             saleActive = await royalKingdomContract.saleActive()
-            currentMinted = await royalKingdomContract.totalSupply()
+            const minted = await royalKingdomContract.totalSupply()
+            currentMinted = minted.toNumber()
+
+            if (presaleActive) mintPrice = 0.03
+            if (saleActive) mintPrice = 0.05
+
+            const hexProof = merkleTree.getHexProof(keccak256(params.address.toString()));
+            whitelisted = hexProof.length > 0
 
         } catch (e) {
             console.log(e)
@@ -44,16 +77,101 @@ export const loadApp = createAsyncThunk("app/init",
             loading: false,
             presaleActive: presaleActive,
             saleActive: saleActive,
-            currentMinted: currentMinted
+            currentMinted: currentMinted,
+            whitelisted: whitelisted,
+            mintAmount: initialState.mintAmount,
+            mintTotalPrice: mintPrice,
+            mintPrice: mintPrice
         }
     }
 )
+
+export const mintPresale = createAsyncThunk("app/mintPresale",
+    async (params: Web3Params, thunkApi) => {
+        const contracts = getAddresses(params.networkID);
+        const state = thunkApi.getState() as RootState
+
+        try {
+            toast.loading('Minting Royal Kingdom')
+            const hexProof = merkleTree.getHexProof(keccak256(params.address.toString()));
+
+            const royalKingdomContract = new ethers.Contract(contracts.ROYAL_KINGDOM, RoyalKingdom.abi, params.provider.getSigner())
+            let price = ethers.utils.parseUnits(state.app.mintTotalPrice.toFixed(2), 'ether');
+            let tx;
+            tx = royalKingdomContract.mintPresale(state.app.mintAmount, hexProof, {value: price})
+            await tx.wait()
+
+        } catch (e) {
+            console.log(e)
+            toast.dismiss()
+            toast.error('Minting Failed')
+            return
+        }
+
+        await sleep(5);
+        await thunkApi.dispatch(loadApp({
+            address: params.address,
+            networkID: params.networkID,
+            provider: params.provider
+        }))
+
+        toast.dismiss()
+        toast.success('Minting success')
+
+    })
+
+export const mint = createAsyncThunk("app/mint",
+    async (params: Web3Params, thunkApi) => {
+        const contracts = getAddresses(params.networkID);
+        const state = thunkApi.getState() as RootState
+
+        try {
+            toast.loading('Minting Royal Kingdom')
+
+            const royalKingdomContract = new ethers.Contract(contracts.ROYAL_KINGDOM, RoyalKingdom.abi, params.provider.getSigner())
+            let price = ethers.utils.parseUnits(state.app.mintTotalPrice.toFixed(2), 'ether');
+            let tx;
+            tx = royalKingdomContract.mint(state.app.mintAmount, {value: price})
+            await tx.wait()
+
+        } catch (e) {
+            console.log(e)
+            toast.dismiss()
+            toast.error('Minting Failed')
+            return
+        }
+
+        await sleep(5);
+        await thunkApi.dispatch(loadApp({
+            address: params.address,
+            networkID: params.networkID,
+            provider: params.provider
+        }))
+
+        toast.dismiss()
+        toast.success('Minting success')
+
+    })
 
 
 const appSlice = createSlice({
     name: "app",
     initialState,
-    reducers: {},
+    reducers: {
+        mintAmountPlus: (state) => {
+            if (state.mintAmount < 10)
+                state.mintAmount += 1
+
+            state.mintTotalPrice = (state.mintAmount * state.mintPrice)
+        },
+        mintAmountMinus: (state) => {
+            if (state.mintAmount > 1)
+                state.mintAmount -= 1
+
+
+            state.mintTotalPrice = (state.mintAmount * state.mintPrice)
+        },
+    },
     extraReducers: builder => {
         builder
             .addCase(loadApp.pending, state => {
@@ -69,5 +187,6 @@ const appSlice = createSlice({
             })
     }
 })
+export const {mintAmountPlus, mintAmountMinus} = appSlice.actions
 
 export default appSlice.reducer

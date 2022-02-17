@@ -3,7 +3,13 @@ import {createTheme} from '@mui/material/styles';
 const FONT_PRIMARY = "VT323, monospace"; // Google Font
 
 export const theme = createTheme({
-    components: {},
+    components: {
+        MuiButton: {
+            defaultProps: {
+                sx: {borderRadius: 0, borderColor: 'white', borderWidth: 2}
+            }
+        }
+    },
     palette: {
         primary: {
             main: "#6A5495"
@@ -25,11 +31,11 @@ export const theme = createTheme({
             fontSize: 22,
             fontFamily: FONT_PRIMARY
         },
-        body1 :{
+        body1: {
             fontSize: 22,
             fontFamily: FONT_PRIMARY
         },
-        caption :{
+        caption: {
             fontSize: 18,
             fontFamily: FONT_PRIMARY
         },

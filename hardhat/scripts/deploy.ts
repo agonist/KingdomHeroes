@@ -4,7 +4,7 @@
 // When running the script with `npx hardhat run <script>` you'll find the Hardhat
 // Runtime Environment's members available in the global scope.
 import env, {ethers} from "hardhat";
-import func from "./00_deploy_RoyalKingdom";
+// import func from "./00_deploy_RoyalKingdom";
 
 async function main() {
     // Hardhat always runs the compile task when running scripts with its command
@@ -14,7 +14,7 @@ async function main() {
     // manually to make sure everything is compiled
     // await hre.run('compile');
 
-    func(env)
+///    func(env)
 
 }
 

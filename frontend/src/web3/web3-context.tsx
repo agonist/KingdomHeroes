@@ -5,6 +5,7 @@ import WalletConnectProvider from "@walletconnect/web3-provider";
 import {Networks, DEFAULD_NETWORK} from "./blockchain";
 import {useDispatch} from "react-redux";
 import {swithNetwork} from "./switch-network";
+import {Web3Params} from "../store/utils/params";
 
 type onChainProvider = {
     connect: () => Promise<Web3Provider>;
@@ -18,6 +19,7 @@ type onChainProvider = {
     web3?: any;
     providerChainID: number;
     hasCachedProvider: () => boolean;
+    web3Params: Web3Params;
 };
 
 export type Web3ContextData = {
@@ -153,6 +155,15 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({child
         }, 1);
     }, [provider, web3Modal, connected]);
 
+    const params = useCallback(async () => {
+
+        let p: Web3Params = {
+            networkID: chainID, provider: provider, address: address
+        }
+        return p
+
+    }, [provider, chainID, address])
+
     const onChainProvider = useMemo(
         () => ({
             connect,
@@ -165,8 +176,9 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({child
             web3Modal,
             providerChainID,
             checkWrongNetwork,
+            params,
         }),
-        [connect, disconnect, hasCachedProvider, provider, connected, address, chainID, web3Modal, providerChainID],
+        [connect, disconnect, hasCachedProvider, provider, connected, address, chainID, web3Modal, providerChainID, params],
     );
     //@ts-ignore
     return <Web3Context.Provider value={{onChainProvider}}>{children}</Web3Context.Provider>;

@@ -1,5 +1,5 @@
 export enum Networks {
-    LOCALHOST = 1337,
+    LOCALHOST = 31337,
     MAINNET = 1,
     RINKEBY = 4,
 }

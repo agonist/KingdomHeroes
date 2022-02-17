@@ -6,6 +6,8 @@ import {Provider} from "react-redux";
 import store from "../store/store";
 import {Web3ContextProvider} from "../web3/web3-context";
 import Layout from "./Layout";
+import {ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function MyApp({Component, pageProps}: AppProps) {
 
@@ -15,6 +17,17 @@ function MyApp({Component, pageProps}: AppProps) {
                 <Web3ContextProvider>
                     <Layout>
                         <Component {...pageProps} />
+                        <ToastContainer
+                            position="bottom-right"
+                            autoClose={5000}
+                            hideProgressBar
+                            newestOnTop
+                            closeOnClick
+                            rtl={false}
+                            pauseOnFocusLoss
+                            draggable
+                            pauseOnHover
+                        />
                     </Layout>
                 </Web3ContextProvider>
             </Provider>
