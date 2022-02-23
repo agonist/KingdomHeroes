@@ -29,7 +29,7 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 
 const config: HardhatUserConfig = {
     solidity: {
-        version: "0.8.4",
+        version: "0.8.12",
         settings: {
             optimizer: {
                 enabled: true,
@@ -40,11 +40,32 @@ const config: HardhatUserConfig = {
     defaultNetwork: 'hardhat',
 
     networks: {
-        ropsten: {
-            url: process.env.ROPSTEN_URL || "",
-            accounts:
-                process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+
+        hardhat: {
+            deploy: ['deploy_l1', 'deploy_l2'],
+            companionNetworks: {
+                l1: 'hardhat',
+            },
         },
+
+        goerli: {
+            url: process.env.GOERLI_URL || "",
+            accounts: process.env.GOERLI_KEY !== undefined ? [process.env.GOERLI_KEY] : [],
+        },
+
+        mumbai: {
+            url: process.env.MUMBAI_URL || "",
+            accounts: process.env.MUMBAI_KEY !== undefined ? [process.env.MUMBAI_KEY] : [],
+        },
+        polygon: {
+            url: process.env.POLYGON_URL || "",
+            accounts: process.env.POLYGON_KEY !== undefined ? [process.env.POLYGON_KEY] : [],
+        },
+        mainnet: {
+            url: process.env.MAINNET_URL || "",
+            accounts: process.env.MAINNET_KEY !== undefined ? [process.env.MAINNET_KEY] : [],
+        },
+
     },
     gasReporter: {
         enabled: process.env.REPORT_GAS !== undefined,

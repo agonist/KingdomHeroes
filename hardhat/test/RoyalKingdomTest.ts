@@ -1,8 +1,51 @@
-import {expect} from "chai";
 import {waffle} from "hardhat";
 import {describe} from "mocha";
-import {setup} from "./utils/fixture";
 import {gp, parseCoin} from "./utils/helpers";
+
+// We import Chai to use its assertion functions here.
+import {expect} from "chai";
+
+// we import our utilities
+import {setupUsers, setupUser} from './utils';
+
+// We import the hardhat environment field we are planning to use
+import {ethers, deployments, getNamedAccounts, getUnnamedAccounts} from 'hardhat';
+import keccak256 from "keccak256";
+import {MerkleTree} from "merkletreejs";
+import {RoyalKingdom__factory} from "../typechain-types";
+
+// we create a setup function that can be called by every test and setup variable for easy to read tests
+async function setup() {
+
+    await deployments.fixture(["RoyalKingdom"]);
+    const contracts = {
+        nft: (await ethers.getContract('RoyalKingdom')),
+    };
+
+    const {
+        deployer: ownerAddr,
+        alice: aliceAddr,
+        bob: bobAddr,
+        carol: carolAddr,
+    } = await getNamedAccounts();
+
+    const [owner, alice, bob, carol] = await setupUsers(
+        [ownerAddr, aliceAddr, bobAddr, carolAddr],
+        contracts
+    );
+
+    const whitelist = [bob.address];
+    const ogleafNodes = whitelist.map((addr) => keccak256(addr));
+    const merkleTree = new MerkleTree(ogleafNodes, keccak256, {
+        sortPairs: true,
+    });
+
+    return {
+        ...contracts,
+        owner,
+        bob, alice, carol, merkleTree
+    };
+}
 
 describe('RoyalKingdom', function () {
 
@@ -10,7 +53,7 @@ describe('RoyalKingdom', function () {
 
         it('should initialize', async function () {
             // given
-            const {nft} = await waffle.loadFixture(setup);
+            const {nft} = await setup();
             // when
             const name = await nft.name();
             const symbol = await nft.symbol();
@@ -32,10 +75,10 @@ describe('RoyalKingdom', function () {
 
         it("Should set sale active", async function () {
             // given
-            const {nft} = await waffle.loadFixture(setup);
+            const {nft, owner} = await setup();
 
             // when
-            await nft.toggleSale();
+            await owner.nft.toggleSale();
             const saleActive = await nft.saleActive();
 
             // then
@@ -44,7 +87,7 @@ describe('RoyalKingdom', function () {
 
         it('Should be reverted with "Ownable: caller is not the owner"', async function () {
             // given
-            const {alice} = await waffle.loadFixture(setup);
+            const {alice} = await setup();
 
             // when
             const tx = alice.nft.toggleSale();
@@ -59,7 +102,8 @@ describe('RoyalKingdom', function () {
 
         it("Should return a tokenURI", async function () {
             // given
-            const {nft, alice} = await waffle.loadFixture(setup);
+            const {nft, alice} = await setup();
+
             const baseTokenURI = await nft.baseTokenURI();
             await nft.toggleSale();
             await alice.nft.mint(1, {value: parseCoin("0.05")});
@@ -72,11 +116,11 @@ describe('RoyalKingdom', function () {
 
         it('Should reverted with "URI query for nonexistent token"', async function () {
             // given
-            const {alice} = await waffle.loadFixture(setup);
+            const {alice} = await setup();
             // when
             const tx = alice.nft.tokenURI(1);
             // then
-            await expect(tx).to.be.revertedWith("URI query for nonexistent token");
+            await expect(tx).to.be.revertedWith("URIQueryForNonexistentToken()");
         });
 
     });
@@ -85,7 +129,7 @@ describe('RoyalKingdom', function () {
 
         it("Should set new baseTokenURI", async function () {
             // given
-            const {nft, owner} = await waffle.loadFixture(setup);
+            const {nft, owner} = await setup();
             const baseTokenURI = "http://";
             // when
             await owner.nft.setBaseURI(baseTokenURI);
@@ -95,7 +139,7 @@ describe('RoyalKingdom', function () {
 
         it('Should reverted with "Ownable: caller is not the owner"', async function () {
             // given
-            const {alice} = await waffle.loadFixture(setup);
+            const {alice} = await setup();
             // when
             const tx = alice.nft.setBaseURI("https://abc/");
             // then
@@ -108,7 +152,7 @@ describe('RoyalKingdom', function () {
 
         it('should reserve 5 NFT', async function () {
             // given
-            const {nft, owner} = await waffle.loadFixture(setup);
+            const {nft, owner} = await setup()
 
             // when
             await nft.reserve(5)
@@ -119,7 +163,7 @@ describe('RoyalKingdom', function () {
 
         it('should revert with "Ownable: caller is not the owner"', async function () {
             // given
-            const {bob} = await waffle.loadFixture(setup);
+            const {bob} = await setup()
 
             // when
             const tx = bob.nft.reserve(5)
@@ -130,7 +174,7 @@ describe('RoyalKingdom', function () {
 
         it('should revert with "Mint exceed max supply"', async function () {
             // given
-            const {nft, owner} = await waffle.loadFixture(setup);
+            const {nft, owner} = await setup()
 
             // when
             const tx = nft.reserve(105)
@@ -145,7 +189,7 @@ describe('RoyalKingdom', function () {
 
         it('Should revert with "Sale inactive"', async function () {
             // given
-            const {nft, owner} = await waffle.loadFixture(setup);
+            const {nft, owner} = await setup()
 
             // when
             const tx = nft.mint(1)
@@ -156,7 +200,7 @@ describe('RoyalKingdom', function () {
 
         it('Should revert with "Mint exceed max supply"', async function () {
             // given
-            const {nft, owner} = await waffle.loadFixture(setup);
+            const {nft, owner} = await setup()
             await nft.toggleSale()
 
             // when
@@ -168,7 +212,7 @@ describe('RoyalKingdom', function () {
 
         it('Should revert with "Max mint exceeded"', async function () {
             // given
-            const {nft, owner} = await waffle.loadFixture(setup);
+            const {nft, owner} = await setup()
             await nft.toggleSale()
 
             // when
@@ -180,7 +224,7 @@ describe('RoyalKingdom', function () {
 
         it('Should revert with "Value sent is incorrect"', async function () {
             // given
-            const {nft, owner} = await waffle.loadFixture(setup);
+            const {nft, owner} = await setup()
             await nft.toggleSale()
 
             // when
@@ -192,7 +236,7 @@ describe('RoyalKingdom', function () {
 
         it('Should mint 5 NFTs', async function () {
             // given
-            const {nft, owner} = await waffle.loadFixture(setup);
+            const {nft, owner} = await setup()
             await nft.toggleSale()
 
             // when
@@ -206,7 +250,7 @@ describe('RoyalKingdom', function () {
     describe('mintPresale', function () {
         it('Should revert with "Presale inactive"', async function () {
             // given
-            const {nft, owner, merkleTree} = await waffle.loadFixture(setup);
+            const {nft, owner, merkleTree} = await setup()
 
             // when
             const tx = nft.mintPresale(1, gp(merkleTree, owner.address))
@@ -217,7 +261,7 @@ describe('RoyalKingdom', function () {
 
         it('Should revert with "Not whitelisted"', async function () {
             // given
-            const {nft, owner, merkleTree} = await waffle.loadFixture(setup);
+            const {nft, owner, merkleTree} = await setup()
             await nft.togglePresale()
 
             // when
@@ -229,7 +273,7 @@ describe('RoyalKingdom', function () {
 
         it('Should revert with "Whitelist mint exceeded"', async function () {
             // given
-            const {nft, bob, merkleTree} = await waffle.loadFixture(setup);
+            const {nft, bob, merkleTree} = await setup()
             await nft.togglePresale()
             await nft.setWhitelistMerkleRoot(merkleTree.getHexRoot())
 
@@ -243,7 +287,7 @@ describe('RoyalKingdom', function () {
 
         it('Should revert with "Value sent is incorrect"', async function () {
             // given
-            const {nft, bob, merkleTree} = await waffle.loadFixture(setup);
+            const {nft, bob, merkleTree} = await setup()
             await nft.togglePresale()
             await nft.setWhitelistMerkleRoot(merkleTree.getHexRoot())
 
@@ -256,7 +300,7 @@ describe('RoyalKingdom', function () {
 
         it('Should mint 2 presale NFTs', async function () {
             // given
-            const {nft, bob, merkleTree} = await waffle.loadFixture(setup);
+            const {nft, bob, merkleTree} = await setup()
             await nft.togglePresale()
             await nft.setWhitelistMerkleRoot(merkleTree.getHexRoot())
 
@@ -272,7 +316,7 @@ describe('RoyalKingdom', function () {
 
         it('Should revert with "Ownable: caller is not the owner"', async function () {
             // given
-            const {bob, merkleTree} = await waffle.loadFixture(setup);
+            const {bob, merkleTree} = await setup()
 
             // when
             const tx = bob.nft.setWhitelistMerkleRoot(merkleTree.getHexRoot())
@@ -283,7 +327,7 @@ describe('RoyalKingdom', function () {
 
         it('Should set MerkleRoot properly', async function () {
             // given
-            const {nft, merkleTree} = await waffle.loadFixture(setup);
+            const {nft, merkleTree} = await setup()
 
             // when
             await nft.setWhitelistMerkleRoot(merkleTree.getHexRoot())
