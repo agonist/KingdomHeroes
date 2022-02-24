@@ -14,7 +14,7 @@ function RoadmapSection() {
                 <Image src={PIC} width={700} height={550}/>
 
                 <Stack width={"100%"} alignItems="center">
-                    <Stack width={700}>
+                    <Stack maxWidth={700}>
 
                         <Typography paddingTop={2} variant={"h3"}>V1: Protect the Kingdom</Typography>
 
@@ -43,7 +43,7 @@ function RoadmapSection() {
                 </Stack>
 
                 <Stack width={"100%"} alignItems="center">
-                    <Stack width={700}>
+                    <Stack maxWidth={700}>
 
                         <Typography paddingTop={2} variant={"h3"}>V3: Battle for Glory</Typography>
 
