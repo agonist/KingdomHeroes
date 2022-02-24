@@ -9,14 +9,18 @@ import '@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol';
 contract KingdomPolyGate is FxBaseChildTunnel, Create2, IERC721Receiver {
 
     bytes32 public constant DEPOSIT = keccak256("DEPOSIT");
-    bytes32 public constant MAP_TOKEN = keccak256("MAP_TOKEN");
     string public constant SUFFIX_NAME = " (FXERC721)";
     string public constant PREFIX_SYMBOL = "fx";
 
     // root to child token
     mapping(address => address) public rootToChildToken;
 
-    constructor(address _fxChild) FxBaseChildTunnel(_fxChild) {
+    address rootToken;
+    address childToken;
+
+    constructor(address _fxChild, address _rootToken, address _childToken) FxBaseChildTunnel(_fxChild) {
+        rootToken = _rootToken;
+        childToken = _childToken;
     }
 
     function onERC721Received(
@@ -29,20 +33,18 @@ contract KingdomPolyGate is FxBaseChildTunnel, Create2, IERC721Receiver {
     }
 
     function withdraw(
-        address childToken,
-        uint256 tokenId,
-        bytes memory data
+        uint256 _tokenId,
+        bytes memory _data
     ) external {
-        _withdraw(childToken, msg.sender, tokenId, data);
+        _withdraw(msg.sender, _tokenId, _data);
     }
 
     function withdrawTo(
-        address childToken,
-        address receiver,
-        uint256 tokenId,
-        bytes memory data
+        address _receiver,
+        uint256 _tokenId,
+        bytes memory _data
     ) external {
-        _withdraw(childToken, receiver, tokenId, data);
+        _withdraw(_receiver, _tokenId, _data);
     }
 
     //
@@ -69,7 +71,6 @@ contract KingdomPolyGate is FxBaseChildTunnel, Create2, IERC721Receiver {
             syncData,
             (address, address, address, uint256, bytes)
         );
-        address childToken = rootToChildToken[rootToken];
 
         // deposit tokens
         FxERC721 childTokenContract = FxERC721(childToken);
@@ -77,26 +78,16 @@ contract KingdomPolyGate is FxBaseChildTunnel, Create2, IERC721Receiver {
     }
 
     function _withdraw(
-        address childToken,
         address receiver,
         uint256 tokenId,
         bytes memory data
     ) internal {
         FxERC721 childTokenContract = FxERC721(childToken);
-        // child token contract will have root token
-        address rootToken = childTokenContract.connectedToken();
-
-        // validate root and child token mapping
-        require(
-            childToken != address(0x0) && rootToken != address(0x0) && childToken == rootToChildToken[rootToken],
-            "FxERC721ChildTunnel: NO_MAPPED_TOKEN"
-        );
 
         require(msg.sender == childTokenContract.ownerOf(tokenId));
 
         // withdraw tokens
         childTokenContract.burn(tokenId);
-
         // send message to root regarding token burn
         _sendMessageToRoot(abi.encode(rootToken, childToken, receiver, tokenId, data));
     }

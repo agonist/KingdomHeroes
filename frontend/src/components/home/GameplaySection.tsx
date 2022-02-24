@@ -4,12 +4,12 @@ import {Stack, Typography} from "@mui/material";
 function GameplaySection() {
 
     return (
-        <Stack sx={{backgroundColor: '#f1f1f1'}} paddingTop={6}
+        <Stack sx={{backgroundColor: '#f1f1f1'}} paddingTop={6} paddingX={2}
                alignItems="center" id="Concept">
             <Stack maxWidth={700} alignItems="center" spacing={3}>
                 <Typography variant={"h1"}>Gameplay</Typography>
 
-                <Typography textAlign={"center"}>
+                <Typography variant={"body1"}>
 
                     Community members will train their staked NFTs- Knights, Wizards, and Elves- against the monsters
                     that lurk outside the walls of Creeth. Battling against Goblins, Dragons, and Beasts, winning teams

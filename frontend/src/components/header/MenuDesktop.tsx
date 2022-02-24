@@ -46,35 +46,13 @@ function MenuDesktop() {
                 >
                     {
                         frgMenuData.map((menu, index) => (
-                            <Typography variant="h2" color={'black'} component={ScrollLink} to={menu.tabContent} spy
+                            <Typography variant="h4" color={'black'} component={ScrollLink} to={menu.tabContent} spy
                                         smooth offset={-100} sx={{
                                 cursor: "pointer",
                                 textTransform: "uppercase",
                             }} key={index}>
                                 {menu.tabContent}
                             </Typography>
-
-                            // <Link href={menu.href} key={index}>
-                            //     {router.pathname === menu.href ?
-                            //         <a style={{
-                            //             textDecoration: 'none',
-                            //         }}>
-                            //             <Typography variant="h2" color={'black'} component={ScrollLink}  to={menu.tabContent} spy smooth>
-                            //                 {menu.tabContent}
-                            //             </Typography>
-                            //         </a>
-                            //
-                            //         :
-                            //
-                            //         <a style={{
-                            //             textDecoration: 'none',
-                            //         }}>
-                            //             <Typography variant="h2"  color={'black'}>
-                            //                 {menu.tabContent}
-                            //             </Typography>
-                            //         </a>
-                            //     }
-                            // </Link>
                         ))
                     }
                 </Stack>

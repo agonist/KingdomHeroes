@@ -16,9 +16,9 @@ function Footer() {
             <a href={"https://twitter.com/KingdomHeroesN1"} target="_blank" rel="noreferrer">
                 <Image src={discord} width={42} height={42}/>
             </a>
-            <a href={"https://twitter.com/KingdomHeroesN1"} target="_blank" rel="noreferrer">
-                <Image src={opensea} width={42} height={42}/>
-            </a>
+            {/*<a href={"https://twitter.com/KingdomHeroesN1"} target="_blank" rel="noreferrer">*/}
+            {/*    <Image src={opensea} width={42} height={42}/>*/}
+            {/*</a>*/}
         </Stack>
     )
 

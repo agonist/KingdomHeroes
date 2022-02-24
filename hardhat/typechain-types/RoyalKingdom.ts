@@ -51,6 +51,7 @@ export interface RoyalKingdomInterface extends utils.Interface {
     "toggleSale()": FunctionFragment;
     "tokenByIndex(uint256)": FunctionFragment;
     "tokenOfOwnerByIndex(address,uint256)": FunctionFragment;
+    "tokenStats(uint256)": FunctionFragment;
     "tokenURI(uint256)": FunctionFragment;
     "totalSupply()": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
@@ -152,6 +153,10 @@ export interface RoyalKingdomInterface extends utils.Interface {
     values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
+    functionFragment: "tokenStats",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "tokenURI",
     values: [BigNumberish]
   ): string;
@@ -250,6 +255,7 @@ export interface RoyalKingdomInterface extends utils.Interface {
     functionFragment: "tokenOfOwnerByIndex",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "tokenStats", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "tokenURI", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "totalSupply",
@@ -461,6 +467,19 @@ export interface RoyalKingdom extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
+    tokenStats(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<
+      [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
+        attack: BigNumber;
+        defense: BigNumber;
+        speed: BigNumber;
+        level: BigNumber;
+        hp: BigNumber;
+      }
+    >;
+
     tokenURI(
       tokenId: BigNumberish,
       overrides?: CallOverrides
@@ -603,6 +622,19 @@ export interface RoyalKingdom extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
+  tokenStats(
+    arg0: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<
+    [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
+      attack: BigNumber;
+      defense: BigNumber;
+      speed: BigNumber;
+      level: BigNumber;
+      hp: BigNumber;
+    }
+  >;
+
   tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
@@ -726,6 +758,19 @@ export interface RoyalKingdom extends BaseContract {
       index: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    tokenStats(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<
+      [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
+        attack: BigNumber;
+        defense: BigNumber;
+        speed: BigNumber;
+        level: BigNumber;
+        hp: BigNumber;
+      }
+    >;
 
     tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
@@ -914,6 +959,11 @@ export interface RoyalKingdom extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    tokenStats(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     tokenURI(
       tokenId: BigNumberish,
       overrides?: CallOverrides
@@ -1063,6 +1113,11 @@ export interface RoyalKingdom extends BaseContract {
     tokenOfOwnerByIndex(
       owner: string,
       index: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    tokenStats(
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

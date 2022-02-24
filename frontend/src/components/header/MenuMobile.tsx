@@ -51,7 +51,7 @@ function MenuMobile() {
 
                     {
                         frgMenuData.map((menu, index) => (
-                            <Typography variant="h2" color={'black'} component={ScrollLink} to={menu.tabContent} spy
+                            <Typography variant="h3" color={'black'} component={ScrollLink} to={menu.tabContent} spy
                                         smooth offset={-100} sx={{
                                 cursor: "pointer",
                                 textTransform: "uppercase",
@@ -61,7 +61,7 @@ function MenuMobile() {
                         ))
                     }
 
-                    <ConnectButton/>
+                    {/*<ConnectButton/>*/}
                 </Stack>
 
 

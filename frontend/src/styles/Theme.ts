@@ -24,15 +24,23 @@ export const theme = createTheme({
             fontFamily: FONT_PRIMARY
         },
         h2: {
-            fontSize: 28,
+            fontSize: 38,
             fontFamily: FONT_PRIMARY,
         },
         h3: {
-            fontSize: 22,
+            fontSize: 34,
+            fontFamily: FONT_PRIMARY
+        },
+        h4: {
+            fontSize: 28,
             fontFamily: FONT_PRIMARY
         },
         body1: {
             fontSize: 22,
+            fontFamily: FONT_PRIMARY
+        },
+        body2: {
+            fontSize: 18,
             fontFamily: FONT_PRIMARY
         },
         caption: {

@@ -10,6 +10,4 @@ interface FxERC721 is IERC721 {
     ) external;
 
     function burn(uint256 tokenId) external;
-
-    function connectedToken() external returns (address);
 }

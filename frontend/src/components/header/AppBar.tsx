@@ -32,9 +32,11 @@ function MenuBar(): JSX.Element {
             justifyContent: "space-between", backgroundColor: "#f1f1f1"
         }}>
             <ToolbarStyle>
-                <Stack width={350}>
-                    <Typography>Logo</Typography>
-                </Stack>
+                <Hidden mdDown>
+                    <Stack width={350}>
+                        <Typography>Logo</Typography>
+                    </Stack>
+                </Hidden>
                 <Container
                     maxWidth="xl"
                 >
@@ -49,7 +51,7 @@ function MenuBar(): JSX.Element {
                 </Container>
                 <Hidden mdDown>
                     <Stack width={350}>
-                        <ConnectButton/>
+                        {/*<ConnectButton/>*/}
                     </Stack>
                 </Hidden>
 

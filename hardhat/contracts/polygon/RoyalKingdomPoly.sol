@@ -4,15 +4,16 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "../interfaces/Interfaces.sol";
-import '@openzeppelin/contracts/token/ERC721/ERC721.sol';
+import '@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol';
+import "@openzeppelin/contracts/utils/Strings.sol";
 
-/// @title Royal Kingdom NFT contract
+/// @title Royal Kingdom Polygon NFT contract
+/// @notice This contract is only used to mint/burn from the gate.
 /// @author agonist (https://github.com/agonist)
-contract RoyalKingdomPoly is ERC721, Ownable, FxERC721 {
-
+contract RoyalKingdomPoly is ERC721Enumerable, Ownable, FxERC721 {
+    using Strings for uint256;
 
     address internal gate;
-
     string public baseTokenURI;
 
     modifier onlyGate() {
@@ -37,17 +38,13 @@ contract RoyalKingdomPoly is ERC721, Ownable, FxERC721 {
         address _user,
         uint256 _tokenId,
         bytes memory _data
-    ) public override onlyGate {
+    ) external override onlyGate {
         _safeMint(_user, _tokenId, _data);
     }
 
-    function burn(uint256 tokenId) public override onlyGate {
+    function burn(uint256 tokenId) external override onlyGate {
         _burn(tokenId);
     }
-    //
-    //    function _baseURI() internal view override returns (string memory) {
-    //        return baseTokenURI;
-    //    }
 
     /// @notice set the base URI of the NFT
     /// @param _baseTokenURI The new URI
@@ -57,7 +54,14 @@ contract RoyalKingdomPoly is ERC721, Ownable, FxERC721 {
         baseTokenURI = _baseTokenURI;
     }
 
-    function connectedToken() public view override returns (address) {
-        return address(0x0);
+    function tokenURI(
+        uint256 tokenId
+    ) public view override returns (string memory) {
+        require(_exists(tokenId), "URI query for nonexistent token");
+        return string(abi.encodePacked(baseTokenURI, tokenId.toString(), ".json"));
+    }
+
+    function setGate(address _gate) external onlyOwner {
+        gate = _gate;
     }
 }
