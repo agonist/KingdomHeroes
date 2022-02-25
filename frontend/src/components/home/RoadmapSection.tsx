@@ -54,12 +54,8 @@ function RoadmapSection() {
 
                         </Typography>
                     </Stack>
-
                 </Stack>
-
             </Stack>
-
-
         </Stack>
     )
 
