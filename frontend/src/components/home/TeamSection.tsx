@@ -17,8 +17,8 @@ function TeamSection() {
                 <Grid item xs={3}>
                     <Stack direction={"column"} alignItems="center">
                         <Image src={TEAM3} width={150} height={150}/>
-                        <Typography variant={"body1"}>x</Typography>
-                        <Typography variant={"caption"}>Founder</Typography>
+                        <Typography variant={"body1"}>JB</Typography>
+                        <Typography variant={"caption"}>Game Creator</Typography>
                     </Stack>
                 </Grid>
                 <Grid item xs={3}>

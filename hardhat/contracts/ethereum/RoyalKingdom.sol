@@ -22,16 +22,6 @@ contract RoyalKingdom is ERC721A, Ownable {
 
     mapping(address => uint256) public claimed;
 
-    struct Stats {
-        uint64 attack;
-        uint64 defense;
-        uint64 speed;
-        uint64 level;
-        uint64 hp;
-    }
-
-    mapping(uint256 => Stats) public tokenStats;
-
     constructor(
         string memory name_,
         string memory symbol_,
@@ -57,7 +47,6 @@ contract RoyalKingdom is ERC721A, Ownable {
         require(price * _quantity == msg.value, "Value sent is incorrect");
 
         _safeMint(msg.sender, _quantity);
-        initStats(1);
     }
 
     /// @notice presale mint function of the contract

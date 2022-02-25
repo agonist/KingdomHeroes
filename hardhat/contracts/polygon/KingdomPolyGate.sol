@@ -74,6 +74,7 @@ contract KingdomPolyGate is FxBaseChildTunnel, Create2, IERC721Receiver {
 
         // deposit tokens
         FxERC721 childTokenContract = FxERC721(childToken);
+        // mint token to staking contract and linkd token id to original user
         childTokenContract.mint(to, tokenId, depositData);
     }
 
