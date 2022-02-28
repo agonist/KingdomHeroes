@@ -1,30 +1,32 @@
 import {HardhatRuntimeEnvironment} from 'hardhat/types';
 import {DeployFunction} from 'hardhat-deploy/types';
+import {network} from "hardhat";
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     const {deployments, getNamedAccounts} = hre;
     const {deploy} = deployments;
 
     const {deployer} = await getNamedAccounts();
+    const network = await hre.ethers.provider.getNetwork();
 
-    const royalKingdom = await hre.ethers.getContractAt('RoyalKingdom', (await deployments.get('RoyalKingdom')).address);
+    let maxSupply = 500
 
-    let checkPointManager = "0x2890bA17EfE978480615e330ecB65333b880928e"
-    let fxRoot = "0x3d1d3E34f7fB6D26245E6640E1c50710eFFf15bA"
-
-    console.log(royalKingdom.address)
+    if (network.chainId == 31337) {
+        maxSupply = 100
+    }
 
     const args = [
-        checkPointManager,
-        fxRoot,
-        royalKingdom.address
+        "https://gateway.pinata.cloud/ipfs/xxx/",
+        maxSupply,
+        5,
+        2
     ]
 
-    await deploy('KingdomEthGate', {
+    await deploy('KingdomKey', {
         from: deployer,
         args: args,
         log: true,
     });
 };
 export default func;
-func.tags = ['KingdomEthGate'];
+func.tags = ['KingdomKey'];
