@@ -97,4 +97,8 @@ contract RoyalKingdom is ERC721A, Ownable {
     function setWhitelistMerkleRoot(bytes32 _merkleRoot) external onlyOwner {
         whitelistMerkleRoot = _merkleRoot;
     }
+
+    function _startTokenId() internal view override returns (uint256) {
+        return 1;
+    }
 }

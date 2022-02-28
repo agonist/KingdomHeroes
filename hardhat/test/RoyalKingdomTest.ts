@@ -71,7 +71,7 @@ describe('RoyalKingdom', function () {
 
     })
 
-    describe('toggleSlae', function () {
+    describe('toggleSale', function () {
 
         it("Should set sale active", async function () {
             // given
@@ -98,6 +98,33 @@ describe('RoyalKingdom', function () {
 
     });
 
+    describe('togglePresale', function () {
+
+        it("Should set presale active", async function () {
+            // given
+            const {nft, owner} = await setup();
+
+            // when
+            await owner.nft.togglePresale();
+            const saleActive = await nft.presaleActive();
+
+            // then
+            expect(saleActive).to.be.true;
+        });
+
+        it('Should be reverted with "Ownable: caller is not the owner"', async function () {
+            // given
+            const {alice} = await setup();
+
+            // when
+            const tx = alice.nft.togglePresale();
+
+            // then
+            await expect(tx).to.be.revertedWith("Ownable: caller is not the owner");
+        });
+
+    });
+
     describe("tokenURI", function () {
 
         it("Should return a tokenURI", async function () {
@@ -109,9 +136,9 @@ describe('RoyalKingdom', function () {
             await alice.nft.mint(1, {value: parseCoin("0.05")});
 
             // when
-            const tokenURI = await nft.tokenURI(0);
+            const tokenURI = await nft.tokenURI(1);
             // then
-            expect(tokenURI).to.be.equal(baseTokenURI + 0);
+            expect(tokenURI).to.be.equal(baseTokenURI + 1);
         });
 
         it('Should reverted with "URI query for nonexistent token"', async function () {

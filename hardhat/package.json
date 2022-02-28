@@ -49,6 +49,6 @@
   },
   "dependencies": {
     "chai-ethers": "^0.0.1",
-    "erc721a": "^2.2.0"
+    "erc721a": "^3.0.0"
   }
 }
