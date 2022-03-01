@@ -4,6 +4,7 @@ import keccak256 from "keccak256";
 import {MerkleTree} from "merkletreejs";
 import {formatCoin, parseCoin} from "./utils/helpers";
 import {expect} from "chai";
+import {BigNumber} from "ethers";
 
 async function setup() {
 
@@ -68,7 +69,7 @@ describe('RoyalStaking', function () {
             await staking.stake([1, 2, 3, 4, 5])
 
             const res = await staking.stakedTokensIdsOf(owner.address)
-            const stakingBalance = await nft.balanceOf(staking.address)
+            const stakingBalance = await staking.balanceOf(owner.address)
             expect(res[0]).to.equal(1)
             expect(res[1]).to.equal(2)
             expect(res[2]).to.equal(3)
@@ -258,8 +259,31 @@ describe('RoyalStaking', function () {
 
             const balance = await token.balanceOf(owner.address)
             // little trick because timestamp is not 100% accurate
-            expect(balance).to.be.greaterThanOrEqual(parseCoin("25"))
-            expect(balance).to.be.lessThanOrEqual(parseCoin("25.01"))
+            expect(BigNumber.from(balance).gte(parseCoin("25"))).to.be.true
+            expect(BigNumber.from(balance).lte(parseCoin("25.01"))).to.be.true
+        });
+
+        it('should have 625 CGLD after claiming yield', async function () {
+            // given
+            const {nft, staking, owner, token} = await setup();
+
+            // when
+            await nft.toggleSale()
+            await nft.mint(5, {value: parseCoin("0.25")})
+            await nft.setApprovalForAll(staking.address, true)
+            await staking.stake([1, 2, 3, 4, 5])
+
+            const days = 5 * 24 * 60 * 60;
+            await ethers.provider.send('evm_increaseTime', [days]);
+            await ethers.provider.send('evm_mine', []);
+            await staking.claimYield()
+
+            const balance = await token.balanceOf(owner.address)
+            // little trick because timestamp is not 100% accurate
+            expect(BigNumber.from(balance).gte(parseCoin("625"))).to.be.true
+            expect(BigNumber.from(balance).lte(parseCoin("625.01"))).to.be.true
+            const oneDayYield = await staking.calculateYieldForAddress(owner.address)
+            expect(oneDayYield).to.equal(parseCoin("0"))
         });
 
     })

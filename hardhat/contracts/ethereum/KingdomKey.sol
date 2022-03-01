@@ -29,7 +29,7 @@ contract KingdomKey is ERC1155, Ownable {
         uint256 maxSupply_,
         uint256 maxMintAtOnce_,
         uint256 maxMintWhitelist_
-    ) public ERC1155(baseTokenURI_) {
+    ) ERC1155(baseTokenURI_) {
         maxSupply = maxSupply_;
         maxMintAtOnce = maxMintAtOnce_;
         maxMintWhitelist = maxMintWhitelist_;

@@ -27,19 +27,6 @@ contract TokensStats is Ownable {
         _;
     }
 
-    function levelUp(uint256 _id, uint256 _levelAmount) external onlyGM {
-        Stats memory current = tokenStats[_id];
-
-        uint64 finalAttack = current.attack;
-        for (uint16 i = 0; i < _levelAmount; i++) {
-            uint256 attackBump = current.attack / 10;
-
-
-        }
-
-    }
-
-
     /// ----- Admin functions ----- ///
 
 

@@ -77,13 +77,13 @@ contract RoyalStaking is Ownable {
 
     /// ----- Yield functions ----- ///
 
-    function _calculateYieldForAddress(address _address, EnumerableSet.UintSet storage set) internal view returns (uint256) {
+    function _calculateYieldForAddress(EnumerableSet.UintSet storage set) internal view returns (uint256) {
         uint256 length = set.length();
         uint256 currentYield = yield;
 
         uint256 totalYield = 0;
         for (uint16 i = 0; i < length; i++) {
-            totalYield += _calculateTokenYield(uint16(set.at(i)), yield);
+            totalYield += _calculateTokenYield(uint16(set.at(i)), currentYield);
         }
         return totalYield;
     }
@@ -96,7 +96,7 @@ contract RoyalStaking is Ownable {
 
     function claimYield() external {
         EnumerableSet.UintSet storage depositSet = stakedTokensByAddress[msg.sender];
-        uint256 totalYield = _calculateYieldForAddress(msg.sender, depositSet);
+        uint256 totalYield = _calculateYieldForAddress(depositSet);
         uint256 length = depositSet.length();
 
         if (totalYield > 0) {
@@ -135,8 +135,8 @@ contract RoyalStaking is Ownable {
 
     // @notice return yield for an address
     function calculateYieldForAddress(address _address) external view returns (uint256) {
-        EnumerableSet.UintSet storage set = stakedTokensByAddress[msg.sender];
-        return _calculateYieldForAddress(_address, set);
+        EnumerableSet.UintSet storage set = stakedTokensByAddress[_address];
+        return _calculateYieldForAddress(set);
     }
 
 }
