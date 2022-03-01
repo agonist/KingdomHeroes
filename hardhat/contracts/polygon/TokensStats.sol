@@ -37,12 +37,6 @@ contract TokensStats is Ownable {
 
         }
 
-
-        uint256 attackBump = current.attack / 10;
-        uint256 defenseBump = current.defense / 10;
-        uint256 speedBump = current.speed / 10;
-
-
     }
 
 

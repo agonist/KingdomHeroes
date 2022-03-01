@@ -4,10 +4,11 @@ pragma solidity ^0.8.0;
 
 import '@openzeppelin/contracts/token/ERC20/ERC20.sol';
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "./Interfaces.sol";
 
 /// @title CreethGold Token contract
 /// @author agonist (https://github.com/agonist)
-contract CreethGold is ERC20, Ownable {
+contract CreethGold is ICreethGold, ERC20, Ownable {
 
     address public minter;
 
@@ -20,11 +21,11 @@ contract CreethGold is ERC20, Ownable {
         minter = _minter;
     }
 
-    function mint(address _account, uint256 _amount) public onlyMinter {
+    function mint(address _account, uint256 _amount) external override onlyMinter {
         _mint(_account, _amount);
     }
 
-    function burn(uint256 amount) public virtual {
+    function burn(uint256 amount) external {
         _burn(_msgSender(), amount);
     }
 
