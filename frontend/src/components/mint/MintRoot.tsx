@@ -4,7 +4,7 @@ import {useAppSelector} from "../../hooks/hooks";
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import {useDispatch} from "react-redux";
-import {mint, mintAmountMinus, mintAmountPlus, mintPresale} from "../../store/app-slice";
+import {mint, mintAmountMinus, mintAmountPlus, mintPresale} from "../../store/heroes-mint-slice";
 import {Web3Params} from "../../store/utils/params";
 
 
@@ -14,7 +14,7 @@ function MintRoot() {
     const {provider, chainID} = useWeb3Context();
     const address = useAddress();
 
-    const app = useAppSelector((state) => state.app)
+    const heroesMint = useAppSelector((state) => state.heroesMint)
 
 
     async function mintPlus() {
@@ -29,44 +29,45 @@ function MintRoot() {
         let p: Web3Params = {
             networkID: chainID, provider: provider, address: address
         }
-        if (app.presaleActive) await dispatch(mintPresale(p))
-        if (app.saleActive) await dispatch(mint(p))
+        if (heroesMint.presaleActive) await dispatch(mintPresale(p))
+        if (heroesMint.saleActive) await dispatch(mint(p))
     }
 
-    if (app.loading) {
+    if (heroesMint.loading) {
         return (
             <CircularProgress/>
         )
     }
 
     // presale active but not whitelisted
-    if (app.presaleActive && !app.whitelisted) {
+    if (heroesMint.presaleActive && !heroesMint.whitelisted) {
         return (
             <Stack alignItems="center" spacing={3}>
-                <Typography variant={"h1"}>Preale mint</Typography>
-                <Typography>Sorry you are not whitelisted</Typography>
+                <Typography>Sorry you are not whitelisted for presale</Typography>
             </Stack>
         )
     }
 
-    if (app.saleActive || (app.presaleActive && app.whitelisted)) {
+    if (heroesMint.saleActive || (heroesMint.presaleActive && heroesMint.whitelisted)) {
         return (
             <Stack alignItems="center" spacing={3}>
-                <Typography variant={"h1"}>Mint now</Typography>
-                <Typography>{app.currentMinted} / 1000 minted</Typography>
+                <Typography variant={"h4"}>Pre-Sale</Typography>
+
+                <Typography variant={"h4"}>{heroesMint.currentMinted} / 10000 Heroes minted</Typography>
                 <Stack direction={"row"} spacing={2}>
                     <Fab size="small" aria-label="remove" onClick={mintMinus}>
                         <RemoveIcon/>
                     </Fab>
 
-                    <Typography>{app.mintAmount}</Typography>
+                    <Typography>{heroesMint.mintAmount}</Typography>
 
                     <Fab size="small" aria-label="add" onClick={mintPlus}>
                         <AddIcon/>
                     </Fab>
                 </Stack>
 
-                <Button variant="contained" onClick={mintSale}>Mint for {app.mintTotalPrice.toFixed(2)} ETH</Button>
+                <Button variant="contained" onClick={mintSale}>Mint
+                    for {heroesMint.mintTotalPrice.toFixed(2)} ETH</Button>
             </Stack>
         )
     }

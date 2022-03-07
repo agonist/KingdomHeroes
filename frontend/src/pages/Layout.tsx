@@ -6,7 +6,7 @@ import {enableMapSet} from "immer";
 import {useAddress, useWeb3Context} from "../web3/web3-context";
 import MenuBar from "../components/header/AppBar";
 import Footer from "../components/footer/Footer";
-import {loadApp} from "../store/app-slice";
+import {loadApp} from "../store/heroes-mint-slice";
 import {Web3Params} from "../store/utils/params";
 
 interface LayoutProps {

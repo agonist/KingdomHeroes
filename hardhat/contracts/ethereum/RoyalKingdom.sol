@@ -6,9 +6,9 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
 import "erc721a/contracts/ERC721A.sol";
 
-/// @title Royal Kingdom NFT contract
+/// @title Kingdom Heroes NFT contract
 /// @author agonist (https://github.com/agonist)
-contract RoyalKingdom is ERC721A, Ownable {
+contract KingdomHeroes is ERC721A, Ownable {
 
     uint256 public immutable maxSupply;
     uint256 public maxMintAtOnce;

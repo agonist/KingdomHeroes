@@ -1,9 +1,11 @@
 import {configureStore} from "@reduxjs/toolkit";
-import appReducer from "./app-slice";
+import heroesMintSlice from "./heroes-mint-slice";
+import keysMintSlice from "./keys-mint-slice";
 
 const store = configureStore({
     reducer: {
-        app: appReducer
+        heroesMint: heroesMintSlice,
+        keysMint: keysMintSlice,
     },
     middleware: getDefaultMiddleware => getDefaultMiddleware({serializableCheck: false}),
 })
