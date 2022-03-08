@@ -1,4 +1,3 @@
-
 const LOCALHOST = {
     KINGDOM_HEROES: "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
     KINGDOM_KEY: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
@@ -25,5 +24,4 @@ const MAINNET = {
 
 export const getAddresses = (networkID: number) => {
     return LOCALHOST;
-    throw Error("Network don't support");
 };

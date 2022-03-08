@@ -1,17 +1,18 @@
-import {Controller, Get, Param, Post, Request, UseGuards} from '@nestjs/common';
-import {LocalAuthGuard} from "./auth/local-auth.guard";
+import {Controller, Get, Logger, Param, Post, Request, UseGuards} from '@nestjs/common';
 import {AuthService} from "./auth/auth.service";
 import {JwtAuthGuard} from "./auth/jwt-auth.guard";
 import {UsersService} from "./users/users.service";
+import {AuthGuard} from "@nestjs/passport";
+import {Web3Strategy} from "./auth/web3.strategy";
 
 @Controller()
 export class AppController {
+
     constructor(private authService: AuthService, private userService: UsersService) {
     }
 
     @Get("auth/:address/nonce")
     async nonce(@Request() req, @Param() params) {
-
         const user = await this.userService.findOne(params.address)
 
         if (user) {
@@ -23,7 +24,7 @@ export class AppController {
         return await this.userService.create(params.address, generatedNonce)
     }
 
-    @UseGuards(LocalAuthGuard)
+    @UseGuards(AuthGuard(Web3Strategy.key))
     @Post('auth/login')
     async login(@Request() req) {
         return this.authService.login(req.user);

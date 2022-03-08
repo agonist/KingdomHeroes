@@ -9,13 +9,16 @@ import {ThemeProvider} from "@mui/material";
 import muiTheme from "./react/MuiTheme";
 import {Provider} from "react-redux";
 import store from "./react/store/store";
+import {Web3ContextProvider} from "./react/web3/web3-context";
 
 ReactDOM.render(
     <React.StrictMode>
         <Provider store={store}>
-            <ThemeProvider theme={muiTheme}>
-                <App/>
-            </ThemeProvider>
+            <Web3ContextProvider>
+                <ThemeProvider theme={muiTheme}>
+                    <App/>
+                </ThemeProvider>
+            </Web3ContextProvider>
         </Provider>
     </React.StrictMode>,
     document.getElementById('root')

@@ -1,15 +1,14 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {Moralis} from "moralis";
 import {default as KingdomHeroes} from "../../abi/KingdomHeroes.json";
-import {BigNumber} from "ethers";
+import {BigNumber, ethers} from "ethers";
 import {setAll} from "../set-all";
 import phaserGame from "../../../phaser/PhaserGame";
 import {Game} from "phaser";
 import MainMenu from "../../../phaser/scenes/MainMenu";
 import {getAddresses} from "../../web3/contractsAddresses";
-
-const ethers = Moralis.web3Library
-
+import {Web3Params} from "../params";
+import axios from "axios";
 
 interface UserState {
     show: boolean,
@@ -26,18 +25,28 @@ const initialState: UserState = {
 }
 
 export const initUser = createAsyncThunk("user/init",
-    async (userId: number
+    async (params: Web3Params
         , thunkAPI): Promise<UserState> => {
-        let user = Moralis.User.current();
 
-        if (!user) {
-            user = await Moralis.Web3.authenticate();
-        }
-        const web3Provider = await Moralis.enableWeb3();
 
-        const kingdomHeroes = new ethers.Contract(getAddresses(0).KINGDOM_HEROES, KingdomHeroes.abi, web3Provider);
+        const {data, status} = await axios.get("http://localhost:3002/auth/" + params.address + "/nonce")
 
-        const ids: Array<BigNumber> = await kingdomHeroes.tokensOfOwner(user!.attributes.ethAddress)
+        console.log(data.nonce)
+
+
+        let signature = await params.provider.getSigner(params.address).signMessage(data.nonce)
+
+        const res = await axios.post("http://localhost:3002/auth/login", {
+            address: params.address,
+            signature: signature
+        })
+
+        console.log(res)
+
+
+        const kingdomHeroes = new ethers.Contract(getAddresses(0).KINGDOM_HEROES, KingdomHeroes.abi, params.provider);
+
+        const ids: Array<BigNumber> = await kingdomHeroes.tokensOfOwner(params.address)
 
         const idsArray = ids.map((id) => {
             return id.toNumber()
@@ -46,10 +55,17 @@ export const initUser = createAsyncThunk("user/init",
         return {
             show: false,
             loading: false,
-            address: user!.attributes.ethAddress,
+            address: params.address,
             heroesIds: idsArray
         }
     })
+
+function toHex(stringToConvert: string) {
+    return stringToConvert
+        .split('')
+        .map((c) => c.charCodeAt(0).toString(16).padStart(2, '0'))
+        .join('');
+}
 
 const userSlice = createSlice({
     name: 'user-slice',
@@ -80,3 +96,4 @@ const userSlice = createSlice({
 export const {showLogin} = userSlice.actions
 
 export default userSlice.reducer
+

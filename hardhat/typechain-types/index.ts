@@ -24,7 +24,6 @@ export type { KingdomHeroes } from "./KingdomHeroes";
 export type { KingdomKey } from "./KingdomKey";
 export type { KingdomStaking } from "./KingdomStaking";
 export type { TokensStats } from "./TokensStats";
-export type { ERC721A } from "./ERC721A";
 
 export { Ownable__factory } from "./factories/Ownable__factory";
 export { ERC1155__factory } from "./factories/ERC1155__factory";
@@ -49,4 +48,3 @@ export { KingdomHeroes__factory } from "./factories/KingdomHeroes__factory";
 export { KingdomKey__factory } from "./factories/KingdomKey__factory";
 export { KingdomStaking__factory } from "./factories/KingdomStaking__factory";
 export { TokensStats__factory } from "./factories/TokensStats__factory";
-export { ERC721A__factory } from "./factories/ERC721A__factory";
