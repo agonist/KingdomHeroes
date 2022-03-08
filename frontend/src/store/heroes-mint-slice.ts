@@ -96,9 +96,9 @@ export const mintPresale = createAsyncThunk("app/mintPresale",
             const hexProof = merkleTree.getHexProof(keccak256(params.address.toString()));
 
             const royalKingdomContract = new ethers.Contract(contracts.KINGDOM_HEROES, KingdomHeroes.abi, params.provider.getSigner())
-            let price = ethers.utils.parseUnits(state.app.mintTotalPrice.toFixed(2), 'ether');
+            let price = ethers.utils.parseUnits(state.heroesMint.mintTotalPrice.toFixed(2), 'ether');
             let tx;
-            tx = await royalKingdomContract.mintPresale(state.app.mintAmount, hexProof, {value: price})
+            tx = await royalKingdomContract.mintPresale(state.heroesMint.mintAmount, hexProof, {value: price})
             await tx.wait()
 
         } catch (e) {
@@ -129,9 +129,9 @@ export const mint = createAsyncThunk("app/mint",
             toast.loading('Minting Kingdom Heroes')
 
             const royalKingdomContract = new ethers.Contract(contracts.KINGDOM_HEROES, KingdomHeroes.abi, params.provider.getSigner())
-            let price = ethers.utils.parseUnits(state.app.mintTotalPrice.toFixed(2), 'ether');
+            let price = ethers.utils.parseUnits(state.heroesMint.mintTotalPrice.toFixed(2), 'ether');
             let tx;
-            tx = await royalKingdomContract.mint(state.app.mintAmount, {value: price})
+            tx = await royalKingdomContract.mint(state.heroesMint.mintAmount, {value: price})
             await tx.wait()
 
         } catch (e) {

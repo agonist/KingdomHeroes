@@ -4,11 +4,11 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
-import "erc721a/contracts/ERC721A.sol";
+import "./ERC721ACustom.sol";
 
 /// @title Kingdom Heroes NFT contract
 /// @author agonist (https://github.com/agonist)
-contract KingdomHeroes is ERC721A, Ownable {
+contract KingdomHeroes is ERC721ACustom, Ownable {
 
     uint256 public immutable maxSupply;
     uint256 public maxMintAtOnce;
@@ -29,7 +29,7 @@ contract KingdomHeroes is ERC721A, Ownable {
         uint256 maxSupply_,
         uint256 maxMintAtOnce_,
         uint256 maxMintWhitelist_
-    ) ERC721A(name_, symbol_){
+    ) ERC721ACustom(name_, symbol_){
         baseTokenURI = baseTokenURI_;
         maxSupply = maxSupply_;
         maxMintAtOnce = maxMintAtOnce_;

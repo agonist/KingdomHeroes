@@ -48,7 +48,6 @@
     "deploy:rinkeby": "npx hardhat run scripts/deploy.ts --network rinkeby"
   },
   "dependencies": {
-    "chai-ethers": "^0.0.1",
-    "erc721a": "^3.0.0"
+    "chai-ethers": "^0.0.1"
   }
 }
