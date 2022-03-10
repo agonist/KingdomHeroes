@@ -1,11 +1,13 @@
 import {configureStore} from "@reduxjs/toolkit";
-import dialogReducer from "./slices/DialogSlice";
 import userReducer from "./slices/user-slice";
+import heroesMintSlice from "./slices/heroes-mint-slice";
+import uiSlice from "./slices/ui-slice";
 
 const store = configureStore({
     reducer: {
         user: userReducer,
-        dialog: dialogReducer
+        heroesMint: heroesMintSlice,
+        ui: uiSlice
     },
     middleware: getDefaultMiddleware => getDefaultMiddleware({serializableCheck: false}),
 })

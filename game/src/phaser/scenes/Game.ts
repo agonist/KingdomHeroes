@@ -1,14 +1,21 @@
-import Phaser, {Scene} from 'phaser';
+import Phaser from 'phaser';
 import {debugDraw} from "../debug/debug";
 import Player from "../objects/Player";
 import Sign from "../objects/Sign";
+import Npc from "../objects/NPC";
+import {Constants} from "../Constants";
 
 export default class Game extends Phaser.Scene {
 
     private player!: Player
+    whitelisted: boolean = false
 
     constructor() {
-        super('GameScene');
+        super(Constants.SCENE_GAME);
+    }
+
+    init(data: any) {
+        this.whitelisted = data.whitelisted
     }
 
     preload() {
@@ -16,8 +23,8 @@ export default class Game extends Phaser.Scene {
 
     create() {
         // map
-        const map = this.make.tilemap({key: 'map'})
-        const tileset = map.addTilesetImage('world', 'tiles')
+        const map = this.make.tilemap({key: Constants.KEY_MAP})
+        const tileset = map.addTilesetImage(Constants.TILESET_WORLD, Constants.KEY_TILES)
 
         // Ground
         map.createLayer('Ground', tileset)
@@ -27,8 +34,17 @@ export default class Game extends Phaser.Scene {
         wallsLayer.setCollisionByProperty({collide: true})
         debugDraw(wallsLayer, this)
 
-        // signs
+        // WL blockers
 
+        let whitelistLayer
+        if (!this.whitelisted) {
+            whitelistLayer = map.createLayer('WL', tileset)
+            whitelistLayer.setCollisionByProperty({collide: true})
+            debugDraw(whitelistLayer, this)
+        }
+
+
+        // signs
         const signsGroup = this.physics.add.group({
             allowGravity: false,
             immovable: true
@@ -42,15 +58,22 @@ export default class Game extends Phaser.Scene {
         });
 
         // npc
-        const sensei = this.add.sprite(200, 200, 'sensei')
-
+        const npcGroup = this.physics.add.group({
+            allowGravity: false,
+            immovable: true
+        });
+        const sensei = new Npc(this, 28 * 16, 16 * 16, NPCList.MINT, Constants.KEY_MINT_NPC)
+        npcGroup.add(sensei)
 
         // player
         this.player = new Player(this, 178, 128)
+        if (whitelistLayer) this.physics.add.collider(this.player, whitelistLayer)
+
         this.physics.add.collider(this.player, wallsLayer)
         this.player.create()
         this.cameras.main.startFollow(this.player, true)
-        this.player.setOverlap(signsGroup)
+        this.player.setSignOverlap(signsGroup)
+        this.player.setNpcOverlap(npcGroup)
     }
 
 
@@ -58,5 +81,10 @@ export default class Game extends Phaser.Scene {
         this.player.update(time, delta)
     }
 
+}
+
+export enum NPCList {
+    NONE,
+    MINT
 }
 

@@ -3,10 +3,8 @@ import React, {useCallback, useEffect, useState} from "react";
 import Message from "./Message";
 import {makeStyles} from "@mui/styles";
 import dialogBorderBox from './dialogbox.png';
-import {Button, IconButton, Stack, Typography} from "@mui/material";
+import {IconButton, Stack, Typography} from "@mui/material";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import store from "../../store/store";
-import {hide, show} from "../../store/slices/DialogSlice";
 
 const useStyles = makeStyles((theme) => ({
     dialogMessage: () => ({
@@ -46,16 +44,6 @@ interface DialogBoxProps {
 const DialogBox = ({messages, onClose}: DialogBoxProps) => {
     const [currentMessage, setCurrentMessage] = useState(0);
     const classes = useStyles();
-
-
-    // const handleClick = () => {
-    //     if (currentMessage < messages.length - 1) {
-    //         setCurrentMessage(currentMessage + 1);
-    //     } else {
-    //         setCurrentMessage(0);
-    //         onClose()
-    //     }
-    // };
 
     const handleClick = useCallback(() => {
         if (currentMessage < messages.length - 1) {

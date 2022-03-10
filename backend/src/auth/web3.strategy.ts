@@ -4,7 +4,7 @@ import {Injectable, Logger, UnauthorizedException} from '@nestjs/common';
 import {AuthService} from "./auth.service";
 
 @Injectable()
-export class Web3Strategy extends PassportStrategy(Strategy, "custom") {
+export class Web3Strategy extends PassportStrategy(Strategy, "web3") {
 
     static key = "web3"
 

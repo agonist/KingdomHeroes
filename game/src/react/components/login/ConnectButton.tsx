@@ -1,12 +1,10 @@
 import {useEffect, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
 import {Button, Typography} from "@mui/material";
 import {DEFAULD_NETWORK} from "../../web3/blockchain";
 import {useWeb3Context} from "../../web3/web3-context";
 
 function ConnectMenu() {
     const {connect, disconnect, connected, web3, providerChainID, checkWrongNetwork} = useWeb3Context();
-    const dispatch = useDispatch();
     const [isConnected, setConnected] = useState(connected);
 
     let buttonText = "Connect Wallet";

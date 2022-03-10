@@ -1,28 +1,31 @@
 import {Scene} from "phaser";
-import {Moralis} from "moralis";
+import {Constants} from "../Constants";
 
 export default class Preloader extends Scene {
 
     constructor() {
-        super("preloader");
+        super(Constants.SCENE_PRELOADER);
     }
 
     async preload() {
-        this.load.image('tiles', 'assets/tiles/atlas.png')
-        this.load.image('sign', 'assets/tiles/sign.png')
-        this.load.image('sensei', 'assets/sensei.png')
-        this.load.tilemapTiledJSON('map', 'assets/tiles/world.tmj')
+        // town asset
+        this.load.image(Constants.KEY_TILES, Constants.ASSETS_TOWN_ATLAS)
+        this.load.tilemapTiledJSON(Constants.KEY_MAP, Constants.ASSETS_TOWN_TILED)
 
-        this.load.atlas('player', 'assets/player.png', 'assets/player.json')
+        // player assets
+        this.load.atlas(Constants.KEY_PLAYER, Constants.ASSETS_PLAYER, Constants.ASSETS_PLAYER_ATLAS)
 
-        await Moralis.start({
-            serverUrl: process.env.REACT_APP_MORALIS_SERVER_URL,
-            appId: process.env.REACT_APP_MORALIS_APP_ID
-        })
+        this.load.image(Constants.KEY_SIGN, Constants.ASSETS_SIGN)
+        this.load.image(Constants.KEY_MINT_NPC, Constants.ASSETS_MINT_NPC)
     }
 
 
     create() {
-        this.scene.start("mainmenu")
+        this.scene.start(Constants.SCENE_MENU)
+        // this.scene.start(Constants.SCENE_GAME, {whitelisted: true})
+    }
+
+    startMenu() {
+        this.scene.start(Constants.SCENE_MENU)
     }
 }

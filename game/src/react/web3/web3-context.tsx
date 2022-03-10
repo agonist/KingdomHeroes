@@ -5,7 +5,7 @@ import WalletConnectProvider from "@walletconnect/web3-provider";
 import {Networks, DEFAULD_NETWORK} from "./blockchain";
 import {useDispatch} from "react-redux";
 import {swithNetwork} from "./switch-network";
-import {Web3Params} from "../store/params";
+import {Web3Params} from "../store/utils/params";
 
 type onChainProvider = {
     connect: () => Promise<Web3Provider>;

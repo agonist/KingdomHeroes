@@ -1,80 +1,139 @@
-import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {Moralis} from "moralis";
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {default as KingdomHeroes} from "../../abi/KingdomHeroes.json";
 import {BigNumber, ethers} from "ethers";
-import {setAll} from "../set-all";
+import {setAll} from "../utils/set-all";
 import phaserGame from "../../../phaser/PhaserGame";
-import {Game} from "phaser";
 import MainMenu from "../../../phaser/scenes/MainMenu";
 import {getAddresses} from "../../web3/contractsAddresses";
-import {Web3Params} from "../params";
+import {Web3Params} from "../utils/params";
 import axios from "axios";
+import store, {RootState} from "../store";
+import {hideUi} from "./ui-slice";
+import {loadMintDetails} from "./heroes-mint-slice";
+import {Constants} from "../../../phaser/Constants";
+import Preloader from "../../../phaser/scenes/Preloader";
 
 interface UserState {
-    show: boolean,
     loading: boolean,
     address: String,
     heroesIds: number[]
 }
 
 const initialState: UserState = {
-    show: false,
     loading: false,
     address: "",
     heroesIds: []
 }
 
+export class API {
+
+    BASE_RUL: string = "http://localhost:3002"
+
+    async getNonce(address: string): Promise<string | undefined> {
+        try {
+            const response = await axios.get(this.BASE_RUL + "/auth/" + address + "/nonce")
+            return response.data.nonce
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+
+    async login(address: string, signature: string): Promise<string | undefined> {
+        try {
+            const response = await axios.post(this.BASE_RUL + "/auth/login", {
+                address: address,
+                signature: signature
+            })
+            console.log(response)
+            return response.data.access_token
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+const api = new API()
+
 export const initUser = createAsyncThunk("user/init",
     async (params: Web3Params
         , thunkAPI): Promise<UserState> => {
 
+        let idsArray: number[] = []
 
-        const {data, status} = await axios.get("http://localhost:3002/auth/" + params.address + "/nonce")
+        try {
 
-        console.log(data.nonce)
+            const token = localStorage.getItem("auth_token")
+            if (!token) {
 
+                const nonce = await api.getNonce(params.address)
+                if (!nonce) {
+                    return Promise.reject("Get nonce error")
+                }
 
-        let signature = await params.provider.getSigner(params.address).signMessage(data.nonce)
+                let signature = await params.provider.getSigner(params.address).signMessage(nonce)
 
-        const res = await axios.post("http://localhost:3002/auth/login", {
+                const authToken = await api.login(params.address, signature)
+                console.log(authToken)
+                if (!authToken) {
+                    return Promise.reject()
+                }
+
+                localStorage.setItem("auth_token", authToken)
+
+            }
+
+            const kingdomHeroes = new ethers.Contract(getAddresses(0).KINGDOM_HEROES, KingdomHeroes.abi, params.provider);
+
+            const ids: Array<BigNumber> = await kingdomHeroes.tokensOfOwner(params.address)
+
+            idsArray = ids.map((id) => {
+                return id.toNumber()
+            })
+
+        } catch (e) {
+            console.log(e)
+        }
+
+        store.dispatch(hideUi())
+
+        // remove this once mint is done
+        await thunkAPI.dispatch(loadMintDetails({
             address: params.address,
-            signature: signature
-        })
-
-        console.log(res)
-
-
-        const kingdomHeroes = new ethers.Contract(getAddresses(0).KINGDOM_HEROES, KingdomHeroes.abi, params.provider);
-
-        const ids: Array<BigNumber> = await kingdomHeroes.tokensOfOwner(params.address)
-
-        const idsArray = ids.map((id) => {
-            return id.toNumber()
-        })
+            networkID: params.networkID,
+            provider: params.provider
+        }))
 
         return {
-            show: false,
             loading: false,
             address: params.address,
             heroesIds: idsArray
         }
     })
 
-function toHex(stringToConvert: string) {
-    return stringToConvert
-        .split('')
-        .map((c) => c.charCodeAt(0).toString(16).padStart(2, '0'))
-        .join('');
-}
+export const refreshUser = createAsyncThunk("user/refresh",
+    async (params: Web3Params
+        , thunkAPI): Promise<UserState> => {
+        let root = thunkAPI.getState() as RootState
+
+        const kingdomHeroes = new ethers.Contract(getAddresses(0).KINGDOM_HEROES, KingdomHeroes.abi, params.provider);
+        const ids: Array<BigNumber> = await kingdomHeroes.tokensOfOwner(params.address)
+        console.log("tokens " + ids)
+        const idsArray = ids.map((id) => {
+            return id.toNumber()
+        })
+        console.log("tokens " + idsArray)
+        return {
+            loading: false,
+            address: params.address,
+            heroesIds: idsArray
+        }
+    })
 
 const userSlice = createSlice({
     name: 'user-slice',
     initialState,
-    reducers: {
-        showLogin: (state) => {
-            state.show = true
-        }
-    },
+    reducers: {},
     extraReducers: builder => {
         builder
             .addCase(initUser.pending, state => {
@@ -83,17 +142,30 @@ const userSlice = createSlice({
             .addCase(initUser.fulfilled, (state, action) => {
                 setAll(state, action.payload)
                 state.loading = false
-                const menu = phaserGame.scene.keys.mainmenu as MainMenu
+                const menu = phaserGame.scene.getScene(Constants.SCENE_MENU) as MainMenu
                 menu.startGame()
+
             })
             .addCase(initUser.rejected, (state, {error}) => {
+                state.loading = false
+                console.log(error)
+            })
+
+            .addCase(refreshUser.pending, state => {
+                state.loading = true
+            })
+            .addCase(refreshUser.fulfilled, (state, action) => {
+                setAll(state, action.payload)
+                state.loading = false
+            })
+            .addCase(refreshUser.rejected, (state, {error}) => {
                 state.loading = false
                 console.log(error)
             })
     }
 })
 
-export const {showLogin} = userSlice.actions
+export const {} = userSlice.actions
 
 export default userSlice.reducer
 

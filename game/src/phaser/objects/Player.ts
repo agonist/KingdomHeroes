@@ -1,10 +1,13 @@
 import Phaser, {Scene} from "phaser";
-import GameObject = Phaser.GameObjects.GameObject;
 import Sign from "./Sign";
 import store from "../../react/store/store";
-import {show} from "../../react/store/slices/DialogSlice";
-import Group = Phaser.Physics.Arcade.Group;
+import Npc from "./NPC";
+import {NPCList} from "../scenes/Game";
+import {showUi} from "../../react/store/slices/ui-slice";
+import {BottomDialogActionParams, UI, UiAction} from "../../react/store/ui/UiAction";
 import {DIALOG} from "../../react/components/dialog/DialogConstant";
+import GameObject = Phaser.GameObjects.GameObject;
+import Group = Phaser.Physics.Arcade.Group;
 import Key = Phaser.Input.Keyboard.Key;
 
 
@@ -13,6 +16,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     private readonly cursors!: Phaser.Types.Input.Keyboard.CursorKeys
     public detect!: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
     public currentFacingSign!: number
+    public currentFacingNpc!: NPCList
     private keyObj!: Key
 
     constructor(scene: Scene, x: number, y: number) {
@@ -27,7 +31,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     create() {
-        this.body.setSize(this.width * 0.5, this.height * 0.8)
+        this.body.setSize(this.width * 0.5, this.height * 0.70)
 
         this.anims.create({
             key: 'player-idle-down',
@@ -89,6 +93,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.detect.setPosition(x - 20, y)
 
             this.currentFacingSign = 0
+            this.currentFacingNpc = NPCList.NONE
         } else if (this.cursors.right?.isDown) {
             this.anims.play('player-run-side', true)
             this.setVelocity(speed, 0)
@@ -97,22 +102,28 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.detect.setPosition(x + 20, y)
 
             this.currentFacingSign = 0
+            this.currentFacingNpc = NPCList.NONE
         } else if (this.cursors.up?.isDown) {
             this.anims.play('player-run-up', true)
             this.setVelocity(0, -speed)
             this.detect.setPosition(x, y - 26)
 
             this.currentFacingSign = 0
+            this.currentFacingNpc = NPCList.NONE
         } else if (this.cursors.down?.isDown) {
             this.anims.play('player-run-down', true)
             this.setVelocity(0, speed)
             this.detect.setPosition(x, y + 26)
 
             this.currentFacingSign = 0
+            this.currentFacingNpc = NPCList.NONE
         } else if (Phaser.Input.Keyboard.JustUp(this.keyObj)) {
             if (this.currentFacingSign !== 0) {
                 console.log(this.currentFacingSign)
-                store.dispatch(show(this.currentFacingSign))
+                this.showDialogForId(this.currentFacingSign)
+            }
+            if (this.currentFacingNpc !== NPCList.NONE) {
+                this.showUiForNpc(this.currentFacingNpc)
             }
         } else {
             const parts = this.anims.currentAnim.key.split('-')
@@ -122,7 +133,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         }
     }
 
-    setOverlap(group: Group) {
+    setSignOverlap(group: Group) {
         this.scene.physics.add.overlap(this.detect, group, this.signsOverlapped, undefined, this)
     }
 
@@ -131,6 +142,49 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
         this.currentFacingSign = (sign as Sign).id
         console.log("overlap " + player + this.currentFacingSign)
+    }
+
+    setNpcOverlap(group: Group) {
+        this.scene.physics.add.overlap(this.detect, group, this.npcOverlapped, undefined, this)
+    }
+
+    npcOverlapped(player: GameObject, npc: GameObject) {
+        if (this.currentFacingNpc === (npc as Npc).id) return
+
+        this.currentFacingNpc = (npc as Npc).id
+        console.log("overlap " + player + this.currentFacingNpc)
+    }
+
+    showUiForNpc(npc: NPCList) {
+
+        const a: UiAction = {
+            show: UI.MINT_HEROES,
+            params: undefined
+        }
+        store.dispatch(showUi(a))
+
+    }
+
+
+    showDialogForId(id: number) {
+        let dialog: string[] = []
+        switch (id) {
+            case 1:
+                dialog = DIALOG.D1
+                break
+            case 2:
+                dialog = DIALOG.D2
+        }
+        const b: BottomDialogActionParams = {
+            messages: dialog
+        }
+        const a: UiAction = {
+            show: UI.BOTTOM_DIALOG,
+            params: b
+        }
+
+        store.dispatch(showUi(a))
+
     }
 }
 
