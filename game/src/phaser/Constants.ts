@@ -6,9 +6,9 @@ export const Constants = {
     SCENE_GAME: "SCENE_GAME",
 
     //KEYS
-    KEY_TILES: "tiles",
+    KEY_TILES_TOWN: "tiles_town",
     KEY_PLAYER: "player",
-    KEY_MAP: "map",
+    KEY_TILEMAP_TOWN: "tilemap_town",
     KEY_SIGN: "sign",
     KEY_MINT_NPC: "mint_npc",
 

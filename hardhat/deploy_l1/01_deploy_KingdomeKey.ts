@@ -10,18 +10,14 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     const network = await hre.ethers.provider.getNetwork();
 
     let maxSupply = 500
-    let maxMintAtOnce = 5;
-    let maxMintWhitelist = 2;
 
     if (network.chainId == 31337) {
-        maxSupply = 100
+        maxSupply = 3
     }
 
     const args = [
         "https://gateway.pinata.cloud/ipfs/xxx/",
-        maxSupply,
-        maxMintAtOnce,
-        maxMintWhitelist
+        maxSupply
     ]
 
     await deploy('KingdomKey', {

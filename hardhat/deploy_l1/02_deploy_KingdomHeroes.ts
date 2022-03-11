@@ -9,6 +9,8 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     const {deployer} = await getNamedAccounts();
     const network = await hre.ethers.provider.getNetwork();
 
+    const kingdomKey = await hre.ethers.getContractAt('KingdomKey', (await deployments.get('KingdomKey')).address);
+
     let maxSupply = 10000
     let maxMintAtOnce = 10;
     let maxMintWhitelist = 2;
@@ -23,7 +25,8 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
         "https://gateway.pinata.cloud/ipfs/xxx/",
         maxSupply,
         maxMintAtOnce,
-        maxMintWhitelist
+        maxMintWhitelist,
+        kingdomKey.address
     ]
 
     await deploy('KingdomHeroes', {
@@ -33,4 +36,5 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     });
 };
 export default func;
+func.dependencies = ['KingdomKey'];
 func.tags = ['KingdomHeroes'];

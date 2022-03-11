@@ -9,12 +9,8 @@ import {BottomDialogActionParams, UI} from "./react/store/ui/UiAction";
 import {hideUi} from "./react/store/slices/ui-slice";
 import MintHeroes from "./react/components/mint/MintHeroes";
 import {ToastContainer} from "react-toastify";
-import Layout from "./react/components/Layout";
 import {useDispatch} from "react-redux";
 import {useAddress, useWeb3Context} from "./react/web3/web3-context";
-import phaserGame from "./phaser/PhaserGame";
-import {Constants} from "./phaser/Constants";
-import Preloader from "./phaser/scenes/Preloader";
 import {Web3Params} from "./react/store/utils/params";
 
 function App() {
@@ -51,7 +47,7 @@ function App() {
         if (connected) {
             //dispatch(loadApp(p))
         } else {
-            // const preloader = phaserGame.scene.getScene(Constants.SCENE_PRELOADER) as Preloader
+            // const preloader = phaserGame.scene.getScene(Constants.SCENE_PRELOADER) as PreloaderScene
             // preloader.startMenu()
         }
 

@@ -4,8 +4,8 @@ import {useEffect, useState} from "react";
 import {useAddress, useWeb3Context} from "../web3/web3-context";
 import {Web3Params} from "../store/utils/params";
 import phaserGame from "../../phaser/PhaserGame";
-import MainMenu from "../../phaser/scenes/MainMenu";
-import Preloader from "../../phaser/scenes/Preloader";
+import MainMenuScene from "../../phaser/scenes/MainMenuScene";
+import PreloaderScene from "../../phaser/scenes/PreloaderScene";
 import {Constants} from "../../phaser/Constants";
 
 interface LayoutProps {
@@ -26,14 +26,9 @@ const Layout = ({children}: LayoutProps) => {
             connect().then(() => {
                 setWalletChecked(true);
             });
-            console.log("has cached wallet and connected")
-            // redirect to login
 
         } else {
             setWalletChecked(false);
-            console.log("not cached and connected")
-            const preloader = phaserGame.scene.getScene(Constants.SCENE_PRELOADER) as Preloader
-            preloader.startMenu()
         }
     }, [web3Modal, connected]);
 

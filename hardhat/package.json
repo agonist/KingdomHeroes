@@ -44,7 +44,7 @@
     "compile": "npx hardhat compile",
     "test": "npx hardhat test",
     "test:coverage": "hardhat coverage",
-    "deploy": "npx hardhat run scripts/deploy.ts --network localhost",
+    "deploy": " npx hardhat run scripts/ethereum/localhost_deployer.ts --network localhost",
     "deploy:rinkeby": "npx hardhat run scripts/deploy.ts --network rinkeby"
   },
   "dependencies": {

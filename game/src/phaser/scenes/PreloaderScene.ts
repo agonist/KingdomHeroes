@@ -1,7 +1,7 @@
 import {Scene} from "phaser";
 import {Constants} from "../Constants";
 
-export default class Preloader extends Scene {
+export default class PreloaderScene extends Scene {
 
     constructor() {
         super(Constants.SCENE_PRELOADER);
@@ -9,8 +9,8 @@ export default class Preloader extends Scene {
 
     async preload() {
         // town asset
-        this.load.image(Constants.KEY_TILES, Constants.ASSETS_TOWN_ATLAS)
-        this.load.tilemapTiledJSON(Constants.KEY_MAP, Constants.ASSETS_TOWN_TILED)
+        this.load.image(Constants.KEY_TILES_TOWN, Constants.ASSETS_TOWN_ATLAS)
+        this.load.tilemapTiledJSON(Constants.KEY_TILEMAP_TOWN, Constants.ASSETS_TOWN_TILED)
 
         // player assets
         this.load.atlas(Constants.KEY_PLAYER, Constants.ASSETS_PLAYER, Constants.ASSETS_PLAYER_ATLAS)
@@ -21,11 +21,6 @@ export default class Preloader extends Scene {
 
 
     create() {
-        this.scene.start(Constants.SCENE_MENU)
-        // this.scene.start(Constants.SCENE_GAME, {whitelisted: true})
-    }
-
-    startMenu() {
         this.scene.start(Constants.SCENE_MENU)
     }
 }

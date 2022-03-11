@@ -3,7 +3,7 @@ import {setupUsers} from "./utils";
 import keccak256 from "keccak256";
 import {MerkleTree} from "merkletreejs";
 import {expect} from "chai";
-import {describe} from "mocha";
+import {describe, it} from "mocha";
 import {gp, parseCoin} from "./utils/helpers";
 
 async function setup() {
@@ -51,7 +51,7 @@ describe('KingdomKey', function () {
             const saleActive = await nft.saleActive();
 
             expect(tokenURI).to.be.equal("https://gateway.pinata.cloud/ipfs/xxx/");
-            expect(maxSupply).to.be.equal(100);
+            expect(maxSupply).to.be.equal(3);
             expect(saleActive).to.be.false;
         })
     })
@@ -140,7 +140,7 @@ describe('KingdomKey', function () {
             const {nft, owner} = await setup()
 
             // when
-            const tx = nft.mint(1)
+            const tx = nft.mint()
 
             // then
             await expect(tx).to.be.revertedWith("Sale inactive")
@@ -148,11 +148,14 @@ describe('KingdomKey', function () {
 
         it('Should revert with "Mint exceed max supply"', async function () {
             // given
-            const {nft, owner} = await setup()
+            const {nft, owner, bob, alice, carol} = await setup()
             await nft.toggleSale()
 
             // when
-            const tx = nft.mint(300)
+            await owner.nft.mint({value: parseCoin("0.05")})
+            await bob.nft.mint({value: parseCoin("0.05")})
+            await alice.nft.mint({value: parseCoin("0.05")})
+            const tx = carol.nft.mint({value: parseCoin("0.05")})
 
             // then
             await expect(tx).to.be.revertedWith("Mint exceed max supply")
@@ -164,7 +167,8 @@ describe('KingdomKey', function () {
             await nft.toggleSale()
 
             // when
-            const tx = nft.mint(11)
+            await nft.mint({value: parseCoin("0.05")})
+            const tx = nft.mint({value: parseCoin("0.05")})
 
             // then
             await expect(tx).to.be.revertedWith("Max mint exceeded")
@@ -176,22 +180,22 @@ describe('KingdomKey', function () {
             await nft.toggleSale()
 
             // when
-            const tx = bob.nft.mint(1, {value: parseCoin("0.03")})
+            const tx = bob.nft.mint({value: parseCoin("0.03")})
 
             // then
             await expect(tx).to.be.revertedWith("Value sent is incorrect")
         })
 
-        it('Should mint 5 NFTs', async function () {
+        it('Should mint 1', async function () {
             // given
             const {nft, owner} = await setup()
             await nft.toggleSale()
 
             // when
-            await nft.mint(5, {value: parseCoin("0.25")})
+            await nft.mint({value: parseCoin("0.05")})
 
             // then
-            expect(await nft.balanceOf(owner.address, 1)).to.be.equal(5);
+            expect(await nft.balanceOf(owner.address, 1)).to.be.equal(1);
         })
     })
 
@@ -201,7 +205,7 @@ describe('KingdomKey', function () {
             const {nft, owner, merkleTree} = await setup()
 
             // when
-            const tx = nft.mintPresale(1, gp(merkleTree, owner.address))
+            const tx = nft.mintPresale(gp(merkleTree, owner.address))
 
             //then
             await expect(tx).to.be.revertedWith("Presale inactive");
@@ -213,7 +217,7 @@ describe('KingdomKey', function () {
             await nft.togglePresale()
 
             // when
-            const tx = nft.mintPresale(1, gp(merkleTree, owner.address))
+            const tx = nft.mintPresale(gp(merkleTree, owner.address), {value: parseCoin("0.03")})
 
             //then
             await expect(tx).to.be.revertedWith("Not whitelisted");
@@ -226,8 +230,8 @@ describe('KingdomKey', function () {
             await nft.setWhitelistMerkleRoot(merkleTree.getHexRoot())
 
             // when
-            await bob.nft.mintPresale(2, gp(merkleTree, bob.address), {value: parseCoin("0.06")})
-            const tx = bob.nft.mintPresale(1, gp(merkleTree, bob.address), {value: parseCoin("0.03")})
+            await bob.nft.mintPresale(gp(merkleTree, bob.address), {value: parseCoin("0.03")})
+            const tx = bob.nft.mintPresale(gp(merkleTree, bob.address), {value: parseCoin("0.03")})
 
             //then
             await expect(tx).to.be.revertedWith("Whitelist mint exceeded");
@@ -240,23 +244,10 @@ describe('KingdomKey', function () {
             await nft.setWhitelistMerkleRoot(merkleTree.getHexRoot())
 
             // when
-            const tx = bob.nft.mintPresale(2, gp(merkleTree, bob.address), {value: parseCoin("0.03")})
+            const tx = bob.nft.mintPresale(gp(merkleTree, bob.address), {value: parseCoin("0.01")})
 
             //then
             await expect(tx).to.be.revertedWith("Value sent is incorrect");
-        })
-
-        it('Should mint 2 presale NFTs', async function () {
-            // given
-            const {nft, bob, merkleTree} = await setup()
-            await nft.togglePresale()
-            await nft.setWhitelistMerkleRoot(merkleTree.getHexRoot())
-
-            // when
-            await bob.nft.mintPresale(2, gp(merkleTree, bob.address), {value: parseCoin("0.06")})
-
-            //then
-            expect(await nft.balanceOf(bob.address, 1)).to.be.equal(2);
         })
     })
 
@@ -283,6 +274,81 @@ describe('KingdomKey', function () {
 
             // then
             await expect(root).to.be.equal(merkleTree.getHexRoot())
+        })
+    })
+
+    describe('pause', function () {
+        it('should revert with "ERC1155Pausable: token transfer while paused', async function () {
+            // given
+            const {nft, owner, bob} = await setup()
+            await nft.toggleSale()
+
+            // when
+            await nft.mint({value: parseCoin("0.05")})
+            await nft.pause()
+
+            const tx = nft.safeTransferFrom(owner.address, bob.address, 1, 1, 0)
+
+            // then
+            await expect(tx).to.be.revertedWith("ERC1155Pausable: token transfer while paused")
+            expect(await nft.balanceOf(owner.address, 1)).to.be.equal(1);
+        });
+
+        it('should transfer token when not paused', async function () {
+            // given
+            const {nft, owner, bob} = await setup()
+            await nft.toggleSale()
+
+            // when
+            await nft.mint({value: parseCoin("0.05")})
+
+            await nft.safeTransferFrom(owner.address, bob.address, 1, 1, 0)
+
+            // then
+            expect(await nft.balanceOf(bob.address, 1)).to.be.equal(1);
+        });
+    })
+
+    describe('unpause', function () {
+
+        it('should transfer token after unpause', async function () {
+            // given
+            const {nft, owner, bob} = await setup()
+            await nft.toggleSale()
+
+            // when
+            await nft.mint({value: parseCoin("0.05")})
+            await nft.pause()
+            await nft.unpause()
+
+            await nft.safeTransferFrom(owner.address, bob.address, 1, 1, 0)
+
+            // then
+            expect(await nft.balanceOf(bob.address, 1)).to.be.equal(1);
+        });
+    })
+
+    describe('reserve', function () {
+        it('should revert with "Mint exceed max supply"', async function () {
+            // given
+            const {nft, owner} = await setup()
+
+            //when
+            const tx = nft.reserve(4)
+
+            // then
+            await expect(tx).to.be.revertedWith("Mint exceed max supply")
+        })
+
+        it('should reserve 3"', async function () {
+            // given
+            const {nft, owner} = await setup()
+
+            //when
+            await nft.reserve(3)
+
+            // then
+            expect(await nft.balanceOf(owner.address, 1)).to.be.equal(3);
         })
     })
 

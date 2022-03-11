@@ -5,7 +5,7 @@ import Sign from "../objects/Sign";
 import Npc from "../objects/NPC";
 import {Constants} from "../Constants";
 
-export default class Game extends Phaser.Scene {
+export default class GameScene extends Phaser.Scene {
 
     private player!: Player
     whitelisted: boolean = false
@@ -23,8 +23,8 @@ export default class Game extends Phaser.Scene {
 
     create() {
         // map
-        const map = this.make.tilemap({key: Constants.KEY_MAP})
-        const tileset = map.addTilesetImage(Constants.TILESET_WORLD, Constants.KEY_TILES)
+        const map = this.make.tilemap({key: Constants.KEY_TILEMAP_TOWN})
+        const tileset = map.addTilesetImage(Constants.TILESET_WORLD, Constants.KEY_TILES_TOWN)
 
         // Ground
         map.createLayer('Ground', tileset)
@@ -32,7 +32,7 @@ export default class Game extends Phaser.Scene {
         // Walls
         const wallsLayer = map.createLayer('Wall', tileset)
         wallsLayer.setCollisionByProperty({collide: true})
-        debugDraw(wallsLayer, this)
+        // debugDraw(wallsLayer, this)
 
         // WL blockers
 

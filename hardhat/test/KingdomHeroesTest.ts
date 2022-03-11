@@ -8,8 +8,10 @@ import {MerkleTree} from "merkletreejs";
 
 async function setup() {
 
+    await deployments.fixture(["KingdomKey"]);
     await deployments.fixture(["KingdomHeroes"]);
     const contracts = {
+        key: (await ethers.getContract('KingdomKey')),
         nft: (await ethers.getContract('KingdomHeroes')),
     };
 
@@ -328,6 +330,39 @@ describe('KingdomHeroes', function () {
             //then
             expect(await nft.balanceOf(bob.address)).to.be.equal(2);
         })
+
+        it('should mint one extra NFT if you hold a key', async function () {
+            // given
+            const {nft, key, bob, merkleTree} = await setup()
+            await key.toggleSale()
+            await nft.togglePresale()
+
+            await nft.setWhitelistMerkleRoot(merkleTree.getHexRoot())
+
+            // when
+            await bob.key.mint({value: parseCoin("0.05")})
+            await bob.nft.mintPresale(2, gp(merkleTree, bob.address), {value: parseCoin("0.06")})
+
+            //then
+            expect(await nft.balanceOf(bob.address)).to.be.equal(3);
+        });
+
+        it('should not mint one extra NFT if key bonus already claimed', async function () {
+            // given
+            const {nft, key, bob, merkleTree} = await setup()
+            await key.toggleSale()
+            await nft.togglePresale()
+
+            await nft.setWhitelistMerkleRoot(merkleTree.getHexRoot())
+
+            // when
+            await bob.key.mint({value: parseCoin("0.05")})
+            await bob.nft.mintPresale(1, gp(merkleTree, bob.address), {value: parseCoin("0.03")})
+            await bob.nft.mintPresale(1, gp(merkleTree, bob.address), {value: parseCoin("0.03")})
+
+            //then
+            expect(await nft.balanceOf(bob.address)).to.be.equal(3);
+        });
     })
 
     describe('setWhitelistMerkleRoot', function () {

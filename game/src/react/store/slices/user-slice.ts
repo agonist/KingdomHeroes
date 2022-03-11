@@ -3,26 +3,29 @@ import {default as KingdomHeroes} from "../../abi/KingdomHeroes.json";
 import {BigNumber, ethers} from "ethers";
 import {setAll} from "../utils/set-all";
 import phaserGame from "../../../phaser/PhaserGame";
-import MainMenu from "../../../phaser/scenes/MainMenu";
+import MainMenuScene from "../../../phaser/scenes/MainMenuScene";
 import {getAddresses} from "../../web3/contractsAddresses";
 import {Web3Params} from "../utils/params";
 import axios from "axios";
 import store, {RootState} from "../store";
 import {hideUi} from "./ui-slice";
-import {loadMintDetails} from "./heroes-mint-slice";
+import {loadHeroesMintDetails} from "./heroes-mint-slice";
 import {Constants} from "../../../phaser/Constants";
-import Preloader from "../../../phaser/scenes/Preloader";
+import PreloaderScene from "../../../phaser/scenes/PreloaderScene";
+import {loadKeysMintDetails} from "./keys-mint-slice";
 
 interface UserState {
     loading: boolean,
     address: String,
-    heroesIds: number[]
+    heroesIds: number[],
+    canMint: boolean
 }
 
 const initialState: UserState = {
     loading: false,
     address: "",
-    heroesIds: []
+    heroesIds: [],
+    canMint: false
 }
 
 export class API {
@@ -98,7 +101,13 @@ export const initUser = createAsyncThunk("user/init",
         store.dispatch(hideUi())
 
         // remove this once mint is done
-        await thunkAPI.dispatch(loadMintDetails({
+        await thunkAPI.dispatch(loadHeroesMintDetails({
+            address: params.address,
+            networkID: params.networkID,
+            provider: params.provider
+        }))
+
+        await thunkAPI.dispatch(loadKeysMintDetails({
             address: params.address,
             networkID: params.networkID,
             provider: params.provider
@@ -107,7 +116,8 @@ export const initUser = createAsyncThunk("user/init",
         return {
             loading: false,
             address: params.address,
-            heroesIds: idsArray
+            heroesIds: idsArray,
+            canMint: (thunkAPI.getState() as RootState).heroesMint.whitelisted
         }
     })
 
@@ -126,7 +136,8 @@ export const refreshUser = createAsyncThunk("user/refresh",
         return {
             loading: false,
             address: params.address,
-            heroesIds: idsArray
+            heroesIds: idsArray,
+            canMint: (thunkAPI.getState() as RootState).heroesMint.whitelisted
         }
     })
 
@@ -142,8 +153,9 @@ const userSlice = createSlice({
             .addCase(initUser.fulfilled, (state, action) => {
                 setAll(state, action.payload)
                 state.loading = false
-                const menu = phaserGame.scene.getScene(Constants.SCENE_MENU) as MainMenu
-                menu.startGame()
+
+                const menu = phaserGame.scene.getScene(Constants.SCENE_MENU) as MainMenuScene
+                menu.startGame(state.canMint)
 
             })
             .addCase(initUser.rejected, (state, {error}) => {

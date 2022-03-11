@@ -1,8 +1,9 @@
 import {Stack} from "@mui/material";
 import MintHeroesRoot from "./MintHeroesRoot";
 import dialogBorderBox from "../dialog/dialogbox.png";
+import MintKeysRoot from "./MintKeysRoot";
 
-export default function MintHeroes() {
+export default function MintKeys() {
 
     return (
         <Stack sx={{
@@ -12,7 +13,7 @@ export default function MintHeroes() {
             padding: 2,
             paddingX: 3
         }}>
-            <MintHeroesRoot/>
+            <MintKeysRoot/>
         </Stack>
     )
 }

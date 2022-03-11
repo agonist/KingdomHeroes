@@ -5,6 +5,7 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
 import "./ERC721ACustom.sol";
+import '@openzeppelin/contracts/token/ERC1155/IERC1155.sol';
 
 /// @title Kingdom Heroes NFT contract
 /// @author agonist (https://github.com/agonist)
@@ -21,6 +22,9 @@ contract KingdomHeroes is ERC721ACustom, Ownable {
     bytes32 public whitelistMerkleRoot = 0x0;
 
     mapping(address => uint256) public claimed;
+    mapping(address => bool) public keyFreeClaimed;
+
+    IERC1155 keysContract;
 
     constructor(
         string memory name_,
@@ -28,12 +32,14 @@ contract KingdomHeroes is ERC721ACustom, Ownable {
         string memory baseTokenURI_,
         uint256 maxSupply_,
         uint256 maxMintAtOnce_,
-        uint256 maxMintWhitelist_
+        uint256 maxMintWhitelist_,
+        address keysContract_
     ) ERC721ACustom(name_, symbol_){
         baseTokenURI = baseTokenURI_;
         maxSupply = maxSupply_;
         maxMintAtOnce = maxMintAtOnce_;
         maxMintWhitelist = maxMintWhitelist_;
+        keysContract = IERC1155(keysContract_);
     }
 
     /// @notice main mint function of the contract
@@ -59,8 +65,17 @@ contract KingdomHeroes is ERC721ACustom, Ownable {
         require(claimed[msg.sender] + _quantity <= maxMintWhitelist, "Whitelist mint exceeded");
         require(presalePrice * _quantity == msg.value, "Value sent is incorrect");
 
+        uint256 keyBalance = keysContract.balanceOf(msg.sender, 1);
+        uint256 keyExtra = 0;
+        if (keyBalance > 0) {
+            if (!keyFreeClaimed[msg.sender]) {
+                keyExtra += keyBalance;
+                keyFreeClaimed[msg.sender] = true;
+            }
+        }
+
         claimed[msg.sender] += _quantity;
-        _safeMint(msg.sender, _quantity);
+        _safeMint(msg.sender, _quantity + keyExtra);
     }
 
     /// @notice toggle the main sale on or off

@@ -5,7 +5,7 @@ import {UI, UiAction} from "../../react/store/ui/UiAction";
 import {Constants} from "../Constants";
 
 
-export default class MainMenu extends Scene {
+export default class MainMenuScene extends Scene {
 
     constructor() {
         super(Constants.SCENE_MENU);
@@ -20,8 +20,8 @@ export default class MainMenu extends Scene {
         store.dispatch(showUi(a))
     }
 
-    startGame() {
-        this.scene.start(Constants.SCENE_GAME)
+    startGame(whitelisted: boolean) {
+        this.scene.start(Constants.SCENE_GAME, {whitelisted: whitelisted})
     }
 
 }

@@ -2,7 +2,7 @@ import Phaser, {Scene} from "phaser";
 import Sign from "./Sign";
 import store from "../../react/store/store";
 import Npc from "./NPC";
-import {NPCList} from "../scenes/Game";
+import {NPCList} from "../scenes/GameScene";
 import {showUi} from "../../react/store/slices/ui-slice";
 import {BottomDialogActionParams, UI, UiAction} from "../../react/store/ui/UiAction";
 import {DIALOG} from "../../react/components/dialog/DialogConstant";

@@ -12,7 +12,7 @@ function HeadSection() {
             <Image src={PIC}/>
 
 
-            {/*<MintRoot/>*/}
+            {/*<MintHeroesRoot/>*/}
         </Stack>
     )
 

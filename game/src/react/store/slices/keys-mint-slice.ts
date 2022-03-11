@@ -1,9 +1,9 @@
-import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {Web3Params} from "../utils/params";
 import {setAll} from "../utils/set-all";
 import {getAddresses} from "../../web3/contractsAddresses";
 import {ethers} from "ethers";
-import {default as KingdomHeroes} from '../../abi/KingdomHeroes.json';
+import {default as KingdomKeys} from '../../abi/KingdomKeys.json';
 import store, {RootState} from "../store";
 import {toast} from "react-toastify";
 import {sleep} from "../utils/sleep";
@@ -12,18 +12,13 @@ import keccak256 from "keccak256";
 import {refreshUser} from "./user-slice";
 import {hideUi} from "./ui-slice";
 
-
-type Data = {
-    proof: string
-}
-
 const whitelist = ["0xE032d90BE017B57118eAafaA5826De494D73E39b", "0xE032d90BE017B57118eAafaA5826De494D73E392", "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"];
 const leafNodes = whitelist.map((addr) => keccak256(addr));
 const merkleTree = new MerkleTree(leafNodes, keccak256, {
     sortPairs: true,
 });
 
-export interface HeroesMintSlice {
+export interface KeysMintSlice {
     loading: boolean,
     presaleActive: boolean,
     saleActive: boolean,
@@ -34,7 +29,7 @@ export interface HeroesMintSlice {
     mintPrice: number
 }
 
-const initialState: HeroesMintSlice = {
+const initialState: KeysMintSlice = {
     loading: true,
     presaleActive: false,
     saleActive: false,
@@ -45,8 +40,8 @@ const initialState: HeroesMintSlice = {
     mintPrice: 0
 }
 
-export const loadHeroesMintDetails = createAsyncThunk("heroesMint/init",
-    async (params: Web3Params): Promise<HeroesMintSlice> => {
+export const loadKeysMintDetails = createAsyncThunk("keysMint/init",
+    async (params: Web3Params): Promise<KeysMintSlice> => {
 
         const contracts = getAddresses(params.networkID);
 
@@ -58,11 +53,11 @@ export const loadHeroesMintDetails = createAsyncThunk("heroesMint/init",
 
 
         try {
-            const royalKingdomContract = new ethers.Contract(contracts.KINGDOM_HEROES, KingdomHeroes.abi, params.provider)
+            const keysContract = new ethers.Contract(contracts.KINGDOM_KEY, KingdomKeys.abi, params.provider)
 
-            presaleActive = await royalKingdomContract.presaleActive()
-            saleActive = await royalKingdomContract.saleActive()
-            const minted = await royalKingdomContract.totalSupply()
+            presaleActive = await keysContract.presaleActive()
+            saleActive = await keysContract.saleActive()
+            const minted = await keysContract.totalSupply()
             currentMinted = minted.toNumber()
 
             if (presaleActive) mintPrice = 0.03
@@ -88,7 +83,7 @@ export const loadHeroesMintDetails = createAsyncThunk("heroesMint/init",
     }
 )
 
-export const mintPresale = createAsyncThunk("heroesMint/mintPresale",
+export const mintKeysPresale = createAsyncThunk("keysMint/mintPresale",
     async (params: Web3Params, thunkApi) => {
         const contracts = getAddresses(params.networkID);
         const root = thunkApi.getState() as RootState
@@ -97,10 +92,10 @@ export const mintPresale = createAsyncThunk("heroesMint/mintPresale",
             toast.loading('Minting Kingdom Heroes')
             const hexProof = merkleTree.getHexProof(keccak256(params.address.toString()));
 
-            const royalKingdomContract = new ethers.Contract(contracts.KINGDOM_HEROES, KingdomHeroes.abi, params.provider.getSigner())
+            const royalKingdomContract = new ethers.Contract(contracts.KINGDOM_KEY, KingdomKeys.abi, params.provider.getSigner())
             let price = ethers.utils.parseUnits(root.heroesMint.mintTotalPrice.toFixed(2), 'ether');
             let tx;
-            tx = await royalKingdomContract.mintPresale(root.heroesMint.mintAmount, hexProof, {value: price})
+            tx = await royalKingdomContract.mintPresale(hexProof, {value: price})
             await tx.wait()
 
         } catch (e) {
@@ -111,7 +106,7 @@ export const mintPresale = createAsyncThunk("heroesMint/mintPresale",
         }
 
         await sleep(2);
-        await thunkApi.dispatch(loadHeroesMintDetails({
+        await thunkApi.dispatch(loadKeysMintDetails({
             address: params.address,
             networkID: params.networkID,
             provider: params.provider
@@ -131,7 +126,7 @@ export const mintPresale = createAsyncThunk("heroesMint/mintPresale",
 
     })
 
-export const mint = createAsyncThunk("heroesMint/mint",
+export const mintKeys = createAsyncThunk("keysMint/mint",
     async (params: Web3Params, thunkApi) => {
         const contracts = getAddresses(params.networkID);
         const state = thunkApi.getState() as RootState
@@ -139,10 +134,10 @@ export const mint = createAsyncThunk("heroesMint/mint",
         try {
             toast.loading('Minting Kingdom Heroes')
 
-            const royalKingdomContract = new ethers.Contract(contracts.KINGDOM_HEROES, KingdomHeroes.abi, params.provider.getSigner())
+            const royalKingdomContract = new ethers.Contract(contracts.KINGDOM_KEY, KingdomKeys.abi, params.provider.getSigner())
             let price = ethers.utils.parseUnits(state.heroesMint.mintTotalPrice.toFixed(2), 'ether');
             let tx;
-            tx = await royalKingdomContract.mint(state.heroesMint.mintAmount, {value: price})
+            tx = await royalKingdomContract.mint({value: price})
             await tx.wait()
 
         } catch (e) {
@@ -153,7 +148,7 @@ export const mint = createAsyncThunk("heroesMint/mint",
         }
 
         await sleep(5);
-        await thunkApi.dispatch(loadHeroesMintDetails({
+        await thunkApi.dispatch(loadKeysMintDetails({
             address: params.address,
             networkID: params.networkID,
             provider: params.provider
@@ -165,39 +160,25 @@ export const mint = createAsyncThunk("heroesMint/mint",
     })
 
 
-const heroesMintSlice = createSlice({
-    name: "heroesMint",
+const keysMintSlice = createSlice({
+    name: "keysMint",
     initialState,
-    reducers: {
-        mintAmountPlus: (state) => {
-            if (state.mintAmount < 10)
-                state.mintAmount += 1
-
-            state.mintTotalPrice = (state.mintAmount * state.mintPrice)
-        },
-        mintAmountMinus: (state) => {
-            if (state.mintAmount > 1)
-                state.mintAmount -= 1
-
-
-            state.mintTotalPrice = (state.mintAmount * state.mintPrice)
-        },
-    },
+    reducers: {},
     extraReducers: builder => {
         builder
-            .addCase(loadHeroesMintDetails.pending, state => {
+            .addCase(loadKeysMintDetails.pending, state => {
                 state.loading = true
             })
-            .addCase(loadHeroesMintDetails.fulfilled, (state, action) => {
+            .addCase(loadKeysMintDetails.fulfilled, (state, action) => {
                 setAll(state, action.payload)
                 state.loading = false
             })
-            .addCase(loadHeroesMintDetails.rejected, (state, {error}) => {
+            .addCase(loadKeysMintDetails.rejected, (state, {error}) => {
                 state.loading = false
                 console.log(error)
             })
     }
 })
-export const {mintAmountPlus, mintAmountMinus} = heroesMintSlice.actions
+export const {} = keysMintSlice.actions
 
-export default heroesMintSlice.reducer
+export default keysMintSlice.reducer

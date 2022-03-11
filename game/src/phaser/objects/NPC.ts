@@ -1,6 +1,6 @@
 import Phaser, {Scene} from "phaser";
 import Sprite = Phaser.Physics.Arcade.Sprite;
-import {NPCList} from "../scenes/Game";
+import {NPCList} from "../scenes/GameScene";
 
 export default class Npc extends Sprite {
     public id: NPCList;

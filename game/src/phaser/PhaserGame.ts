@@ -1,9 +1,8 @@
 import Phaser from 'phaser'
 
-import Preloader from "./scenes/Preloader";
-import MainMenu from "./scenes/MainMenu";
-import GameScene from './scenes/Game';
-import InitScene from "./scenes/InitScene";
+import PreloaderScene from "./scenes/PreloaderScene";
+import MainMenuScene from "./scenes/MainMenuScene";
+import GameScene from './scenes/GameScene';
 
 const config: Phaser.Types.Core.GameConfig = {
     type: Phaser.AUTO,
@@ -25,7 +24,7 @@ const config: Phaser.Types.Core.GameConfig = {
             debug: true
         },
     },
-    scene: [Preloader, MainMenu, GameScene],
+    scene: [PreloaderScene, MainMenuScene, GameScene],
 
 }
 

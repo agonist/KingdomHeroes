@@ -10,7 +10,6 @@ import muiTheme from "./react/MuiTheme";
 import {Provider} from "react-redux";
 import store from "./react/store/store";
 import {Web3ContextProvider} from "./react/web3/web3-context";
-import {ToastContainer} from "react-toastify";
 
 ReactDOM.render(
     <React.StrictMode>

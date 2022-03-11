@@ -6,9 +6,10 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import {useDispatch} from "react-redux";
 import {mint, mintAmountMinus, mintAmountPlus, mintPresale} from "../../store/slices/heroes-mint-slice";
 import {Web3Params} from "../../store/utils/params";
+import {hideUi} from "../../store/slices/ui-slice";
 
 
-function MintRoot() {
+function MintHeroesRoot() {
     const dispatch = useDispatch();
 
     const {provider, chainID} = useWeb3Context();
@@ -18,7 +19,13 @@ function MintRoot() {
 
 
     async function mintPlus() {
-        await dispatch(mintAmountPlus())
+        let maxMint = 10
+        if (heroesMint.presaleActive) {
+            maxMint = 2
+        }
+
+        if (heroesMint.mintAmount < maxMint)
+            await dispatch(mintAmountPlus())
     }
 
     async function mintMinus() {
@@ -50,10 +57,14 @@ function MintRoot() {
 
     if (heroesMint.saleActive || (heroesMint.presaleActive && heroesMint.whitelisted)) {
         return (
-            <Stack alignItems="center" spacing={3}>
-                <Typography variant={"h4"}>Pre-Sale</Typography>
+            <Stack alignItems="center" spacing={2}>
+                <Typography variant={"h2"}>Heroes Pre-Sale</Typography>
+                <Typography variant={"body1"}>
+                    GM adventurer, <br/>I'm the cool NPC that will sell you heroes
+                </Typography>
 
-                <Typography variant={"h4"}>{heroesMint.currentMinted} / 10000 Heroes minted</Typography>
+                <Typography paddingTop={2} variant={"h4"}>{heroesMint.currentMinted} / 10000 Heroes minted</Typography>
+
                 <Stack direction={"row"} spacing={2}>
                     <Fab size="small" aria-label="remove" onClick={mintMinus}>
                         <RemoveIcon/>
@@ -68,6 +79,7 @@ function MintRoot() {
 
                 <Button variant="contained" onClick={mintSale}>Mint
                     for {heroesMint.mintTotalPrice.toFixed(2)} ETH</Button>
+                <Button onClick={() => dispatch(hideUi())}>Close</Button>
             </Stack>
         )
     }
@@ -80,4 +92,4 @@ function MintRoot() {
     )
 }
 
-export default MintRoot
+export default MintHeroesRoot
