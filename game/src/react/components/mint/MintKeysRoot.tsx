@@ -46,7 +46,7 @@ function MintHeroesRoot() {
                     GM adventurer, <br/>I'm the cool NPC that will sell you keys
                 </Typography>
 
-                <Typography paddingTop={2} variant={"h4"}>{keysMint.currentMinted} / 10000 Heroes minted</Typography>
+                <Typography paddingTop={2} variant={"h4"}>{keysMint.currentMinted} / 500 Keys minted</Typography>
 
                 <Stack direction={"row"} spacing={2}>
 

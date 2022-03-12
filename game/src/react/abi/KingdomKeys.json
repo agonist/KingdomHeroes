@@ -11,16 +11,6 @@
           "internalType": "uint256",
           "name": "maxSupply_",
           "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "maxMintAtOnce_",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "maxMintWhitelist_",
-          "type": "uint256"
         }
       ],
       "stateMutability": "nonpayable",
@@ -68,6 +58,19 @@
         }
       ],
       "name": "OwnershipTransferred",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "Paused",
       "type": "event"
     },
     {
@@ -164,6 +167,19 @@
       "type": "event"
     },
     {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "Unpaused",
+      "type": "event"
+    },
+    {
       "inputs": [],
       "name": "KINGDOM_KEY",
       "outputs": [
@@ -235,9 +251,9 @@
       "name": "claimed",
       "outputs": [
         {
-          "internalType": "uint256",
+          "internalType": "bool",
           "name": "",
-          "type": "uint256"
+          "type": "bool"
         }
       ],
       "stateMutability": "view",
@@ -269,32 +285,6 @@
     },
     {
       "inputs": [],
-      "name": "maxMintAtOnce",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "maxMintWhitelist",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
       "name": "maxSupply",
       "outputs": [
         {
@@ -307,13 +297,7 @@
       "type": "function"
     },
     {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "_quantity",
-          "type": "uint256"
-        }
-      ],
+      "inputs": [],
       "name": "mint",
       "outputs": [],
       "stateMutability": "payable",
@@ -321,11 +305,6 @@
     },
     {
       "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "_quantity",
-          "type": "uint256"
-        },
         {
           "internalType": "bytes32[]",
           "name": "_merkleProof",
@@ -345,6 +324,26 @@
           "internalType": "address",
           "name": "",
           "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "pause",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "paused",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
         }
       ],
       "stateMutability": "view",
@@ -392,6 +391,19 @@
     {
       "inputs": [],
       "name": "renounceOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_quantity",
+          "type": "uint256"
+        }
+      ],
+      "name": "reserve",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
@@ -553,6 +565,19 @@
       "type": "function"
     },
     {
+      "inputs": [],
+      "name": "totalSupply",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
       "inputs": [
         {
           "internalType": "address",
@@ -561,6 +586,13 @@
         }
       ],
       "name": "transferOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "unpause",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"

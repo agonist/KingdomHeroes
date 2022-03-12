@@ -31,6 +31,11 @@
           "internalType": "uint256",
           "name": "maxMintWhitelist_",
           "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "keysContract_",
+          "type": "address"
         }
       ],
       "stateMutability": "nonpayable",
@@ -297,6 +302,25 @@
         }
       ],
       "name": "isApprovedForAll",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "keyFreeClaimed",
       "outputs": [
         {
           "internalType": "bool",

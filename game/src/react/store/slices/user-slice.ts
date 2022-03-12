@@ -1,5 +1,6 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {default as KingdomHeroes} from "../../abi/KingdomHeroes.json";
+import {default as KingdomKey} from "../../abi/KingdomKeys.json";
 import {BigNumber, ethers} from "ethers";
 import {setAll} from "../utils/set-all";
 import phaserGame from "../../../phaser/PhaserGame";
@@ -13,20 +14,24 @@ import {loadHeroesMintDetails} from "./heroes-mint-slice";
 import {Constants} from "../../../phaser/Constants";
 import PreloaderScene from "../../../phaser/scenes/PreloaderScene";
 import {loadKeysMintDetails} from "./keys-mint-slice";
+import {buildInventory, InventoryItem} from "../../model/inventory";
 
 interface UserState {
     loading: boolean,
     address: String,
     heroesIds: number[],
-    canMint: boolean
+    canMint: boolean,
+    inventory: Array<InventoryItem>
 }
 
 const initialState: UserState = {
     loading: false,
     address: "",
     heroesIds: [],
-    canMint: false
+    canMint: false,
+    inventory: []
 }
+
 
 export class API {
 
@@ -62,7 +67,10 @@ export const initUser = createAsyncThunk("user/init",
     async (params: Web3Params
         , thunkAPI): Promise<UserState> => {
 
+        const contracts = getAddresses(params.networkID);
+
         let idsArray: number[] = []
+        let inventory: Array<InventoryItem> = []
 
         try {
 
@@ -86,13 +94,18 @@ export const initUser = createAsyncThunk("user/init",
 
             }
 
-            const kingdomHeroes = new ethers.Contract(getAddresses(0).KINGDOM_HEROES, KingdomHeroes.abi, params.provider);
+            const kingdomHeroes = new ethers.Contract(contracts.KINGDOM_HEROES, KingdomHeroes.abi, params.provider);
 
             const ids: Array<BigNumber> = await kingdomHeroes.tokensOfOwner(params.address)
 
             idsArray = ids.map((id) => {
                 return id.toNumber()
             })
+
+            const kingdomKeys = new ethers.Contract(contracts.KINGDOM_KEY, KingdomKey.abi, params.provider);
+            const keysBalance = await kingdomKeys.balanceOf(params.address, 1)
+            console.log("KEYS " + keysBalance)
+            inventory = buildInventory(keysBalance)
 
         } catch (e) {
             console.log(e)
@@ -117,27 +130,37 @@ export const initUser = createAsyncThunk("user/init",
             loading: false,
             address: params.address,
             heroesIds: idsArray,
-            canMint: (thunkAPI.getState() as RootState).heroesMint.whitelisted
+            canMint: (thunkAPI.getState() as RootState).keysMint.whitelisted,
+            inventory: inventory
         }
     })
 
 export const refreshUser = createAsyncThunk("user/refresh",
     async (params: Web3Params
         , thunkAPI): Promise<UserState> => {
-        let root = thunkAPI.getState() as RootState
+        const contracts = getAddresses(params.networkID);
 
-        const kingdomHeroes = new ethers.Contract(getAddresses(0).KINGDOM_HEROES, KingdomHeroes.abi, params.provider);
+        let root = thunkAPI.getState() as RootState
+        let inventory: Array<InventoryItem> = []
+
+        const kingdomHeroes = new ethers.Contract(contracts.KINGDOM_HEROES, KingdomHeroes.abi, params.provider);
         const ids: Array<BigNumber> = await kingdomHeroes.tokensOfOwner(params.address)
         console.log("tokens " + ids)
         const idsArray = ids.map((id) => {
             return id.toNumber()
         })
         console.log("tokens " + idsArray)
+
+        const kingdomKeys = new ethers.Contract(contracts.KINGDOM_KEY, KingdomKey.abi, params.provider);
+        const keysBalance = kingdomKeys.balanceOf(params.address, 1)
+        inventory = buildInventory(keysBalance)
+
         return {
             loading: false,
             address: params.address,
             heroesIds: idsArray,
-            canMint: (thunkAPI.getState() as RootState).heroesMint.whitelisted
+            canMint: (thunkAPI.getState() as RootState).heroesMint.whitelisted,
+            inventory: inventory
         }
     })
 

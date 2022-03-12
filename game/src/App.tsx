@@ -1,17 +1,20 @@
-import React, {useEffect, useState} from 'react'
+import React, {useCallback, useEffect, useState} from 'react'
 import './App.css'
 import {Box, Stack} from "@mui/material";
 import DialogBox from "./react/components/dialog/Dialog";
 import {useAppSelector} from "./react/store/hooks";
 import store from "./react/store/store";
 import Login from "./react/components/login/Login";
-import {BottomDialogActionParams, UI} from "./react/store/ui/UiAction";
-import {hideUi} from "./react/store/slices/ui-slice";
+import {BottomDialogActionParams, UI, UiAction} from "./react/store/ui/UiAction";
+import {hideUi, showUi} from "./react/store/slices/ui-slice";
 import MintHeroes from "./react/components/mint/MintHeroes";
 import {ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import {useDispatch} from "react-redux";
 import {useAddress, useWeb3Context} from "./react/web3/web3-context";
 import {Web3Params} from "./react/store/utils/params";
+import MintKeys from "./react/components/mint/MintKeys";
+import Inventory from "./react/components/inventory/Inventory";
 
 function App() {
     const dispatch = useDispatch();
@@ -53,8 +56,32 @@ function App() {
 
     }, [connected])
 
-
     const uiAction = useAppSelector((state) => state.ui)
+
+    const handleClick = useCallback((e) => {
+        if (e.key === 'i') {
+            console.log(uiAction)
+            if (uiAction.show) {
+                store.dispatch(hideUi())
+            } else {
+                const a: UiAction = {
+                    show: UI.INVENTORY,
+                    params: undefined
+                }
+                store.dispatch(showUi(a))
+
+            }
+        }
+    }, [uiAction]);
+
+    useEffect(() => {
+        document.addEventListener("keydown", handleClick, false);
+
+        return () => {
+            document.removeEventListener("keydown", handleClick, false);
+        };
+    }, [uiAction]);
+
 
     let ui: JSX.Element = <div/>
 
@@ -88,6 +115,27 @@ function App() {
         )
     }
 
+    function mintKeys() {
+        return (
+            <Stack height={"100%"} direction="column"
+                   justifyContent="center"
+                   alignItems="center">
+                <MintKeys/>
+            </Stack>
+        )
+    }
+
+    function inventory() {
+        return (
+            <Stack height={"100%"} direction="column"
+                   justifyContent="center"
+                   alignItems="center">
+                <Inventory onClose={() => store.dispatch(hideUi())}/>
+            </Stack>
+        )
+
+    }
+
     if (uiAction.show && uiAction.current) {
         switch (uiAction.current.show) {
             case UI.BOTTOM_DIALOG:
@@ -98,6 +146,12 @@ function App() {
                 break
             case UI.MINT_HEROES:
                 ui = mintHeroes()
+                break
+            case UI.MINT_KEYS:
+                ui = mintKeys()
+                break
+            case UI.INVENTORY:
+                ui = inventory()
                 break
         }
     }

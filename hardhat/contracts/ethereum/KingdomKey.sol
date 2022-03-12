@@ -75,6 +75,10 @@ contract KingdomKey is ERC1155Pausable, Ownable {
         _setURI(_baseTokenURI);
     }
 
+    function totalSupply() external view returns (uint256){
+        return _totalSupply;
+    }
+
     /// @notice set the merkle hash root for whitelist check
     /// @param _merkleRoot The root hash
     function setWhitelistMerkleRoot(bytes32 _merkleRoot) external onlyOwner {

@@ -18,6 +18,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     public currentFacingSign!: number
     public currentFacingNpc!: NPCList
     private keyObj!: Key
+    private inventoryKey!: Key
 
     constructor(scene: Scene, x: number, y: number) {
         super(scene, x, y, 'player', 'walk-down-3.png');
@@ -25,6 +26,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.scene.add.existing(this)
         this.cursors = scene.input.keyboard.createCursorKeys()
         this.keyObj = scene.input.keyboard.addKey('E');
+        this.inventoryKey = scene.input.keyboard.addKey("I")
     }
 
     preload() {
@@ -155,10 +157,19 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         console.log("overlap " + player + this.currentFacingNpc)
     }
 
+    showInventory() {
+        const a: UiAction = {
+            show: UI.INVENTORY,
+            params: undefined
+        }
+        store.dispatch(showUi(a))
+
+    }
+
     showUiForNpc(npc: NPCList) {
 
         const a: UiAction = {
-            show: UI.MINT_HEROES,
+            show: UI.MINT_KEYS,
             params: undefined
         }
         store.dispatch(showUi(a))

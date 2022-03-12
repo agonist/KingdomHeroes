@@ -6,6 +6,7 @@ import {useAddress, useWeb3Context} from "../../web3/web3-context";
 import {useEffect, useState} from "react";
 import {DEFAULD_NETWORK} from "../../web3/blockchain";
 import {Web3Params} from "../../store/utils/params";
+import {toast} from "react-toastify";
 
 
 export default function Login() {
@@ -31,7 +32,6 @@ export default function Login() {
     useEffect(() => {
         setConnected(connected);
     }, [web3, connected]);
-
 
     if (isConnected) {
         return (

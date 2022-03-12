@@ -65,7 +65,7 @@ export const loadKeysMintDetails = createAsyncThunk("keysMint/init",
 
             const hexProof = merkleTree.getHexProof(keccak256(params.address.toString()));
             whitelisted = hexProof.length > 0
-
+            console.log("Key whitelist " + whitelisted)
         } catch (e) {
             console.log(e)
         }
@@ -147,12 +147,21 @@ export const mintKeys = createAsyncThunk("keysMint/mint",
             return
         }
 
-        await sleep(5);
+        await sleep(2);
         await thunkApi.dispatch(loadKeysMintDetails({
             address: params.address,
             networkID: params.networkID,
             provider: params.provider
         }))
+
+        await sleep(2);
+        await thunkApi.dispatch(refreshUser({
+            address: params.address,
+            networkID: params.networkID,
+            provider: params.provider
+        }))
+
+        store.dispatch(hideUi())
 
         toast.dismiss()
         toast.success('Minting success')

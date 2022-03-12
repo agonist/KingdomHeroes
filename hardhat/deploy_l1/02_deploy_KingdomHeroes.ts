@@ -13,10 +13,11 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
     let maxSupply = 10000
     let maxMintAtOnce = 10;
-    let maxMintWhitelist = 2;
+    let maxMintWhitelist = 5;
 
     if (network.chainId == 31337) {
         maxSupply = 100
+        maxMintWhitelist = 2;
     }
 
     const args = [

@@ -23,6 +23,7 @@ async function deployLocal() {
     const creethGold = await hre.ethers.getContractAt('CreethGold', CreethGold.address);
     const kingdomStaking = await hre.ethers.getContractAt('KingdomStaking', KingdomStaking.address);
 
+    await kingdomKey.togglePresale()
     await royalKingdom.togglePresale()
 
 
@@ -32,6 +33,7 @@ async function deployLocal() {
         sortPairs: true,
     });
 
+    await kingdomKey.setWhitelistMerkleRoot(merkleTree.getHexRoot())
     await royalKingdom.setWhitelistMerkleRoot(merkleTree.getHexRoot())
     // do stuff
 
