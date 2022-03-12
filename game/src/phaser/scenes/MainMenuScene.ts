@@ -1,6 +1,6 @@
 import {Scene} from "phaser";
 import store from "../../react/store/store";
-import {hideUi, showUi} from "../../react/store/slices/ui-slice";
+import {showUi} from "../../react/store/slices/ui-slice";
 import {UI, UiAction} from "../../react/store/ui/UiAction";
 import {Constants} from "../Constants";
 

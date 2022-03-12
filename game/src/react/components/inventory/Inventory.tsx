@@ -1,4 +1,4 @@
-import {Box, Button, Grid, Stack, Tooltip, tooltipClasses, TooltipProps, Typography} from "@mui/material";
+import {Box, Grid, Stack, Tooltip, tooltipClasses, TooltipProps, Typography} from "@mui/material";
 import {useAppSelector} from "../../store/hooks";
 import dialogBorderBox from "../dialog/dialogbox.png";
 import key from "../../../img/key.png";
@@ -59,7 +59,7 @@ export default function Inventory({onClose}: InventoryProps) {
                                         </React.Fragment>
                                     }
                                 >
-                                    <img src={key}/>
+                                    <img src={key} alt={"kingdom key"}/>
                                 </HtmlTooltip>
                             </Stack>
                         </Grid>

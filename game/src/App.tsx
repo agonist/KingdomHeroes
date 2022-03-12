@@ -10,14 +10,12 @@ import {hideUi, showUi} from "./react/store/slices/ui-slice";
 import MintHeroes from "./react/components/mint/MintHeroes";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import {useDispatch} from "react-redux";
 import {useAddress, useWeb3Context} from "./react/web3/web3-context";
 import {Web3Params} from "./react/store/utils/params";
 import MintKeys from "./react/components/mint/MintKeys";
 import Inventory from "./react/components/inventory/Inventory";
 
 function App() {
-    const dispatch = useDispatch();
     const address = useAddress();
     const {connect, provider, hasCachedProvider, chainID, connected, web3Modal} = useWeb3Context();
     const [walletChecked, setWalletChecked] = useState(false);
@@ -25,18 +23,12 @@ function App() {
     useEffect(() => {
         if (web3Modal === undefined) return
 
-        console.log(connected)
-
         if (hasCachedProvider()) {
             connect().then(() => {
                 setWalletChecked(true);
             });
-            console.log("has cached wallet and connected")
-
-
         } else {
             setWalletChecked(true);
-            console.log("not cached and connected")
 
         }
     }, [web3Modal]);

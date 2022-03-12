@@ -12,7 +12,6 @@ import store, {RootState} from "../store";
 import {hideUi} from "./ui-slice";
 import {loadHeroesMintDetails} from "./heroes-mint-slice";
 import {Constants} from "../../../phaser/Constants";
-import PreloaderScene from "../../../phaser/scenes/PreloaderScene";
 import {loadKeysMintDetails} from "./keys-mint-slice";
 import {buildInventory, InventoryItem} from "../../model/inventory";
 
@@ -140,7 +139,6 @@ export const refreshUser = createAsyncThunk("user/refresh",
         , thunkAPI): Promise<UserState> => {
         const contracts = getAddresses(params.networkID);
 
-        let root = thunkAPI.getState() as RootState
         let inventory: Array<InventoryItem> = []
 
         const kingdomHeroes = new ethers.Contract(contracts.KINGDOM_HEROES, KingdomHeroes.abi, params.provider);
@@ -199,8 +197,6 @@ const userSlice = createSlice({
             })
     }
 })
-
-export const {} = userSlice.actions
 
 export default userSlice.reducer
 

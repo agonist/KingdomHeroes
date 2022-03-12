@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {Button, Typography} from "@mui/material";
-import {DEFAULD_NETWORK} from "../../web3/blockchain";
+import {DEFAULT_NETWORK} from "../../web3/blockchain";
 import {useWeb3Context} from "../../web3/web3-context";
 
 function ConnectMenu() {
@@ -16,7 +16,7 @@ function ConnectMenu() {
         clickFunc = disconnect;
     }
 
-    if (isConnected && providerChainID !== DEFAULD_NETWORK) {
+    if (isConnected && providerChainID !== DEFAULT_NETWORK) {
         buttonText = "Wrong network";
         error = true
         clickFunc = () => {

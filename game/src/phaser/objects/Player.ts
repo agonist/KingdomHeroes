@@ -2,13 +2,13 @@ import Phaser, {Scene} from "phaser";
 import Sign from "./Sign";
 import store from "../../react/store/store";
 import Npc from "./NPC";
-import {NPCList} from "../scenes/GameScene";
 import {showUi} from "../../react/store/slices/ui-slice";
 import {BottomDialogActionParams, UI, UiAction} from "../../react/store/ui/UiAction";
 import {DIALOG} from "../../react/components/dialog/DialogConstant";
 import GameObject = Phaser.GameObjects.GameObject;
 import Group = Phaser.Physics.Arcade.Group;
 import Key = Phaser.Input.Keyboard.Key;
+import {NPCList} from "../data/NPCList";
 
 
 class Player extends Phaser.Physics.Arcade.Sprite {

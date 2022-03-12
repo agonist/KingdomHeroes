@@ -4,6 +4,7 @@ import Player from "../objects/Player";
 import Sign from "../objects/Sign";
 import Npc from "../objects/NPC";
 import {Constants} from "../Constants";
+import {NPCList} from "../data/NPCList";
 
 export default class GameScene extends Phaser.Scene {
 
@@ -82,9 +83,3 @@ export default class GameScene extends Phaser.Scene {
     }
 
 }
-
-export enum NPCList {
-    NONE,
-    MINT
-}
-

@@ -1,4 +1,4 @@
-import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {Web3Params} from "../utils/params";
 import {setAll} from "../utils/set-all";
 import {getAddresses} from "../../web3/contractsAddresses";
@@ -11,11 +11,6 @@ import {MerkleTree} from "merkletreejs";
 import keccak256 from "keccak256";
 import {refreshUser} from "./user-slice";
 import {hideUi} from "./ui-slice";
-
-
-type Data = {
-    proof: string
-}
 
 const whitelist = ["0xE032d90BE017B57118eAafaA5826De494D73E39b", "0xE032d90BE017B57118eAafaA5826De494D73E392", "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"];
 const leafNodes = whitelist.map((addr) => keccak256(addr));

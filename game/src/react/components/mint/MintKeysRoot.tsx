@@ -1,4 +1,4 @@
-import {Button, CircularProgress, Fab, Stack, Typography} from "@mui/material";
+import {Button, CircularProgress, Stack, Typography} from "@mui/material";
 import {useAddress, useWeb3Context} from "../../web3/web3-context";
 import {useAppSelector} from "../../store/hooks";
 import {useDispatch} from "react-redux";

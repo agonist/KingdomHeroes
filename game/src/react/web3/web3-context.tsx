@@ -2,8 +2,7 @@ import React, {useState, ReactElement, useContext, useMemo, useCallback, useEffe
 import Web3Modal from "web3modal";
 import {StaticJsonRpcProvider, JsonRpcProvider, Web3Provider} from "@ethersproject/providers";
 import WalletConnectProvider from "@walletconnect/web3-provider";
-import {Networks, DEFAULD_NETWORK} from "./blockchain";
-import {useDispatch} from "react-redux";
+import {Networks, DEFAULT_NETWORK, DEFAULT_URI, NetworksURI, getURI} from "./blockchain";
 import {swithNetwork} from "./switch-network";
 import {Web3Params} from "../store/utils/params";
 
@@ -36,7 +35,7 @@ export const useWeb3Context = () => {
     const {onChainProvider} = web3Context;
     return useMemo(() => {
         return {...onChainProvider};
-    }, [web3Context]);
+    }, [web3Context, onChainProvider]);
 };
 
 export const useAddress = () => {
@@ -45,14 +44,12 @@ export const useAddress = () => {
 };
 
 export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({children}) => {
-    const dispatch = useDispatch();
-
     const [connected, setConnected] = useState(false);
-    const [chainID, setChainID] = useState(DEFAULD_NETWORK);
-    const [providerChainID, setProviderChainID] = useState(DEFAULD_NETWORK);
+    const [chainID, setChainID] = useState(DEFAULT_NETWORK);
+    const [providerChainID, setProviderChainID] = useState(DEFAULT_NETWORK);
     const [address, setAddress] = useState("");
 
-    const [uri, setUri] = useState("https://rpc.ftm.tools:443/");
+    const [uri, setUri] = useState(DEFAULT_URI);
     const [provider, setProvider] = useState<JsonRpcProvider>(new StaticJsonRpcProvider(uri));
 
     const [web3Modal, setWeb3Modal] = useState<Web3Modal>()
@@ -65,9 +62,9 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({child
                     package: WalletConnectProvider,
                     options: {
                         rpc: {
-                            [Networks.MAINNET]: "https://rpc.ftm.tools:443/",
-                            [Networks.RINKEBY]: "https://rpc.testnet.fantom.network/",
-                            [Networks.LOCALHOST]: "http://127.0.0.1:8545",
+                            [Networks.MAINNET]: NetworksURI.MAINNET,
+                            [Networks.RINKEBY]: NetworksURI.RINKEBY,
+                            [Networks.LOCALHOST]: NetworksURI.LOCALHOST,
                         },
                     },
                 },
@@ -77,9 +74,8 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({child
     }, [])
 
     const hasCachedProvider = (): boolean => {
-        if (!web3Modal) return false;
-        if (!web3Modal.cachedProvider) return false;
-        return true;
+        return !(!web3Modal || !web3Modal.cachedProvider);
+
     };
 
     const _initListeners = useCallback(
@@ -106,6 +102,8 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({child
         const network = Number(otherChainID);
 
         setProviderChainID(network);
+        setChainID(network)
+        setUri(getURI(network))
     };
 
     const connect = useCallback(async () => {
@@ -132,7 +130,7 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({child
     }, [provider, web3Modal, connected]);
 
     const checkWrongNetwork = async (): Promise<boolean> => {
-        if (providerChainID !== DEFAULD_NETWORK) {
+        if (providerChainID !== DEFAULT_NETWORK) {
             const shouldSwitch = window.confirm("Wrong network");
             if (shouldSwitch) {
                 await swithNetwork();

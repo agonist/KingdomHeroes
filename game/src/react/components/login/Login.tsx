@@ -1,13 +1,10 @@
 import {Button, Stack, Typography} from "@mui/material";
 import {useDispatch} from "react-redux";
 import {initUser} from "../../store/slices/user-slice";
-import ConnectButton from "./ConnectButton";
 import {useAddress, useWeb3Context} from "../../web3/web3-context";
 import {useEffect, useState} from "react";
-import {DEFAULD_NETWORK} from "../../web3/blockchain";
+import {DEFAULT_NETWORK} from "../../web3/blockchain";
 import {Web3Params} from "../../store/utils/params";
-import {toast} from "react-toastify";
-
 
 export default function Login() {
 
@@ -25,7 +22,7 @@ export default function Login() {
         await dispatch(initUser(p))
     }
 
-    if (isConnected && providerChainID !== DEFAULD_NETWORK) {
+    if (isConnected && providerChainID !== DEFAULT_NETWORK) {
 
     }
 

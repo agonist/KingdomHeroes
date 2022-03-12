@@ -188,6 +188,5 @@ const keysMintSlice = createSlice({
             })
     }
 })
-export const {} = keysMintSlice.actions
 
 export default keysMintSlice.reducer

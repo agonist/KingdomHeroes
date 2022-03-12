@@ -1,5 +1,4 @@
 import {Stack} from "@mui/material";
-import MintHeroesRoot from "./MintHeroesRoot";
 import dialogBorderBox from "../dialog/dialogbox.png";
 import MintKeysRoot from "./MintKeysRoot";
 
