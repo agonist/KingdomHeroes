@@ -8,7 +8,8 @@ export enum UI {
     LOGIN,
     MINT_HEROES,
     MINT_KEYS,
-    INVENTORY
+    INVENTORY,
+    HEROES
 }
 
 export interface UiActionParam {}

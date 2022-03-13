@@ -17,8 +17,8 @@ export const Constants = {
     ASSETS_TOWN_TILED: "assets/tiles/world.tmj",
     ASSETS_SIGN: "assets/tiles/sign.png",
     ASSETS_MINT_NPC: "assets/sensei.png",
-    ASSETS_PLAYER: "assets/player.png",
-    ASSETS_PLAYER_ATLAS: "assets/player.json",
+    ASSETS_PLAYER: "assets/player/player.png",
+    ASSETS_PLAYER_ATLAS: "assets/player/player.json",
 
     // TILESET
     TILESET_WORLD: "world"

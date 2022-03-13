@@ -7,11 +7,8 @@ import {styled} from "@mui/styles";
 import React from "react";
 
 
-interface InventoryProps {
-    onClose: () => void
-}
 
-export default function Inventory({onClose}: InventoryProps) {
+export default function Inventory() {
 
     const user = useAppSelector((state) => state.user)
 

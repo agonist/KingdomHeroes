@@ -19,57 +19,90 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     public currentFacingNpc!: NPCList
     private keyObj!: Key
     private inventoryKey!: Key
+    private heroesKey!: Key
 
     constructor(scene: Scene, x: number, y: number) {
-        super(scene, x, y, 'player', 'walk-down-3.png');
+        super(scene, x, y, 'player', 'walk-down/walk-down-3.png');
         scene.physics.add.existing(this);
         this.scene.add.existing(this)
         this.cursors = scene.input.keyboard.createCursorKeys()
         this.keyObj = scene.input.keyboard.addKey('E');
         this.inventoryKey = scene.input.keyboard.addKey("I")
+        this.heroesKey = scene.input.keyboard.addKey("H")
     }
 
     preload() {
     }
 
     create() {
-        this.body.setSize(this.width * 0.5, this.height * 0.70)
+        this.body.setSize(this.width * 0.5, this.height * 0.40)
 
         this.anims.create({
             key: 'player-idle-down',
-            frames: [{key: 'player', frame: 'walk-down-3.png'}]
+            frames: [{key: 'player', frame: 'walk-down/walk-down-1.png'}]
         })
 
         this.anims.create({
             key: 'player-idle-up',
-            frames: [{key: 'player', frame: 'walk-up-3.png'}]
+            frames: [{key: 'player', frame: 'walk-up/walk-up-1.png'}]
         })
 
         this.anims.create({
-            key: 'player-idle-side',
-            frames: [{key: 'player', frame: 'walk-side-3.png'}]
+            key: 'player-idle-left-side',
+            frames: [{key: 'player', frame: 'walk-side-left/walk-side-left-1.png'}]
+        })
+
+        this.anims.create({
+            key: 'player-idle-right-side',
+            frames: [{key: 'player', frame: 'walk-side-right/walk-side-right-1.png'}]
         })
 
         this.anims.create({
             key: 'player-run-down',
-            frames: this.anims.generateFrameNames('player', {start: 1, end: 8, prefix: 'run-down-', suffix: '.png',}),
+            frames: this.anims.generateFrameNames('player', {
+                start: 1,
+                end: 3,
+                prefix: 'walk-down/walk-down-',
+                suffix: '.png',
+            }),
             repeat: -1,
-            frameRate: 15
+            frameRate: 10
         })
 
 
         this.anims.create({
             key: 'player-run-up',
-            frames: this.anims.generateFrameNames('player', {start: 1, end: 8, prefix: 'run-up-', suffix: '.png',}),
+            frames: this.anims.generateFrameNames('player', {
+                start: 1,
+                end: 3,
+                prefix: 'walk-up/walk-up-',
+                suffix: '.png',
+            }),
             repeat: -1,
-            frameRate: 15
+            frameRate: 10
         })
 
         this.anims.create({
-            key: 'player-run-side',
-            frames: this.anims.generateFrameNames('player', {start: 1, end: 8, prefix: 'run-side-', suffix: '.png',}),
+            key: 'player-run-left-side',
+            frames: this.anims.generateFrameNames('player', {
+                start: 1,
+                end: 3,
+                prefix: 'walk-side-left/walk-side-left-',
+                suffix: '.png',
+            }),
             repeat: -1,
-            frameRate: 15
+            frameRate: 10
+        })
+        this.anims.create({
+            key: 'player-run-right-side',
+            frames: this.anims.generateFrameNames('player', {
+                start: 1,
+                end: 3,
+                prefix: 'walk-side-right/walk-side-right-',
+                suffix: '.png',
+            }),
+            repeat: -1,
+            frameRate: 10
         })
         this.anims.play('player-idle-down')
 
@@ -88,16 +121,16 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         const {x, y} = this
 
         if (this.cursors.left?.isDown) {
-            this.anims.play('player-run-side', true)
+            this.anims.play('player-run-left-side', true)
             this.setVelocity(-speed, 0)
-            this.scaleX = -1
+            this.scaleX = 1
             this.body.offset.x = 24
             this.detect.setPosition(x - 20, y)
 
             this.currentFacingSign = 0
             this.currentFacingNpc = NPCList.NONE
         } else if (this.cursors.right?.isDown) {
-            this.anims.play('player-run-side', true)
+            this.anims.play('player-run-right-side', true)
             this.setVelocity(speed, 0)
             this.scaleX = 1
             this.body.offset.x = 8
@@ -169,7 +202,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     showUiForNpc(npc: NPCList) {
 
         const a: UiAction = {
-            show: UI.MINT_KEYS,
+            show: UI.MINT_HEROES,
             params: undefined
         }
         store.dispatch(showUi(a))

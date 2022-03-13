@@ -30,6 +30,7 @@
     "@types/mongoose": "^5.11.97",
     "@types/passport-jwt": "^3.0.6",
     "mongoose": "^6.2.4",
+    "nestjs-ethers": "^1.0.1",
     "passport": "^0.5.2",
     "passport-custom": "^1.1.1",
     "passport-jwt": "^4.0.0",

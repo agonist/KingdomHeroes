@@ -14,6 +14,7 @@ import {useAddress, useWeb3Context} from "./react/web3/web3-context";
 import {Web3Params} from "./react/store/utils/params";
 import MintKeys from "./react/components/mint/MintKeys";
 import Inventory from "./react/components/inventory/Inventory";
+import Heroes from "./react/components/heroes/Heroes";
 
 function App() {
     const address = useAddress();
@@ -61,9 +62,22 @@ function App() {
                     params: undefined
                 }
                 store.dispatch(showUi(a))
-
             }
         }
+
+        if (e.key === 'h') {
+            console.log(uiAction)
+            if (uiAction.show) {
+                store.dispatch(hideUi())
+            } else {
+                const a: UiAction = {
+                    show: UI.HEROES,
+                    params: undefined
+                }
+                store.dispatch(showUi(a))
+            }
+        }
+
     }, [uiAction]);
 
     useEffect(() => {
@@ -122,7 +136,18 @@ function App() {
             <Stack height={"100%"} direction="column"
                    justifyContent="center"
                    alignItems="center">
-                <Inventory onClose={() => store.dispatch(hideUi())}/>
+                <Inventory/>
+            </Stack>
+        )
+
+    }
+
+    function heroes() {
+        return (
+            <Stack height={"100%"} direction="column"
+                   justifyContent="center"
+                   alignItems="center">
+                <Heroes/>
             </Stack>
         )
 
@@ -144,6 +169,9 @@ function App() {
                 break
             case UI.INVENTORY:
                 ui = inventory()
+                break
+            case UI.HEROES:
+                ui = heroes()
                 break
         }
     }
