@@ -38,10 +38,11 @@ const useStyles = makeStyles((theme) => ({
 
 interface DialogBoxProps {
     messages: string[],
+    title: string,
     onClose: () => void
 }
 
-const DialogBox = ({messages, onClose}: DialogBoxProps) => {
+const DialogBox = ({messages, title, onClose}: DialogBoxProps) => {
     const [currentMessage, setCurrentMessage] = useState(0);
     const classes = useStyles();
 
@@ -70,7 +71,7 @@ const DialogBox = ({messages, onClose}: DialogBoxProps) => {
     return (
         <Stack className={classes.dialogBox} width={600} height={150}>
             <Stack width={"100%"} alignItems={"flex-start"}>
-                <Typography variant={"h4"}>Cameron</Typography>
+                <Typography variant={"h4"}>{title}</Typography>
                 <Message message={messages[currentMessage]}/>
             </Stack>
             <Stack height={"100%"} justifyContent="flex-end"

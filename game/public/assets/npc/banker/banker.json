@@ -1,0 +1,314 @@
+{
+	"textures": [
+		{
+			"image": "banker.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 96,
+				"h": 29
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "banker-0.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 30,
+						"h": 27
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 30,
+						"h": 27
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 30,
+						"h": 27
+					}
+				},
+				{
+					"filename": "banker-1.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 30,
+						"h": 27
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 30,
+						"h": 27
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 30,
+						"h": 27
+					}
+				},
+				{
+					"filename": "banker-2.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 30,
+						"h": 27
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 30,
+						"h": 27
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 30,
+						"h": 27
+					}
+				},
+				{
+					"filename": "banker-3.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 30,
+						"h": 27
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 30,
+						"h": 27
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 30,
+						"h": 27
+					}
+				},
+				{
+					"filename": "banker-4.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 30,
+						"h": 27
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 30,
+						"h": 27
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 30,
+						"h": 27
+					}
+				},
+				{
+					"filename": "banker-5.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 30,
+						"h": 27
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 30,
+						"h": 27
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 30,
+						"h": 27
+					}
+				},
+				{
+					"filename": "banker-10.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 30,
+						"h": 27
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 30,
+						"h": 27
+					},
+					"frame": {
+						"x": 33,
+						"y": 1,
+						"w": 30,
+						"h": 27
+					}
+				},
+				{
+					"filename": "banker-6.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 30,
+						"h": 27
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 30,
+						"h": 27
+					},
+					"frame": {
+						"x": 33,
+						"y": 1,
+						"w": 30,
+						"h": 27
+					}
+				},
+				{
+					"filename": "banker-7.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 30,
+						"h": 27
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 30,
+						"h": 27
+					},
+					"frame": {
+						"x": 33,
+						"y": 1,
+						"w": 30,
+						"h": 27
+					}
+				},
+				{
+					"filename": "banker-8.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 30,
+						"h": 27
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 30,
+						"h": 27
+					},
+					"frame": {
+						"x": 33,
+						"y": 1,
+						"w": 30,
+						"h": 27
+					}
+				},
+				{
+					"filename": "banker-9.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 30,
+						"h": 27
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 30,
+						"h": 27
+					},
+					"frame": {
+						"x": 33,
+						"y": 1,
+						"w": 30,
+						"h": 27
+					}
+				},
+				{
+					"filename": "banker-11.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 30,
+						"h": 27
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 30,
+						"h": 27
+					},
+					"frame": {
+						"x": 65,
+						"y": 1,
+						"w": 30,
+						"h": 27
+					}
+				},
+				{
+					"filename": "banker-12.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 30,
+						"h": 27
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 30,
+						"h": 27
+					},
+					"frame": {
+						"x": 65,
+						"y": 1,
+						"w": 30,
+						"h": 27
+					}
+				},
+				{
+					"filename": "banker-13.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 30,
+						"h": 27
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 30,
+						"h": 27
+					},
+					"frame": {
+						"x": 65,
+						"y": 1,
+						"w": 30,
+						"h": 27
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:1cdf0f86febb0456ae2ef49972d20908:7dd04c7f3d4cb7beaee2dea5d7826c43:9eed263b8829ad31856352a573f07908$"
+	}
+}

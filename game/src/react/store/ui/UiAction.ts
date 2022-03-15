@@ -15,5 +15,6 @@ export enum UI {
 export interface UiActionParam {}
 
 export interface BottomDialogActionParams extends UiActionParam {
+    title: string,
     messages: string[]
 }

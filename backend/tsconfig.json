@@ -15,7 +15,11 @@
     "strictNullChecks": false,
     "noImplicitAny": false,
     "strictBindCallApply": false,
+    "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "include": [
+      "src"
+    ]
   }
 }

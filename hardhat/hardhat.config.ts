@@ -51,11 +51,13 @@ const config: HardhatUserConfig = {
         goerli: {
             url: process.env.GOERLI_URL || "",
             accounts: process.env.GOERLI_KEY !== undefined ? [process.env.GOERLI_KEY] : [],
+            deploy: ['deploy_l1'],
         },
 
         mumbai: {
             url: process.env.MUMBAI_URL || "",
             accounts: process.env.MUMBAI_KEY !== undefined ? [process.env.MUMBAI_KEY] : [],
+            deploy: ['deploy_l2'],
         },
         polygon: {
             url: process.env.POLYGON_URL || "",

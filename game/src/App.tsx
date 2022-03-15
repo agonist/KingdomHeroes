@@ -96,7 +96,7 @@ function App() {
             <Stack height={"100%"} direction="column"
                    justifyContent="flex-end"
                    alignItems="center" paddingBottom={8}>
-                <DialogBox messages={params.messages} onClose={() => store.dispatch(hideUi())}/>
+                <DialogBox messages={params.messages} title={params.title} onClose={() => store.dispatch(hideUi())}/>
             </Stack>
         )
     }

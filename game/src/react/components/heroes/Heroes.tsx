@@ -19,6 +19,10 @@ export default function Heroes() {
 
             <Stack spacing={2}>
 
+                {user.heroes.length == 0 &&
+                    <Typography>You don't own any heroes</Typography>
+                }
+
                 {user.heroes.map((item, index) => (
                     <Stack sx={{backgroundColor: "pink"}} key={index} width={200}>
                         <Typography>{item.name}</Typography>

@@ -1,0 +1,335 @@
+{
+	"textures": [
+		{
+			"image": "nurse.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 22,
+				"h": 144
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "nurse-0.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 20,
+						"h": 34
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 20,
+						"h": 34
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 20,
+						"h": 34
+					}
+				},
+				{
+					"filename": "nurse-1.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 20,
+						"h": 34
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 20,
+						"h": 34
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 20,
+						"h": 34
+					}
+				},
+				{
+					"filename": "nurse-10.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 20,
+						"h": 34
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 20,
+						"h": 34
+					},
+					"frame": {
+						"x": 1,
+						"y": 37,
+						"w": 20,
+						"h": 34
+					}
+				},
+				{
+					"filename": "nurse-11.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 20,
+						"h": 34
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 20,
+						"h": 34
+					},
+					"frame": {
+						"x": 1,
+						"y": 37,
+						"w": 20,
+						"h": 34
+					}
+				},
+				{
+					"filename": "nurse-12.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 20,
+						"h": 34
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 20,
+						"h": 34
+					},
+					"frame": {
+						"x": 1,
+						"y": 37,
+						"w": 20,
+						"h": 34
+					}
+				},
+				{
+					"filename": "nurse-13.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 20,
+						"h": 34
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 20,
+						"h": 34
+					},
+					"frame": {
+						"x": 1,
+						"y": 37,
+						"w": 20,
+						"h": 34
+					}
+				},
+				{
+					"filename": "nurse-14.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 20,
+						"h": 34
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 20,
+						"h": 34
+					},
+					"frame": {
+						"x": 1,
+						"y": 37,
+						"w": 20,
+						"h": 34
+					}
+				},
+				{
+					"filename": "nurse-2.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 20,
+						"h": 34
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 20,
+						"h": 34
+					},
+					"frame": {
+						"x": 1,
+						"y": 73,
+						"w": 20,
+						"h": 34
+					}
+				},
+				{
+					"filename": "nurse-3.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 20,
+						"h": 34
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 20,
+						"h": 34
+					},
+					"frame": {
+						"x": 1,
+						"y": 73,
+						"w": 20,
+						"h": 34
+					}
+				},
+				{
+					"filename": "nurse-4.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 20,
+						"h": 34
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 20,
+						"h": 34
+					},
+					"frame": {
+						"x": 1,
+						"y": 73,
+						"w": 20,
+						"h": 34
+					}
+				},
+				{
+					"filename": "nurse-5.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 20,
+						"h": 34
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 20,
+						"h": 34
+					},
+					"frame": {
+						"x": 1,
+						"y": 109,
+						"w": 20,
+						"h": 34
+					}
+				},
+				{
+					"filename": "nurse-6.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 20,
+						"h": 34
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 20,
+						"h": 34
+					},
+					"frame": {
+						"x": 1,
+						"y": 109,
+						"w": 20,
+						"h": 34
+					}
+				},
+				{
+					"filename": "nurse-7.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 20,
+						"h": 34
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 20,
+						"h": 34
+					},
+					"frame": {
+						"x": 1,
+						"y": 109,
+						"w": 20,
+						"h": 34
+					}
+				},
+				{
+					"filename": "nurse-8.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 20,
+						"h": 34
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 20,
+						"h": 34
+					},
+					"frame": {
+						"x": 1,
+						"y": 109,
+						"w": 20,
+						"h": 34
+					}
+				},
+				{
+					"filename": "nurse-9.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 20,
+						"h": 34
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 20,
+						"h": 34
+					},
+					"frame": {
+						"x": 1,
+						"y": 109,
+						"w": 20,
+						"h": 34
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:20ac04275eef09e96385a225f5a90d63:1f2360a2dba1e63a81d044e8e1c2afb3:9020e8621183187d517854bfadea9966$"
+	}
+}

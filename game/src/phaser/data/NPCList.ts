@@ -1,4 +1,7 @@
 export enum NPCList {
     NONE,
-    MINT
+    MINT,
+    BLACKSMITH,
+    NURSE,
+    BANKER
 }
