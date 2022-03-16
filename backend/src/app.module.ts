@@ -13,10 +13,7 @@ import {NftModule} from './nft/nft.module';
 import {ConfigModule} from "@nestjs/config";
 
 @Module({
-    imports: [ConfigModule.forRoot({
-        envFilePath: `${process.cwd()}/.env.${process.env.NODE_ENV}`,
-        isGlobal: true
-    }), AuthModule, UsersModule, NftModule],
+    imports: [ConfigModule.forRoot(), AuthModule, UsersModule, NftModule],
     controllers: [AppController, NftController],
     providers: [AppService, UsersService, ...userProviders, ...databaseProviders, NftService],
 })
