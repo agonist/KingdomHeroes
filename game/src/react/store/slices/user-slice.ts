@@ -37,7 +37,7 @@ const initialState: UserState = {
 
 export class API {
 
-    BASE_RUL: string = "http://localhost:3002"
+    BASE_RUL: string = "https://kingdomheroes-dev.herokuapp.com"
 
     async getNonce(address: string): Promise<string | undefined> {
         try {
