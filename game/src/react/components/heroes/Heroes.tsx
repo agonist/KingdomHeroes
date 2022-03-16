@@ -19,7 +19,7 @@ export default function Heroes() {
 
             <Stack spacing={2}>
 
-                {user.heroes.length == 0 &&
+                {user.heroes.length === 0 &&
                     <Typography>You don't own any heroes</Typography>
                 }
 

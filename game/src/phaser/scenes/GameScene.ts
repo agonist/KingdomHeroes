@@ -121,7 +121,7 @@ export default class GameScene extends Phaser.Scene {
     }
 
     update(time: number, delta: number) {
-        this.player.update(time, delta)
+        this.player.update()
         // this.blacksmith.update()
 
     }

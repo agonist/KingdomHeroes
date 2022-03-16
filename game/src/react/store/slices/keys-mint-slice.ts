@@ -12,7 +12,13 @@ import keccak256 from "keccak256";
 import {refreshUser} from "./user-slice";
 import {hideUi} from "./ui-slice";
 
-const whitelist = ["0xE032d90BE017B57118eAafaA5826De494D73E39b", "0xE032d90BE017B57118eAafaA5826De494D73E392", "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"];
+const whitelist = [
+    "0xCBaE0841D72C6e1BDC4e3a85Dea5497822F27d18",
+    "0xE032d90BE017B57118eAafaA5826De494D73E392",
+    "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+    "0xcF6c12BC62604207eBF7c95efd77c8B18519a6e1",
+    "0xE032d90BE017B57118eAafaA5826De494D73E39b",
+];
 const leafNodes = whitelist.map((addr) => keccak256(addr));
 const merkleTree = new MerkleTree(leafNodes, keccak256, {
     sortPairs: true,
@@ -93,7 +99,8 @@ export const mintKeysPresale = createAsyncThunk("keysMint/mintPresale",
             const hexProof = merkleTree.getHexProof(keccak256(params.address.toString()));
 
             const royalKingdomContract = new ethers.Contract(contracts.KINGDOM_KEY, KingdomKeys.abi, params.provider.getSigner())
-            let price = ethers.utils.parseUnits(root.heroesMint.mintTotalPrice.toFixed(2), 'ether');
+            let price = ethers.utils.parseUnits(root.keysMint.mintTotalPrice.toFixed(2), 'ether');
+            console.log(price)
             let tx;
             tx = await royalKingdomContract.mintPresale(hexProof, {value: price})
             await tx.wait()

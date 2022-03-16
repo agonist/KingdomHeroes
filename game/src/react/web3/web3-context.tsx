@@ -63,7 +63,7 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({child
                     options: {
                         rpc: {
                             [Networks.MAINNET]: NetworksURI.MAINNET,
-                            [Networks.RINKEBY]: NetworksURI.RINKEBY,
+                            [Networks.GOERLI]: NetworksURI.GOERLI,
                             [Networks.LOCALHOST]: NetworksURI.LOCALHOST,
                         },
                     },

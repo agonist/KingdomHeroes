@@ -65,7 +65,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 suffix: '.png',
             }),
             repeat: -1,
-            frameRate: 10
+            frameRate: 8
         })
 
 
@@ -78,7 +78,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 suffix: '.png',
             }),
             repeat: -1,
-            frameRate: 10
+            frameRate: 8
         })
 
         this.anims.create({
@@ -90,7 +90,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 suffix: '.png',
             }),
             repeat: -1,
-            frameRate: 10
+            frameRate: 8
         })
         this.anims.create({
             key: 'player-run-right-side',
@@ -101,7 +101,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 suffix: '.png',
             }),
             repeat: -1,
-            frameRate: 10
+            frameRate: 8
         })
         this.anims.play('player-idle-down')
 
@@ -110,12 +110,12 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
 
-    update(time: number, delta: number) {
+    update() {
         if (!this.cursors) {
             return
         }
         // console.log(this.currentFacingSign)
-        const speed = 100;
+        const speed = 70;
 
         const {x, y} = this
         if (this.cursors.left?.isDown) {

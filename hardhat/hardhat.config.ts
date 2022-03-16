@@ -52,6 +52,7 @@ const config: HardhatUserConfig = {
             url: process.env.GOERLI_URL || "",
             accounts: process.env.GOERLI_KEY !== undefined ? [process.env.GOERLI_KEY] : [],
             deploy: ['deploy_l1'],
+            gasMultiplier: 5
         },
 
         mumbai: {

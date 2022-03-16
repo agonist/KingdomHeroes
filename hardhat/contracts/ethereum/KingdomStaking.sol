@@ -17,10 +17,10 @@ contract KingdomStaking is Ownable {
     ICreethGold tokenContract;
 
     // mapping tokens ID => last claimed timestamp
-    mapping(uint256 => uint256) public staked;
+    mapping(uint256 => uint256) public heroesStaked;
 
     // mapping address => set of tokens ID staked
-    mapping(address => EnumerableSet.UintSet) private stakedTokensByAddress;
+    mapping(address => EnumerableSet.UintSet) private heroesStakedTokensByAddress;
 
     // daily yield
     uint256 yield = 25;
@@ -45,11 +45,11 @@ contract KingdomStaking is Ownable {
             require(nftContract.ownerOf(tokenIds[i]) == msg.sender, "Not the owner");
         }
 
-        EnumerableSet.UintSet storage set = stakedTokensByAddress[msg.sender];
+        EnumerableSet.UintSet storage set = heroesStakedTokensByAddress[msg.sender];
         uint256 currentTimestamp = block.timestamp;
 
         for (uint16 i = 0; i < length; i++) {
-            staked[tokenIds[i]] = currentTimestamp;
+            heroesStaked[tokenIds[i]] = currentTimestamp;
             nftContract.transferFrom(msg.sender, address(this), tokenIds[i]);
             set.add(uint16(tokenIds[i]));
             emit TokenStaked(msg.sender, tokenIds[i]);
@@ -61,7 +61,7 @@ contract KingdomStaking is Ownable {
     // @notice unstake tokens of a user.
     function unstake(uint16[] calldata tokenIds) external {
         uint256 length = tokenIds.length;
-        EnumerableSet.UintSet storage set = stakedTokensByAddress[msg.sender];
+        EnumerableSet.UintSet storage set = heroesStakedTokensByAddress[msg.sender];
 
         for (uint16 i = 0; i < length; i++) {
             require(set.contains(tokenIds[i]), "Not the owner");
@@ -70,7 +70,7 @@ contract KingdomStaking is Ownable {
         for (uint16 i = 0; i < length; i++) {
             nftContract.transferFrom(address(this), msg.sender, tokenIds[i]);
             set.remove(uint16(tokenIds[i]));
-            delete staked[tokenIds[i]];
+            delete heroesStaked[tokenIds[i]];
             emit TokenUnstaked(msg.sender, tokenIds[i]);
         }
     }
@@ -89,19 +89,19 @@ contract KingdomStaking is Ownable {
     }
 
     function _calculateTokenYield(uint16 _tokenId, uint256 _yield) internal view returns (uint256) {
-        uint256 time = (block.timestamp - staked[_tokenId]) * 10 ** 18;
+        uint256 time = (block.timestamp - heroesStaked[_tokenId]) * 10 ** 18;
         uint256 timeRate = time / 1 days;
         return timeRate * _yield;
     }
 
     function claimYield() external {
-        EnumerableSet.UintSet storage depositSet = stakedTokensByAddress[msg.sender];
+        EnumerableSet.UintSet storage depositSet = heroesStakedTokensByAddress[msg.sender];
         uint256 totalYield = _calculateYieldForAddress(depositSet);
         uint256 length = depositSet.length();
 
         if (totalYield > 0) {
             for (uint256 i = 0; i < length; i++) {
-                staked[depositSet.at(i)] = block.timestamp;
+                heroesStaked[depositSet.at(i)] = block.timestamp;
             }
 
             tokenContract.mint(msg.sender, totalYield);
@@ -113,7 +113,7 @@ contract KingdomStaking is Ownable {
 
     // @notice return an array of the tokens ids staked for an _address
     function stakedTokensIdsOf(address _address) external view returns (uint16[] memory){
-        EnumerableSet.UintSet storage depositSet = stakedTokensByAddress[_address];
+        EnumerableSet.UintSet storage depositSet = heroesStakedTokensByAddress[_address];
         uint16[] memory tokenIds = new uint16[](depositSet.length());
 
         for (uint16 i; i < depositSet.length(); i++) {
@@ -125,7 +125,7 @@ contract KingdomStaking is Ownable {
 
     // @notice return balance of an _address
     function balanceOf(address _address) external view returns (uint256) {
-        return stakedTokensByAddress[_address].length();
+        return heroesStakedTokensByAddress[_address].length();
     }
 
     // @notice return yield for a token id
@@ -135,7 +135,7 @@ contract KingdomStaking is Ownable {
 
     // @notice return yield for an address
     function calculateYieldForAddress(address _address) external view returns (uint256) {
-        EnumerableSet.UintSet storage set = stakedTokensByAddress[_address];
+        EnumerableSet.UintSet storage set = heroesStakedTokensByAddress[_address];
         return _calculateYieldForAddress(set);
     }
 
