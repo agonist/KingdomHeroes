@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useState, ReactElement, useContext, useMemo, useCallback, useEffect} from "react";
 import Web3Modal from "web3modal";
 import {StaticJsonRpcProvider, JsonRpcProvider, Web3Provider} from "@ethersproject/providers";
@@ -30,7 +31,7 @@ const Web3Context = React.createContext<Web3ContextData>(null);
 export const useWeb3Context = () => {
     const web3Context = useContext(Web3Context);
     if (!web3Context) {
-        throw new Error("useWeb3Context() can only be used inside of <Web3ContextProvider />, " + "please declare it at a higher level.");
+        throw new Error("useWeb3Context() can only be used inside of <Web3ContextProvider />, please declare it at a higher level.");
     }
     const {onChainProvider} = web3Context;
     return useMemo(() => {
@@ -78,26 +79,27 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({child
 
     };
 
-    const _initListeners = useCallback(
-        (rawProvider: JsonRpcProvider) => {
-            if (!rawProvider.on) {
-                return;
-            }
+    // const _initListeners = useCallback(
+    //     (rawProvider: JsonRpcProvider) => {
+    //         if (!rawProvider.on) {
+    //             return;
+    //         }
+    //         console.log("heee")
+    //         rawProvider.on("accountsChanged", () => setTimeout(() => window.location.reload(), 1));
+    //
+    //         rawProvider.on("chainChanged", async (chain: number) => {
+    //             changeNetwork(chain);
+    //         });
+    //
+    //         rawProvider.on("network", (_newNetwork, oldNetwork) => {
+    //             if (!oldNetwork) return;
+    //             window.location.reload();
+    //         });
+    //     },
+    //     [],
+    // );
 
-            rawProvider.on("accountsChanged", () => setTimeout(() => window.location.reload(), 1));
-
-            rawProvider.on("chainChanged", async (chain: number) => {
-                changeNetwork(chain);
-            });
-
-            rawProvider.on("network", (_newNetwork, oldNetwork) => {
-                if (!oldNetwork) return;
-                window.location.reload();
-            });
-        },
-        [provider],
-    );
-
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const changeNetwork = async (otherChainID: number) => {
         const network = Number(otherChainID);
 
@@ -111,7 +113,7 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({child
 
         const rawProvider = await web3Modal.connect();
 
-        _initListeners(rawProvider);
+        // _initListeners(rawProvider);
 
         const connectedProvider = new Web3Provider(rawProvider, "any");
 
