@@ -9,8 +9,8 @@
     "prebuild": "rimraf dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "nest start",
-    "dev": "nest start --watch",
+    "start": "NODE_ENV=dev nest start",
+    "dev": "NODE_ENV=local nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
@@ -23,6 +23,7 @@
   "dependencies": {
     "@metamask/eth-sig-util": "^4.0.0",
     "@nestjs/common": "^8.0.0",
+    "@nestjs/config": "^1.2.0",
     "@nestjs/core": "^8.0.0",
     "@nestjs/jwt": "^8.0.0",
     "@nestjs/passport": "^8.2.1",

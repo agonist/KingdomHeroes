@@ -7,12 +7,16 @@ import {UsersService} from "./users/users.service";
 import {userProviders} from "./users/users.providers";
 import {databaseProviders} from "./db/database.provider";
 import {LoggerMiddleware} from "./utils/logger.middleware";
-import { NftController } from './nft/nft.controller';
-import { NftService } from './nft/nft.service';
-import { NftModule } from './nft/nft.module';
+import {NftController} from './nft/nft.controller';
+import {NftService} from './nft/nft.service';
+import {NftModule} from './nft/nft.module';
+import {ConfigModule} from "@nestjs/config";
 
 @Module({
-    imports: [AuthModule, UsersModule, NftModule],
+    imports: [ConfigModule.forRoot({
+        envFilePath: `${process.cwd()}/.env.${process.env.NODE_ENV}`,
+        isGlobal: true
+    }), AuthModule, UsersModule, NftModule],
     controllers: [AppController, NftController],
     providers: [AppService, UsersService, ...userProviders, ...databaseProviders, NftService],
 })
