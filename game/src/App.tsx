@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useCallback, useEffect} from 'react'
 import './App.css'
 import {Box, Stack} from "@mui/material";
@@ -29,7 +30,7 @@ function App() {
             // setWalletChecked(true);
 
         }
-    }, [connect, hasCachedProvider, web3Modal]);
+    }, [web3Modal]);
 
 
     const uiAction = useAppSelector((state) => state.ui)
