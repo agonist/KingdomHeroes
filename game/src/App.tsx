@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react'
+import React, {useCallback, useEffect} from 'react'
 import './App.css'
 import {Box, Stack} from "@mui/material";
 import DialogBox from "./react/components/dialog/Dialog";
@@ -10,44 +10,27 @@ import {hideUi, showUi} from "./react/store/slices/ui-slice";
 import MintHeroes from "./react/components/mint/MintHeroes";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import {useAddress, useWeb3Context} from "./react/web3/web3-context";
-import {Web3Params} from "./react/store/utils/params";
+import {useWeb3Context} from "./react/web3/web3-context";
 import MintKeys from "./react/components/mint/MintKeys";
 import Inventory from "./react/components/inventory/Inventory";
 import Heroes from "./react/components/heroes/Heroes";
 
 function App() {
-    const address = useAddress();
-    const {connect, provider, hasCachedProvider, chainID, connected, web3Modal} = useWeb3Context();
-    const [walletChecked, setWalletChecked] = useState(false);
+    const {connect, hasCachedProvider, web3Modal} = useWeb3Context();
 
     useEffect(() => {
         if (web3Modal === undefined) return
 
         if (hasCachedProvider()) {
             connect().then(() => {
-                setWalletChecked(true);
+                // setWalletChecked(true);
             });
         } else {
-            setWalletChecked(true);
+            // setWalletChecked(true);
 
         }
-    }, [web3Modal]);
+    }, [connect, hasCachedProvider, web3Modal]);
 
-    useEffect(() => {
-        console.log("address " + address)
-        console.log("Connected " + connected)
-        let p: Web3Params = {
-            networkID: chainID, provider: provider, address: address
-        }
-        if (connected) {
-            //dispatch(loadApp(p))
-        } else {
-            // const preloader = phaserGame.scene.getScene(Constants.SCENE_PRELOADER) as PreloaderScene
-            // preloader.startMenu()
-        }
-
-    }, [connected])
 
     const uiAction = useAppSelector((state) => state.ui)
 
@@ -86,7 +69,7 @@ function App() {
         return () => {
             document.removeEventListener("keydown", handleClick, false);
         };
-    }, [uiAction]);
+    }, [handleClick, uiAction]);
 
 
     let ui: JSX.Element = <div/>
