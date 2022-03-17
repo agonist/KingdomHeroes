@@ -1,8 +1,8 @@
 export const DIALOG = {
     D1: [
-        "Hello chenapan, I'm the super dialog", "Please say hi to Picoti"
+        "Hello there, I'm the super dialog", "Enjoy your time"
     ],
     D2: [
-        "Hello Peepoodoo, I'm the super dialog number 2", "Please say hi to Toby", "GOODBYE TOBY GOODBYE TOBY"
+        "Hello, I'm the super dialog number 2", "Please say have a good day", "wagmi"
     ]
 }
