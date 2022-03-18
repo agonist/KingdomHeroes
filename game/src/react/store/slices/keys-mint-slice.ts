@@ -48,7 +48,7 @@ export const loadKeysMintDetails = createAsyncThunk("keysMint/init",
         let presaleActive = false
         let saleActive = false
         let currentMinted = 0
-        let whitelisted = false
+        let whitelisted = true
         let mintPrice = 0
 
 
@@ -63,8 +63,8 @@ export const loadKeysMintDetails = createAsyncThunk("keysMint/init",
             if (presaleActive) mintPrice = 0.03
             if (saleActive) mintPrice = 0.05
 
-            const hexProof = merkleTree.getHexProof(keccak256(params.address.toString()));
-            whitelisted = hexProof.length > 0
+            // const hexProof = merkleTree.getHexProof(keccak256(params.address.toString()));
+            // whitelisted = hexProof.length > 0
             console.log("Key whitelist " + whitelisted)
         } catch (e) {
             console.log(e)
