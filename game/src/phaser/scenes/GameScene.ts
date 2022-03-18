@@ -39,21 +39,21 @@ export default class GameScene extends Phaser.Scene {
         const tileset = map.addTilesetImage(Constants.TILESET_WORLD, Constants.KEY_TILES_TOWN)
 
         // Ground
-        map.createLayer('Ground', tileset)
+        map.createLayer('ground', tileset)
 
         // Walls
-        const wallsLayer = map.createLayer('Wall', tileset)
+        const wallsLayer = map.createLayer('walls', tileset)
         wallsLayer.setCollisionByProperty({collide: true})
         // debugDraw(wallsLayer, this)
 
         // WL blockers
 
-        let whitelistLayer
-        if (!this.whitelisted) {
-            whitelistLayer = map.createLayer('WL', tileset)
-            whitelistLayer.setCollisionByProperty({collide: true})
-            debugDraw(whitelistLayer, this)
-        }
+        // let whitelistLayer
+        // if (!this.whitelisted) {
+        //     whitelistLayer = map.createLayer('WL', tileset)
+        //     whitelistLayer.setCollisionByProperty({collide: true})
+        //     debugDraw(whitelistLayer, this)
+        // }
 
 
         this.createInteractableObject(map)
@@ -62,8 +62,8 @@ export default class GameScene extends Phaser.Scene {
 
 
         // player
-        this.player = new Player(this, 178, 128)
-        if (whitelistLayer) this.physics.add.collider(this.player, whitelistLayer)
+        this.player = new Player(this, 400, 248)
+        // if (whitelistLayer) this.physics.add.collider(this.player, whitelistLayer)
 
         this.physics.add.collider(this.player, wallsLayer)
         this.physics.add.collider(this.player, this.npcGroup!)
@@ -81,7 +81,7 @@ export default class GameScene extends Phaser.Scene {
             immovable: true
         });
 
-        const forge = new Sprite(this, 400, 66, Constants.KEY_FORGE)
+        const forge = new Sprite(this, 310, 210, Constants.KEY_FORGE)
         this.physics.add.existing(forge);
         this.add.existing(forge)
         this.collidingGroup.add(forge)
@@ -110,12 +110,12 @@ export default class GameScene extends Phaser.Scene {
             immovable: true
         });
 
-        tilemap.getObjectLayer('Signs').objects.forEach((sign) => {
-            if (sign !== undefined) {
-                const signSprite = new Sign(this, sign.x!, (sign.y! - sign.height!), sign.id)
-                this.interactableGroup!.add(signSprite)
-            }
-        });
+        // tilemap.getObjectLayer('Signs').objects.forEach((sign) => {
+        //     if (sign !== undefined) {
+        //         const signSprite = new Sign(this, sign.x!, (sign.y! - sign.height!), sign.id)
+        //         this.interactableGroup!.add(signSprite)
+        //     }
+        // });
     }
 
     update(time: number, delta: number) {

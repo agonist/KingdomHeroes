@@ -17,8 +17,8 @@ export const Constants = {
     KEY_FORGE: "forge",
 
     //ASSETS
-    ASSETS_TOWN_ATLAS: "assets/tiles/atlas.png",
-    ASSETS_TOWN_TILED: "assets/tiles/world.tmj",
+    ASSETS_TOWN_ATLAS: "assets/tiles/town/town.png",
+    ASSETS_TOWN_TILED: "assets/tiles/town/town.tmj",
     ASSETS_SIGN: "assets/tiles/sign.png",
     ASSETS_MINT_NPC: "assets/sensei.png",
     ASSETS_PLAYER: "assets/player/player.png",
@@ -32,7 +32,7 @@ export const Constants = {
     ASSETS_FORGE: "assets/building/forge.png",
 
     // TILESET
-    TILESET_WORLD: "world"
+    TILESET_WORLD: "town"
 
 }
 
