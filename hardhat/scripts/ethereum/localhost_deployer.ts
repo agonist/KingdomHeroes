@@ -30,7 +30,13 @@ async function deployLocal() {
     await royalKingdom.togglePresale()
 
 
-    const whitelist = ["0xCBaE0841D72C6e1BDC4e3a85Dea5497822F27d18", "0xE032d90BE017B57118eAafaA5826De494D73E392", "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"];
+    const whitelist = [
+        "0xCBaE0841D72C6e1BDC4e3a85Dea5497822F27d18",
+        "0xE032d90BE017B57118eAafaA5826De494D73E392",
+        "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+        "0xcF6c12BC62604207eBF7c95efd77c8B18519a6e1",
+        "0xE032d90BE017B57118eAafaA5826De494D73E39b",
+    ];
     const leafNodes = whitelist.map((addr) => keccak256(addr));
     const merkleTree = new MerkleTree(leafNodes, keccak256, {
         sortPairs: true,

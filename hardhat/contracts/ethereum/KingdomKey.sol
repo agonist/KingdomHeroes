@@ -9,6 +9,7 @@ import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
 /// @title Royal Kingdom Key NFT contract
 /// @author agonist (https://github.com/agonist)
 contract KingdomKey is ERC1155Pausable, Ownable {
+    // TODO ADD WITHDRAW !!!
 
     uint256 public constant KINGDOM_KEY = 1;
 
@@ -99,4 +100,6 @@ contract KingdomKey is ERC1155Pausable, Ownable {
     function unpause() external onlyOwner {
         _unpause();
     }
+
+    // TODO ADD WITHDRAW !!!
 }

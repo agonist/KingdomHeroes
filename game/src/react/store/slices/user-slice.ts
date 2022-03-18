@@ -37,7 +37,7 @@ const initialState: UserState = {
 
 export class API {
 
-    BASE_RUL: string = "https://kingdomheroes-dev.herokuapp.com"
+    BASE_RUL?: string = process.env.REACT_APP_API
 
     async getNonce(address: string): Promise<string | undefined> {
         try {

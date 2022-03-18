@@ -11,11 +11,14 @@ import {NftController} from './nft/nft.controller';
 import {NftService} from './nft/nft.service';
 import {NftModule} from './nft/nft.module';
 import {ConfigModule} from "@nestjs/config";
+import {MetadataController} from "./metadata/metadata.controller";
+import {MetadataService} from "./metadata/metadata.service";
+import {metadataProviders} from "./metadata/metadata.providers";
 
 @Module({
     imports: [ConfigModule.forRoot(), AuthModule, UsersModule, NftModule],
-    controllers: [AppController, NftController],
-    providers: [AppService, UsersService, ...userProviders, ...databaseProviders, NftService],
+    controllers: [AppController, NftController, MetadataController],
+    providers: [AppService, UsersService, MetadataService, ...userProviders, ...databaseProviders, ...metadataProviders, NftService],
 })
 
 export class AppModule implements NestModule {
