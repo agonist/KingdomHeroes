@@ -1,7 +1,5 @@
 import Phaser from 'phaser';
-import {debugDraw} from "../debug/debug";
 import Player from "../objects/Player";
-import Sign from "../objects/Sign";
 import {Constants} from "../Constants";
 import {Blacksmith} from "../objects/npc/Blacksmith";
 import {Nurse} from "../objects/npc/Nurse";
