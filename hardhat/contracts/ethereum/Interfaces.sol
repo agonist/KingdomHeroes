@@ -9,3 +9,5 @@ interface ICreethGold is IERC20 {
     function mint(address _account, uint256 _amount) external;
 
 }
+
+
