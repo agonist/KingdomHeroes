@@ -40,6 +40,11 @@
           "components": [
             {
               "internalType": "uint64",
+              "name": "tokenId",
+              "type": "uint64"
+            },
+            {
+              "internalType": "uint64",
               "name": "attack",
               "type": "uint64"
             },
@@ -76,6 +81,11 @@
       "inputs": [
         {
           "components": [
+            {
+              "internalType": "uint64",
+              "name": "tokenId",
+              "type": "uint64"
+            },
             {
               "internalType": "uint64",
               "name": "attack",
@@ -160,6 +170,11 @@
       ],
       "name": "tokenStats",
       "outputs": [
+        {
+          "internalType": "uint64",
+          "name": "tokenId",
+          "type": "uint64"
+        },
         {
           "internalType": "uint64",
           "name": "attack",

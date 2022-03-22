@@ -1,12 +1,12 @@
-import {Inject, Injectable} from "@nestjs/common";
+import {Inject, Injectable, Logger} from "@nestjs/common";
 import mongoose, {Model} from "mongoose";
 import {
     AlchemyProvider,
     BigNumber,
     Contract,
-    EthersContract,
+    EthersContract, InfuraProvider,
     InjectContractProvider,
-    InjectEthersProvider
+    InjectEthersProvider, logger, StaticJsonRpcProvider
 } from "nestjs-ethers";
 import * as TokenStats from "../web3/abi/TokenStats.json";
 import * as KindgomHeroes from "../web3/abi/KingdomHeroes.json";
@@ -31,26 +31,37 @@ export class MetadataService {
 
     private heroesContract: Contract
     private statsContract: Contract
+    private logger = new Logger();
 
     constructor(
         @Inject('METADATA_MODEL')
         private metadataModel: Model<Metadata>,
         @InjectEthersProvider('mumbai')
-        private readonly polyProvider: AlchemyProvider,
+        private readonly polyProvider: InfuraProvider,
         @InjectContractProvider('mumbai')
         private readonly mubaiContract: EthersContract,
         @InjectEthersProvider('goerli')
-        private readonly goerliProvider: AlchemyProvider,
+        private readonly goerliProvider: InfuraProvider,
         @InjectContractProvider('goerli')
         private readonly etherContract: EthersContract,
+        @InjectEthersProvider('local')
+        private readonly ethersProvider: StaticJsonRpcProvider,
+        @InjectContractProvider('local')
+        private readonly localContract: EthersContract,
     ) {
-        this.heroesContract = this.etherContract.create(process.env.KINGDOM_HEROES, KindgomHeroes.abi)
-        this.statsContract = this.mubaiContract.create(process.env.TOKEN_STATS, TokenStats.abi)
+        if (process.env.POLY_CONTRACT_PROVIDER === "local") {
+            this.heroesContract = this.localContract.create(process.env.KINGDOM_HEROES, KindgomHeroes.abi)
+            this.statsContract = this.localContract.create(process.env.TOKEN_STATS, TokenStats.abi)
+        } else {
+            this.heroesContract = this.etherContract.create(process.env.KINGDOM_HEROES, KindgomHeroes.abi)
+            this.statsContract = this.mubaiContract.create(process.env.TOKEN_STATS, TokenStats.abi)
+        }
+
 
     }
 
     async gen() {
-        for (let i = 1; i < 11; i += 1) {
+        for (let i = 1; i < 30; i += 1) {
             await this.metadataModel.create({
                 name: "Heroes #" + i,
                 description: "super description",
@@ -58,12 +69,20 @@ export class MetadataService {
                 image: "",
                 attributes: [
                     {
-                        trait_type: "Trait 1",
-                        value: "Hole " + i
+                        trait_type: "Cloth",
+                        value: "Cloth " + i
                     },
                     {
-                        trait_type: "Trait 2",
-                        value: "Hola " + i
+                        trait_type: "Head",
+                        value: "Head " + i
+                    },
+                    {
+                        trait_type: "Shoes",
+                        value: "Shoes " + i
+                    },
+                    {
+                        trait_type: "Weapon",
+                        value: "Weapon " + i
                     }
                 ]
             })
@@ -71,8 +90,24 @@ export class MetadataService {
 
     }
 
-    async getMetadataForId(tokenId: number): Promise<MetadataModel> {
+    async getMetadataForMultipleIds(tokenIds: number[]): Promise<MetadataModel[]> {
 
+        const stats = await this.getStatsForIds(tokenIds)
+        const meta = await this.metadataModel.find({id: tokenIds})
+
+        let finalMeta = []
+        for (let i = 0; i < tokenIds.length; i++) {
+
+            const s = stats.find(s => s.tokenId === tokenIds[i])
+            const m = meta.find(m => m.id === tokenIds[i])
+
+            finalMeta.push(this.toModelMetadata(m, s))
+        }
+
+        return finalMeta
+    }
+
+    async getMetadataForId(tokenId: number): Promise<MetadataModel> {
         // const supply = this.heroesContract.totalSupply()
 
         const meta = await this.metadataModel.findOne({id: tokenId})
@@ -94,13 +129,16 @@ export class MetadataService {
     }
 
     parseStats(stats: Array<BigNumber[]>): Stats[] {
+
         let final = stats.map((s) => {
+
             let st: Stats = {
-                attack: BigNumber.from(s[0]).toNumber(),
-                defense: BigNumber.from(s[1]).toNumber(),
-                speed: BigNumber.from(s[2]).toNumber(),
-                level: BigNumber.from(s[3]).toNumber(),
-                hp: BigNumber.from(s[4]).toNumber()
+                tokenId: BigNumber.from(s[0]).toNumber(),
+                attack: BigNumber.from(s[1]).toNumber(),
+                defense: BigNumber.from(s[2]).toNumber(),
+                speed: BigNumber.from(s[3]).toNumber(),
+                level: BigNumber.from(s[4]).toNumber(),
+                hp: BigNumber.from(s[5]).toNumber()
             }
             return st
         })
@@ -169,6 +207,7 @@ export class MetadataService {
 
 
 export interface Stats {
+    tokenId: number,
     attack: number,
     defense: number,
     speed: number,

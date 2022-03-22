@@ -33,26 +33,32 @@ function MintHeroesRoot() {
     if (keysMint.presaleActive && !keysMint.whitelisted) {
         return (
             <Stack alignItems="center" spacing={3}>
-                <Typography>Sorry you are not whitelisted for presale</Typography>
+                <Typography color={"white"}>Sorry you are not whitelisted for presale</Typography>
+                <Button onClick={() => dispatch(hideUi())}>Close</Button>
             </Stack>
         )
     }
 
     if (keysMint.saleActive || (keysMint.presaleActive && keysMint.whitelisted)) {
+        let saletxt = "Pre-Sale"
+        if (keysMint.saleActive) {
+            saletxt = "Sale"
+        }
+
         return (
             <Stack alignItems="center" spacing={2}>
-                <Typography variant={"h2"}>Keys Pre-Sale</Typography>
-                <Typography variant={"body1"}>
-                    GM adventurer, <br/>I'm the cool NPC that will sell you keys
+                <Typography color={"white"} variant={"h2"}>Keys {saletxt}</Typography>
+                <Typography variant={"body1"} color={"white"}>
+                    GM adventurer, <br/>welcome to the Kingdom Keys mint. <br/> Minting a key will give you guaranteed
+                    access to the Heroes Whitelist,<br/> a bonus yield and much more.
                 </Typography>
 
-                <Typography paddingTop={2} variant={"h4"}>{keysMint.currentMinted} / 500 Keys minted</Typography>
+                <Typography color={"white"} paddingTop={2} variant={"h4"}>{keysMint.currentMinted} / 500 Keys
+                    minted</Typography>
 
                 <Stack direction={"row"} spacing={2}>
 
-
-                    <Typography>1 per wallet</Typography>
-
+                    <Typography color={"white"}>1 per wallet max</Typography>
 
                 </Stack>
 
@@ -66,7 +72,8 @@ function MintHeroesRoot() {
     // No sale active
     return (
         <Stack>
-            <Typography>No sale currently active</Typography>
+            <Typography color={"white"}>No sale currently active</Typography>
+            <Button onClick={() => dispatch(hideUi())}>Close</Button>
         </Stack>
     )
 }

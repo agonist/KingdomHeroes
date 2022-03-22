@@ -10,7 +10,6 @@ import '@openzeppelin/contracts/token/ERC1155/IERC1155.sol';
 /// @title Kingdom Heroes NFT contract
 /// @author agonist (https://github.com/agonist)
 contract KingdomHeroes is ERC721ACustom, Ownable {
-    // TODO ADD WITHDRAW !!!
 
     uint256 public immutable maxSupply;
     uint256 public maxMintAtOnce;
@@ -79,6 +78,7 @@ contract KingdomHeroes is ERC721ACustom, Ownable {
         _safeMint(msg.sender, _quantity + keyExtra);
     }
 
+
     /// @notice toggle the main sale on or off
     function toggleSale() external onlyOwner {
         saleActive = !saleActive;
@@ -117,6 +117,11 @@ contract KingdomHeroes is ERC721ACustom, Ownable {
     function _startTokenId() internal pure override returns (uint256) {
         return 1;
     }
-    // TODO ADD WITHDRAW !!!
+
+
+    function withdraw() public onlyOwner {
+        address payable to = payable(msg.sender);
+        to.transfer(address(this).balance);
+    }
 
 }

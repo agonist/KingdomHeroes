@@ -90,7 +90,7 @@ export const mintKeysPresale = createAsyncThunk("keysMint/mintPresale",
 
         try {
             toast.loading('Minting Kingdom Heroes')
-            const hexProof = merkleTree.getHexProof(keccak256(params.address.toString()));
+            const hexProof = merkleTree.getHexProof(keccak256(params.address));
 
             const royalKingdomContract = new ethers.Contract(contracts.KINGDOM_KEY, KingdomKeys.abi, params.provider.getSigner())
             let price = ethers.utils.parseUnits(root.keysMint.mintTotalPrice.toFixed(2), 'ether');

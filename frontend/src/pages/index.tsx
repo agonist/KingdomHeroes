@@ -12,7 +12,6 @@ const Home: NextPage = () => {
     return (
         <Stack>
             <HeadSection/>
-            <MintSection/>
             <ConceptSection/>
             <GameplaySection/>
             <RoadmapSection/>

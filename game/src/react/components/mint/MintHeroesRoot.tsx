@@ -50,27 +50,36 @@ function MintHeroesRoot() {
     if (heroesMint.presaleActive && !heroesMint.whitelisted) {
         return (
             <Stack alignItems="center" spacing={3}>
-                <Typography>Sorry you are not whitelisted for presale</Typography>
+                <Typography color={"white"}>Sorry you are not whitelisted for presale</Typography>
+                <Button onClick={() => dispatch(hideUi())}>Close</Button>
+
             </Stack>
         )
     }
 
     if (heroesMint.saleActive || (heroesMint.presaleActive && heroesMint.whitelisted)) {
+        let saletxt = "Pre-Sale"
+        if (heroesMint.saleActive) {
+            saletxt = "Sale"
+        }
+
         return (
             <Stack alignItems="center" spacing={2}>
-                <Typography variant={"h2"}>Heroes Pre-Sale</Typography>
-                <Typography variant={"body1"}>
-                    GM adventurer, <br/>I'm the cool NPC that will sell you heroes
+                <Typography color={"white"} variant={"h2"}>Heroes {saletxt}</Typography>
+                <Typography color={"white"} variant={"body1"}>
+                    GM adventurer, <br/>Welcome to the Heroes mint.<br/>Kingdom Keys holders will get a free hero<br/>
+                    automatically during the presale.
                 </Typography>
 
-                <Typography paddingTop={2} variant={"h4"}>{heroesMint.currentMinted} / 10000 Heroes minted</Typography>
+                <Typography color={"white"} paddingTop={2} variant={"h4"}>{heroesMint.currentMinted} / 10000 Heroes
+                    minted</Typography>
 
                 <Stack direction={"row"} spacing={2}>
                     <Fab size="small" aria-label="remove" onClick={mintMinus}>
                         <RemoveIcon/>
                     </Fab>
 
-                    <Typography>{heroesMint.mintAmount}</Typography>
+                    <Typography color={"white"}>{heroesMint.mintAmount}</Typography>
 
                     <Fab size="small" aria-label="add" onClick={mintPlus}>
                         <AddIcon/>
@@ -87,7 +96,8 @@ function MintHeroesRoot() {
     // No sale active
     return (
         <Stack>
-            <Typography>No sale currently active</Typography>
+            <Typography color={"white"}>No sale currently active</Typography>
+            <Button onClick={() => dispatch(hideUi())}>Close</Button>
         </Stack>
     )
 }

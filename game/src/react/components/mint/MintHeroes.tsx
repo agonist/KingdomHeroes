@@ -1,14 +1,14 @@
 import {Stack} from "@mui/material";
 import MintHeroesRoot from "./MintHeroesRoot";
-import dialogBorderBox from "../dialog/dialogbox.png";
+import bgui from "../bgui.png";
 
 export default function MintHeroes() {
 
     return (
         <Stack sx={{
-            backgroundColor: "#e2b27e",
+            backgroundColor: "#273047",
             border: "solid",
-            borderImage: `url("${dialogBorderBox}") 25 / 10px 10px 10px 10px stretch`,
+            borderImage: `url("${bgui}") 25 / 10px 10px 10px 10px stretch`,
             padding: 2,
             paddingX: 3
         }}>

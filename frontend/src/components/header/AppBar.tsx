@@ -51,7 +51,7 @@ function MenuBar(): JSX.Element {
                 </Container>
                 <Hidden mdDown>
                     <Stack width={350}>
-                        <ConnectButton/>
+                        {/*<ConnectButton/>*/}
                     </Stack>
                 </Hidden>
 

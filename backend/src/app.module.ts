@@ -14,9 +14,10 @@ import {ConfigModule} from "@nestjs/config";
 import {MetadataController} from "./metadata/metadata.controller";
 import {MetadataService} from "./metadata/metadata.service";
 import {metadataProviders} from "./metadata/metadata.providers";
+import {MetadataModule} from "./metadata/metadata.module";
 
 @Module({
-    imports: [ConfigModule.forRoot(), AuthModule, UsersModule, NftModule],
+    imports: [ConfigModule.forRoot(), AuthModule, UsersModule, NftModule, MetadataModule],
     controllers: [AppController, NftController, MetadataController],
     providers: [AppService, UsersService, MetadataService, ...userProviders, ...databaseProviders, ...metadataProviders, NftService],
 })

@@ -7,10 +7,17 @@ import {MetadataController} from "./metadata.controller";
 
 @Module({
     imports: [
+        EthersModule.forRoot(
+            {
+                token: 'local',
+                custom: "http://127.0.0.1:8545",
+                useDefaultProvider: false,
+
+            }),
         EthersModule.forRoot({
             token: 'mumbai',
             network: MUMBAI_NETWORK,
-            alchemy: 'm1MYV4kRLcvJKke67On0lFxNW84NIkBJ',
+            infura: '9323d47f2a0c4745b63f255c0feaae14',
             useDefaultProvider: false,
         }),
         DatabaseModule],

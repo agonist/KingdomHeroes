@@ -1,6 +1,9 @@
 import {MetadataService} from "./metadata.service";
-import {Controller, Get, Param, Request, UseGuards} from '@nestjs/common';
+import {Body, Controller, Get, Param, Post, Request, UseGuards} from '@nestjs/common';
 
+export class RequestIds {
+    ids: number[]
+}
 
 @Controller('metadata')
 export class MetadataController {
@@ -13,9 +16,17 @@ export class MetadataController {
         await this.metadataService.gen()
     }
 
+    @Post('ids')
+    async getMetadataMultiple(@Body() params: RequestIds) {
+        return await this.metadataService.getMetadataForMultipleIds(params.ids)
+    }
+
     @Get(':id')
     async getMetadata(@Request() req, @Param() params) {
         return await this.metadataService.getMetadataForId(params.id)
     }
 
+
 }
+
+

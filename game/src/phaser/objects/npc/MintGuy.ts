@@ -14,11 +14,10 @@ export class MintGuy extends Npc {
 
     triggerAction() {
         const action: UiAction = {
-            show: UI.MINT_KEYS,
+            show: UI.MINT_HEROES,
             params: undefined
         }
 
         store.dispatch(showUi(action))
     }
-
 }

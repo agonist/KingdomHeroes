@@ -10,6 +10,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract TokensStats is Ownable {
 
     struct Stats {
+        uint64 tokenId;
         uint64 attack;
         uint64 defense;
         uint64 speed;

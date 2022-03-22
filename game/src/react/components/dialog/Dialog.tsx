@@ -5,6 +5,7 @@ import {makeStyles} from "@mui/styles";
 import dialogBorderBox from './dialogbox.png';
 import {IconButton, Stack, Typography} from "@mui/material";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import bgui from "../bgui.png";
 
 const useStyles = makeStyles((theme) => ({
     dialogMessage: () => ({
@@ -14,9 +15,9 @@ const useStyles = makeStyles((theme) => ({
 
 
     dialogBox: () => ({
-        backgroundColor: "#e2b27e",
+        backgroundColor: "#273047",
         border: "solid",
-        borderImage: `url("${dialogBorderBox}") 25 / 10px 10px 10px 10px stretch`,
+        borderImage: `url("${bgui}") 25 / 10px 10px 10px 10px stretch`,
         padding: 15
     }),
 
@@ -71,12 +72,12 @@ const DialogBox = ({messages, title, onClose}: DialogBoxProps) => {
     return (
         <Stack className={classes.dialogBox} width={600} height={150}>
             <Stack width={"100%"} alignItems={"flex-start"}>
-                <Typography variant={"h4"}>{title}</Typography>
+                <Typography variant={"h4"} color={"white"}>{title}</Typography>
                 <Message message={messages[currentMessage]}/>
             </Stack>
             <Stack height={"100%"} justifyContent="flex-end"
                    alignItems="flex-end">
-                <IconButton aria-label="next" onClick={handleClick} sx={{color: "black"}}>
+                <IconButton aria-label="next" onClick={handleClick} sx={{color: "white"}}>
                     <ArrowForwardIcon/>
                 </IconButton>
             </Stack>

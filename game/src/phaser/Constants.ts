@@ -6,6 +6,7 @@ export const Constants = {
     SCENE_GAME: "SCENE_GAME",
 
     //KEYS
+    KEY_LOGO: "logo",
     KEY_TILES_TOWN: "tiles_town",
     KEY_PLAYER: "player",
     KEY_BLACKSMITH: "blacksmith",
@@ -17,6 +18,7 @@ export const Constants = {
     KEY_FORGE: "forge",
 
     //ASSETS
+    ASSETS_LOGO: "logo.png",
     ASSETS_TOWN_ATLAS: "assets/tiles/town/town.png",
     ASSETS_TOWN_TILED: "assets/tiles/town/town.tmj",
     ASSETS_SIGN: "assets/tiles/sign.png",

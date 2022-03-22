@@ -1,9 +1,9 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useState, ReactElement, useContext, useMemo, useCallback, useEffect} from "react";
 import Web3Modal from "web3modal";
 import {StaticJsonRpcProvider, JsonRpcProvider, Web3Provider} from "@ethersproject/providers";
 import WalletConnectProvider from "@walletconnect/web3-provider";
-import {Networks, DEFAULT_NETWORK, DEFAULT_URI, NetworksURI, getURI} from "./blockchain";
+import {DEFAULT_NETWORK, Networks, NetworksURI} from "./blockchain";
+import {useDispatch} from "react-redux";
 import {swithNetwork} from "./switch-network";
 import {Web3Params} from "../store/utils/params";
 
@@ -31,12 +31,12 @@ const Web3Context = React.createContext<Web3ContextData>(null);
 export const useWeb3Context = () => {
     const web3Context = useContext(Web3Context);
     if (!web3Context) {
-        throw new Error("useWeb3Context() can only be used inside of <Web3ContextProvider />, please declare it at a higher level.");
+        throw new Error("useWeb3Context() can only be used inside of <Web3ContextProvider />, " + "please declare it at a higher level.");
     }
     const {onChainProvider} = web3Context;
     return useMemo(() => {
         return {...onChainProvider};
-    }, [web3Context, onChainProvider]);
+    }, [web3Context]);
 };
 
 export const useAddress = () => {
@@ -45,12 +45,14 @@ export const useAddress = () => {
 };
 
 export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({children}) => {
+    const dispatch = useDispatch();
+
     const [connected, setConnected] = useState(false);
     const [chainID, setChainID] = useState(DEFAULT_NETWORK);
     const [providerChainID, setProviderChainID] = useState(DEFAULT_NETWORK);
     const [address, setAddress] = useState("");
 
-    const [uri, setUri] = useState(DEFAULT_URI);
+    const [uri, setUri] = useState(NetworksURI.LOCALHOST);
     const [provider, setProvider] = useState<JsonRpcProvider>(new StaticJsonRpcProvider(uri));
 
     const [web3Modal, setWeb3Modal] = useState<Web3Modal>()
@@ -75,37 +77,35 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({child
     }, [])
 
     const hasCachedProvider = (): boolean => {
-        return !(!web3Modal || !web3Modal.cachedProvider);
-
+        if (!web3Modal) return false;
+        if (!web3Modal.cachedProvider) return false;
+        return true;
     };
 
-    // const _initListeners = useCallback(
-    //     (rawProvider: JsonRpcProvider) => {
-    //         if (!rawProvider.on) {
-    //             return;
-    //         }
-    //         console.log("heee")
-    //         rawProvider.on("accountsChanged", () => setTimeout(() => window.location.reload(), 1));
-    //
-    //         rawProvider.on("chainChanged", async (chain: number) => {
-    //             changeNetwork(chain);
-    //         });
-    //
-    //         rawProvider.on("network", (_newNetwork, oldNetwork) => {
-    //             if (!oldNetwork) return;
-    //             window.location.reload();
-    //         });
-    //     },
-    //     [],
-    // );
+    const _initListeners = useCallback(
+        (rawProvider: JsonRpcProvider) => {
+            if (!rawProvider.on) {
+                return;
+            }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            rawProvider.on("accountsChanged", () => setTimeout(() => window.location.reload(), 1));
+
+            rawProvider.on("chainChanged", async (chain: number) => {
+                changeNetwork(chain);
+            });
+
+            rawProvider.on("network", (_newNetwork, oldNetwork) => {
+                if (!oldNetwork) return;
+                window.location.reload();
+            });
+        },
+        [provider],
+    );
+
     const changeNetwork = async (otherChainID: number) => {
         const network = Number(otherChainID);
 
         setProviderChainID(network);
-        setChainID(network)
-        setUri(getURI(network))
     };
 
     const connect = useCallback(async () => {
@@ -113,7 +113,7 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({child
 
         const rawProvider = await web3Modal.connect();
 
-        // _initListeners(rawProvider);
+        _initListeners(rawProvider);
 
         const connectedProvider = new Web3Provider(rawProvider, "any");
 

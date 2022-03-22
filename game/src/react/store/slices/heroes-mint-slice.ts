@@ -63,7 +63,7 @@ export const loadHeroesMintDetails = createAsyncThunk("heroesMint/init",
             if (presaleActive) mintPrice = 0.03
             if (saleActive) mintPrice = 0.05
 
-            const hexProof = merkleTree.getHexProof(keccak256(params.address.toString()));
+            const hexProof = merkleTree.getHexProof(keccak256(params.address));
             whitelisted = hexProof.length > 0
 
         } catch (e) {
@@ -90,7 +90,7 @@ export const mintPresale = createAsyncThunk("heroesMint/mintPresale",
 
         try {
             toast.loading('Minting Kingdom Heroes')
-            const hexProof = merkleTree.getHexProof(keccak256(params.address.toString()));
+            const hexProof = merkleTree.getHexProof(keccak256(params.address));
 
             const royalKingdomContract = new ethers.Contract(contracts.KINGDOM_HEROES, KingdomHeroes.abi, params.provider.getSigner())
             let price = ethers.utils.parseUnits(root.heroesMint.mintTotalPrice.toFixed(2), 'ether');

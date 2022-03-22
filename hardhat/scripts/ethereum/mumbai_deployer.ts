@@ -1,4 +1,3 @@
-import keccak256 from "keccak256";
 
 require("dotenv").config();
 import hre = require("hardhat");
@@ -14,8 +13,8 @@ async function main() {
 
     let stats = Array()
     let ids = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
-    for (let i = 0; i < 20; i += 1) {
-        stats.push({attack: 1 + i, defense: 2 + i, speed: 3 + i, level: 2 + i, hp: 100 + i})
+    for (let i = 1; i < 20; i += 1) {
+        stats.push({tokenId: i, attack: 1 + i, defense: 2 + i, speed: 3 + i, level: 2 + i, hp: 100 + i})
     }
 
     // when
