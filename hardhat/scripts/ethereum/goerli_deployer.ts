@@ -5,24 +5,24 @@ import hre = require("hardhat");
 import {MerkleTree} from "merkletreejs";
 
 async function main() {
-    // await hre.run('deploy', {tags: 'KingdomKey'});
+    await hre.run('deploy', {tags: 'KingdomKey'});
     await hre.run('deploy', {tags: 'KingdomHeroes'});
     // await hre.run('deploy', {tags: 'CreethGold'});
     // await hre.run('deploy', {tags: 'KingdomStaking'});
 
     const deployments = hre.deployments;
-    // const KingdomKey = await deployments.get('KingdomKey');
+    const KingdomKey = await deployments.get('KingdomKey');
     const KingdomHeroes = await deployments.get('KingdomHeroes');
     // const CreethGold = await deployments.get('CreethGold');
     // const KingdomStaking = await deployments.get('KingdomStaking');
 
-    // const kingdomKey = await hre.ethers.getContractAt('KingdomKey', KingdomKey.address);
+    const kingdomKey = await hre.ethers.getContractAt('KingdomKey', KingdomKey.address);
     const royalKingdom = await hre.ethers.getContractAt('KingdomHeroes', KingdomHeroes.address);
     // const creethGold = await hre.ethers.getContractAt('CreethGold', CreethGold.address);
     // const kingdomStaking = await hre.ethers.getContractAt('KingdomStaking', KingdomStaking.address);
 
-    // await kingdomKey.togglePresale()
-    // await royalKingdom.togglePresale()
+    await kingdomKey.togglePresale()
+    //await royalKingdom.togglePresale()
 
     const whitelist = [
         "0xCBaE0841D72C6e1BDC4e3a85Dea5497822F27d18",
@@ -36,8 +36,8 @@ async function main() {
         sortPairs: true,
     });
 
-    // await kingdomKey.setWhitelistMerkleRoot(merkleTree.getHexRoot())
-    await royalKingdom.setWhitelistMerkleRoot(merkleTree.getHexRoot())
+    await kingdomKey.setWhitelistMerkleRoot(merkleTree.getHexRoot())
+    // await royalKingdom.setWhitelistMerkleRoot(merkleTree.getHexRoot())
 }
 
 main()

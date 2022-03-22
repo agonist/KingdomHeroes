@@ -78,6 +78,7 @@ contract KingdomHeroes is ERC721ACustom, Ownable {
         _safeMint(msg.sender, _quantity + keyExtra);
     }
 
+
     /// @notice toggle the main sale on or off
     function toggleSale() external onlyOwner {
         saleActive = !saleActive;
@@ -116,4 +117,11 @@ contract KingdomHeroes is ERC721ACustom, Ownable {
     function _startTokenId() internal pure override returns (uint256) {
         return 1;
     }
+
+
+    function withdraw() public onlyOwner {
+        address payable to = payable(msg.sender);
+        to.transfer(address(this).balance);
+    }
+
 }

@@ -8,10 +8,5 @@ export class NftController {
     ) {
     }
 
-    @Get('test')
-    getProfile(@Request() req) {
-        return this.nftService.someMethod2();
-    }
-
 
 }

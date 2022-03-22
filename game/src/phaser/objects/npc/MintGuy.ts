@@ -20,5 +20,4 @@ export class MintGuy extends Npc {
 
         store.dispatch(showUi(action))
     }
-
 }

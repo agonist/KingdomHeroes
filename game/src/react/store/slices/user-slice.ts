@@ -14,7 +14,7 @@ import {loadHeroesMintDetails} from "./heroes-mint-slice";
 import {Constants} from "../../../phaser/Constants";
 import {loadKeysMintDetails} from "./keys-mint-slice";
 import {buildInventory, InventoryItem} from "../../model/inventory";
-import {buildHeroes, HeroItem} from "../../model/hero";
+import {MetadataModel} from "../../model/metadata";
 
 interface UserState {
     loading: boolean,
@@ -22,7 +22,7 @@ interface UserState {
     heroesIds: number[],
     canMint: boolean,
     inventory: Array<InventoryItem>,
-    heroes: Array<HeroItem>
+    heroes: Array<MetadataModel>
 }
 
 const initialState: UserState = {
@@ -37,7 +37,7 @@ const initialState: UserState = {
 
 export class API {
 
-    BASE_RUL: string = "http://localhost:3002"
+    BASE_RUL?: string = process.env.REACT_APP_API
 
     async getNonce(address: string): Promise<string | undefined> {
         try {
@@ -55,8 +55,16 @@ export class API {
                 address: address,
                 signature: signature
             })
-            console.log(response)
             return response.data.access_token
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    async getMetadata(ids: number[]): Promise<MetadataModel[] | undefined> {
+        try {
+            const response = await axios.post<MetadataModel[]>(this.BASE_RUL + "/metadata/ids", {ids: ids})
+            return response.data
         } catch (e) {
             console.log(e)
         }
@@ -73,7 +81,7 @@ export const initUser = createAsyncThunk("user/init",
 
         let idsArray: number[] = []
         let inventory: Array<InventoryItem> = []
-        let heroes: Array<HeroItem> = []
+        let heroes: Array<MetadataModel> = []
 
         try {
 
@@ -104,11 +112,14 @@ export const initUser = createAsyncThunk("user/init",
             idsArray = ids.map((id) => {
                 return id.toNumber()
             })
+            const metadata = await api.getMetadata(idsArray)
+            if (metadata) {
+                heroes = metadata
+            }
 
             const kingdomKeys = new ethers.Contract(contracts.KINGDOM_KEY, KingdomKey.abi, params.provider);
             const keysBalance = await kingdomKeys.balanceOf(params.address, 1)
             inventory = buildInventory(keysBalance)
-            heroes = buildHeroes(idsArray)
 
         } catch (e) {
             console.log(e)
@@ -145,20 +156,22 @@ export const refreshUser = createAsyncThunk("user/refresh",
         const contracts = getAddresses(params.networkID);
 
         let inventory: Array<InventoryItem> = []
-        let heroes: Array<HeroItem> = []
+        let heroes: Array<MetadataModel> = []
 
         const kingdomHeroes = new ethers.Contract(contracts.KINGDOM_HEROES, KingdomHeroes.abi, params.provider);
         const ids: Array<BigNumber> = await kingdomHeroes.tokensOfOwner(params.address)
-        console.log("tokens " + ids)
         const idsArray = ids.map((id) => {
             return id.toNumber()
         })
-        console.log("tokens " + idsArray)
+
+        const metadata = await api.getMetadata(idsArray)
+        if (metadata) {
+            heroes = metadata
+        }
 
         const kingdomKeys = new ethers.Contract(contracts.KINGDOM_KEY, KingdomKey.abi, params.provider);
-        const keysBalance = kingdomKeys.balanceOf(params.address, 1)
+        const keysBalance = await kingdomKeys.balanceOf(params.address, 1)
         inventory = buildInventory(keysBalance)
-        heroes = buildHeroes(idsArray)
 
         return {
             loading: false,

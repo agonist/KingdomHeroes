@@ -10,11 +10,10 @@ const config: Phaser.Types.Core.GameConfig = {
     backgroundColor: '#282c34',
     width: window.innerWidth / 2,
     height: window.innerHeight / 2,
+    pixelArt: true,
     scale: {
         zoom: 2,
         mode: Phaser.Scale.ScaleModes.FIT,
-        // width: window.innerWidth,
-        // height: window.innerHeight,
     },
 
     physics: {
@@ -25,7 +24,6 @@ const config: Phaser.Types.Core.GameConfig = {
         },
     },
     scene: [PreloaderScene, MainMenuScene, GameScene],
-
 }
 
 const phaserGame = new Phaser.Game(config)

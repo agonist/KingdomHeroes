@@ -65,13 +65,14 @@ describe('TokensStats', function () {
             // given
             const {tokensStats} = await setup();
             let stats = Array()
-            stats.push({attack: 1, defense: 2, speed: 3, level: 2, hp: 100})
+            stats.push({tokenId: 1,attack: 1, defense: 2, speed: 3, level: 2, hp: 100})
 
             // when
             await tokensStats.initStats(stats, [1])
             const res = await tokensStats.tokenStats(1)
 
             // then
+            expect(res.tokenId.toNumber()).to.equal(1)
             expect(res.attack.toNumber()).to.equal(1)
             expect(res.defense.toNumber()).to.equal(2)
             expect(res.speed.toNumber()).to.equal(3)
@@ -84,8 +85,8 @@ describe('TokensStats', function () {
             const {tokensStats} = await setup();
             let stats = Array()
             let ids = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-            for (let i = 0; i < 10; i += 1) {
-                stats.push({attack: 1 + i, defense: 2 + i, speed: 3 + i, level: 2 + i, hp: 100 + i})
+            for (let i = 1; i < 11; i += 1) {
+                stats.push({tokenId: i, attack: 1 + i, defense: 2 + i, speed: 3 + i, level: 2 + i, hp: 100 + i})
             }
 
             // when
@@ -107,7 +108,7 @@ describe('TokensStats', function () {
             // given
             const {tokensStats, bob} = await setup();
             let stats = Array()
-            stats.push({attack: 1, defense: 2, speed: 3, level: 2, hp: 100})
+            stats.push({tokenId: 1, attack: 1, defense: 2, speed: 3, level: 2, hp: 100})
 
             // when
             const tx = bob.tokensStats.initStats(stats, [1])
@@ -120,7 +121,7 @@ describe('TokensStats', function () {
             // given
             const {tokensStats} = await setup();
             let stats = Array()
-            stats.push({attack: 1, defense: 2, speed: 3, level: 2, hp: 100})
+            stats.push({tokenId: 1, attack: 1, defense: 2, speed: 3, level: 2, hp: 100})
 
             // when
             await tokensStats.frozeInitialStats()

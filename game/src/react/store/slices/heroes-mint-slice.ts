@@ -11,15 +11,9 @@ import {MerkleTree} from "merkletreejs";
 import keccak256 from "keccak256";
 import {refreshUser} from "./user-slice";
 import {hideUi} from "./ui-slice";
+import {devWhitelist} from "../whitelist";
 
-const whitelist = [
-    "0xCBaE0841D72C6e1BDC4e3a85Dea5497822F27d18",
-    "0xE032d90BE017B57118eAafaA5826De494D73E392",
-    "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-    "0xcF6c12BC62604207eBF7c95efd77c8B18519a6e1",
-    "0xE032d90BE017B57118eAafaA5826De494D73E39b",
-];
-const leafNodes = whitelist.map((addr) => keccak256(addr));
+const leafNodes = devWhitelist.map((addr) => keccak256(addr));
 const merkleTree = new MerkleTree(leafNodes, keccak256, {
     sortPairs: true,
 });
@@ -69,7 +63,7 @@ export const loadHeroesMintDetails = createAsyncThunk("heroesMint/init",
             if (presaleActive) mintPrice = 0.03
             if (saleActive) mintPrice = 0.05
 
-            const hexProof = merkleTree.getHexProof(keccak256(params.address.toString()));
+            const hexProof = merkleTree.getHexProof(keccak256(params.address));
             whitelisted = hexProof.length > 0
 
         } catch (e) {
@@ -96,7 +90,7 @@ export const mintPresale = createAsyncThunk("heroesMint/mintPresale",
 
         try {
             toast.loading('Minting Kingdom Heroes')
-            const hexProof = merkleTree.getHexProof(keccak256(params.address.toString()));
+            const hexProof = merkleTree.getHexProof(keccak256(params.address));
 
             const royalKingdomContract = new ethers.Contract(contracts.KINGDOM_HEROES, KingdomHeroes.abi, params.provider.getSigner())
             let price = ethers.utils.parseUnits(root.heroesMint.mintTotalPrice.toFixed(2), 'ether');

@@ -30,7 +30,7 @@ const Message = ({message}: MessageProps) => {
         < Typography variant={"body1"} textAlign={"start"} lineHeight={1}>
             {
                 transitions((styles, {item, key}) => (
-                    <animated.span key={key} style={styles}>
+                    <animated.span key={key} style={{color: "white", ...styles}}>
                         {item}
                     </animated.span>
                 ))

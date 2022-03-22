@@ -99,4 +99,10 @@ contract KingdomKey is ERC1155Pausable, Ownable {
     function unpause() external onlyOwner {
         _unpause();
     }
+
+
+    function withdraw() public onlyOwner {
+        address payable to = payable(msg.sender);
+        to.transfer(address(this).balance);
+    }
 }
