@@ -42,7 +42,7 @@ const config: HardhatUserConfig = {
     networks: {
 
         hardhat: {
-            deploy: ['deploy_l1', 'deploy_l2'],
+            deploy: ['deploy_l1', 'deploy_l2', 'deploy_test'],
             companionNetworks: {
                 l1: 'hardhat',
             },

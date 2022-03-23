@@ -84,22 +84,6 @@ describe('CreethGold', function () {
 
     })
 
-    describe('burnFrom', function () {
-        it('should be able to burn tokens from another account', async function () {
-            // given
-            const {token, bob, alice} = await setup();
-
-            // when
-            await token.mint(bob.address, parseCoin("1000"))
-            await bob.token.approve(alice.address, ethers.constants.MaxUint256)
-            await alice.token.burnFrom(bob.address, parseCoin("500"))
-
-            // expect
-            expect(await token.balanceOf(bob.address)).to.equal(parseCoin("500"))
-        });
-
-    })
-
     describe('setMinter', function () {
         it('should set a new minter', async function () {
             // given
