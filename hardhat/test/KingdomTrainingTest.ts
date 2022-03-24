@@ -110,7 +110,7 @@ describe('KingdomTraining', function () {
 
             // when
             await heroes.toggleSale()
-            await heroes.mint(5, {value: parseCoin("0.25")})
+            await heroes.mint(5, {value: parseCoin("0.4")})
             await heroes.setApprovalForAll(training.address, true)
             await training.stakeHero(1)
             await training.stakeHero(2)
@@ -127,7 +127,7 @@ describe('KingdomTraining', function () {
 
             // when
             await keys.toggleSale()
-            await keys.mint({value: parseCoin("0.05")})
+            await keys.mint({value: parseCoin("0.1")})
             await keys.setApprovalForAll(training.address, true)
 
             await training.stakeKey(1)
@@ -145,8 +145,8 @@ describe('KingdomTraining', function () {
             // when
             await heroes.toggleSale()
             await keys.toggleSale()
-            await keys.mint({value: parseCoin("0.05")})
-            await heroes.mint(5, {value: parseCoin("0.25")})
+            await keys.mint({value: parseCoin("0.1")})
+            await heroes.mint(5, {value: parseCoin("0.40")})
             await keys.setApprovalForAll(training.address, true)
             await heroes.setApprovalForAll(training.address, true)
 
@@ -168,8 +168,8 @@ describe('KingdomTraining', function () {
             // when
             await heroes.toggleSale()
             await keys.toggleSale()
-            await keys.mint({value: parseCoin("0.05")})
-            await heroes.mint(5, {value: parseCoin("0.25")})
+            await keys.mint({value: parseCoin("0.1")})
+            await heroes.mint(5, {value: parseCoin("0.40")})
             await keys.setApprovalForAll(training.address, true)
             await heroes.setApprovalForAll(training.address, true)
 
@@ -191,7 +191,7 @@ describe('KingdomTraining', function () {
 
             // when
             await heroes.toggleSale()
-            await heroes.mint(5, {value: parseCoin("0.25")})
+            await heroes.mint(5, {value: parseCoin("0.40")})
             await heroes.setApprovalForAll(training.address, true)
 
             await training.bulkStakeHeroes([1, 2, 3])
@@ -210,7 +210,7 @@ describe('KingdomTraining', function () {
 
             // when
             await heroes.toggleSale()
-            await heroes.mint(5, {value: parseCoin("0.25")})
+            await heroes.mint(5, {value: parseCoin("0.4")})
             await heroes.setApprovalForAll(training.address, true)
 
             await training.bulkStakeHeroes([1, 2, 3])
@@ -230,7 +230,7 @@ describe('KingdomTraining', function () {
             const {heroes, training, owner} = await setup();
 
             await heroes.toggleSale()
-            await heroes.mint(5, {value: parseCoin("0.25")})
+            await heroes.mint(5, {value: parseCoin("0.4")})
 
             await heroes.setApprovalForAll(training.address, true)
             await training.stakeHero(1)
@@ -247,7 +247,7 @@ describe('KingdomTraining', function () {
             const {heroes, training, owner} = await setup();
 
             await heroes.toggleSale()
-            await heroes.mint(5, {value: parseCoin("0.25")})
+            await heroes.mint(5, {value: parseCoin("0.4")})
 
             await heroes.setApprovalForAll(training.address, true)
             await training.stakeHero(1)
@@ -265,7 +265,7 @@ describe('KingdomTraining', function () {
             const {keys, training, owner} = await setup();
 
             await keys.toggleSale()
-            await keys.mint({value: parseCoin("0.05")})
+            await keys.mint({value: parseCoin("0.1")})
 
             await keys.setApprovalForAll(training.address, true)
             await training.stakeKey(1)
@@ -282,7 +282,7 @@ describe('KingdomTraining', function () {
             const {keys, training, owner} = await setup();
 
             await keys.toggleSale()
-            await keys.mint({value: parseCoin("0.05")})
+            await keys.mint({value: parseCoin("0.1")})
 
             await keys.setApprovalForAll(training.address, true)
             await training.stakeKey(1)

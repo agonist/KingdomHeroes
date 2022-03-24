@@ -8,13 +8,9 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     const {deployer} = await getNamedAccounts();
     const network = await hre.ethers.provider.getNetwork();
 
-    const args = [
-        deployer
-    ]
-
     await deploy('CreethGold', {
         from: deployer,
-        args: args,
+        args: [],
         log: true,
     });
 };

@@ -8,8 +8,6 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     const {deployer} = await getNamedAccounts();
     const network = await hre.ethers.provider.getNetwork();
 
-    const cgld = await hre.ethers.getContractAt('CreethGold', (await deployments.get('CreethGold')).address);
-
     let fxChild = "0x8397259c983751DAf40400790063935a11afa28a"
 
     if (network.chainId == 80001) {

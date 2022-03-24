@@ -41,8 +41,8 @@
     "test": "npx hardhat test",
     "test:coverage": "hardhat coverage",
     "deploy": " npx hardhat run scripts/ethereum/localhost_deployer.ts --network localhost",
-    "deploy:goerli": "npx hardhat run scripts/ethereum/goerli_deployer.ts --network goerli",
-    "deploy:mumbai": "npx hardhat run scripts/ethereum/mumbai_deployer.ts --network mumbai"
+    "deploy:goerli": "npx hardhat run scripts/ethereum/goerli/goerli_deployer.ts --network goerli",
+    "deploy:mumbai": "npx hardhat run scripts/ethereum/mumbai/mumbai_deployer.ts --network mumbai"
   },
   "dependencies": {
     "chai-ethers": "^0.0.1"

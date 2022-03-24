@@ -25,11 +25,11 @@ contract KingdomTraining is FxBaseRootTunnel, Ownable, TokensTypes, IKingdomTrai
     bool public stakingPaused;
 
     constructor(
-        address checkpointManager,
-        address fxRoot,
+        address _checkpointManager,
+        address _fxRoot,
         address _heroesContract,
         address _keysContract
-    ) FxBaseRootTunnel(checkpointManager, fxRoot) {
+    ) FxBaseRootTunnel(_checkpointManager, _fxRoot) {
         heroesContract = IERC721(_heroesContract);
         keysContract = ERC1155(_keysContract);
     }

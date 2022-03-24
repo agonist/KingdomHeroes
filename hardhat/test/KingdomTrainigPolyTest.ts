@@ -16,7 +16,7 @@ async function setup() {
 
 
     await contracts.training.setCgldContract(contracts.cgld.address)
-    await contracts.cgld.setMinter(contracts.training.address)
+    await contracts.cgld.setMinter(contracts.training.address, true)
 
     const {
         deployer: ownerAddr,

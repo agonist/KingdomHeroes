@@ -1,4 +1,4 @@
-import {describe} from "mocha";
+import {describe, it} from "mocha";
 import {gp, parseCoin} from "./utils/helpers";
 import {expect} from "chai";
 import {setupUsers, setupUser} from './utils';
@@ -39,6 +39,8 @@ async function setup() {
         bob, alice, carol, merkleTree
     };
 }
+
+const heroPrice = parseCoin("0.08")
 
 describe('KingdomHeroes', function () {
 
@@ -126,7 +128,7 @@ describe('KingdomHeroes', function () {
 
             const baseTokenURI = await nft.baseTokenURI();
             await nft.toggleSale();
-            await alice.nft.mint(1, {value: parseCoin("0.05")});
+            await alice.nft.mint(1, {value: heroPrice});
 
             // when
             const tokenURI = await nft.tokenURI(1);
@@ -260,7 +262,7 @@ describe('KingdomHeroes', function () {
             await nft.toggleSale()
 
             // when
-            await nft.mint(5, {value: parseCoin("0.25")})
+            await nft.mint(5, {value: parseCoin("0.4")})
 
             // then
             expect(await nft.balanceOf(owner.address)).to.be.equal(5);
@@ -298,8 +300,8 @@ describe('KingdomHeroes', function () {
             await nft.setWhitelistMerkleRoot(merkleTree.getHexRoot())
 
             // when
-            await bob.nft.mintPresale(2, gp(merkleTree, bob.address), {value: parseCoin("0.06")})
-            const tx = bob.nft.mintPresale(1, gp(merkleTree, bob.address), {value: parseCoin("0.03")})
+            await bob.nft.mintPresale(2, gp(merkleTree, bob.address), {value: parseCoin("0.16")})
+            const tx = bob.nft.mintPresale(1, gp(merkleTree, bob.address), {value: parseCoin("0.08")})
 
             //then
             await expect(tx).to.be.revertedWith("Whitelist mint exceeded");
@@ -325,7 +327,7 @@ describe('KingdomHeroes', function () {
             await nft.setWhitelistMerkleRoot(merkleTree.getHexRoot())
 
             // when
-            await bob.nft.mintPresale(2, gp(merkleTree, bob.address), {value: parseCoin("0.06")})
+            await bob.nft.mintPresale(2, gp(merkleTree, bob.address), {value: parseCoin("0.16")})
 
             //then
             expect(await nft.balanceOf(bob.address)).to.be.equal(2);
@@ -340,11 +342,11 @@ describe('KingdomHeroes', function () {
             await nft.setWhitelistMerkleRoot(merkleTree.getHexRoot())
 
             // when
-            await bob.key.mint({value: parseCoin("0.05")})
-            await bob.nft.mintPresale(2, gp(merkleTree, bob.address), {value: parseCoin("0.06")})
+            await bob.key.mint({value: parseCoin("0.1")})
+            await bob.nft.mintPresale(2, gp(merkleTree, bob.address), {value: parseCoin("0.16")})
 
             //then
-            expect(await nft.balanceOf(bob.address)).to.be.equal(3);
+            expect(await nft.balanceOf(bob.address)).to.be.equal(4);
         });
 
         it('should not mint one extra NFT if key bonus already claimed', async function () {
@@ -356,12 +358,39 @@ describe('KingdomHeroes', function () {
             await nft.setWhitelistMerkleRoot(merkleTree.getHexRoot())
 
             // when
-            await bob.key.mint({value: parseCoin("0.05")})
-            await bob.nft.mintPresale(1, gp(merkleTree, bob.address), {value: parseCoin("0.03")})
-            await bob.nft.mintPresale(1, gp(merkleTree, bob.address), {value: parseCoin("0.03")})
+            await bob.key.mint({value: parseCoin("0.1")})
+            await bob.nft.mintPresale(1, gp(merkleTree, bob.address), {value: parseCoin("0.08")})
+            await bob.nft.mintPresale(1, gp(merkleTree, bob.address), {value: parseCoin("0.08")})
 
             //then
-            expect(await nft.balanceOf(bob.address)).to.be.equal(3);
+            expect(await nft.balanceOf(bob.address)).to.be.equal(4);
+        });
+    })
+
+    describe('isWhitelisted', function () {
+
+        it('should be whitelisted', async function () {
+            // given
+            const {nft, merkleTree, bob} = await setup()
+
+            // when
+            await nft.setWhitelistMerkleRoot(merkleTree.getHexRoot())
+            const whitelisted = await bob.nft.isWhitelisted(gp(merkleTree, bob.address))
+
+            // then
+            expect(whitelisted).to.be.equal(true)
+        });
+
+        it('should not be whitelisted', async function () {
+            // given
+            const {nft, merkleTree, owner} = await setup()
+
+            // when
+            await nft.setWhitelistMerkleRoot(merkleTree.getHexRoot())
+            const whitelisted = await nft.isWhitelisted(gp(merkleTree, owner.address))
+
+            // then
+            expect(whitelisted).to.be.equal(false)
         });
     })
 

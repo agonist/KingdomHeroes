@@ -11,15 +11,15 @@ import "../Interfaces.sol";
 /// @author agonist (https://github.com/agonist)
 contract CreethGold is ICreethGold, ERC20Permit, Ownable {
 
-    address public minter;
+    // multiple minters enabled since mint can happens from staking or from game backend to convert in-game CGLD to on-chain
+    mapping(address => bool) public minters;
 
     modifier onlyMinter() {
-        require(msg.sender == minter, 'CGLD: Only minter is authorized');
+        require(minters[msg.sender], 'CGLD: Only minter is authorized');
         _;
     }
 
-    constructor(address _minter) ERC20Permit('CreethGold', 'CGLD', 18) {
-        minter = _minter;
+    constructor() ERC20Permit('CreethGold', 'CGLD', 18) {
     }
 
     function mint(address _account, uint256 _amount) external override onlyMinter {
@@ -30,7 +30,7 @@ contract CreethGold is ICreethGold, ERC20Permit, Ownable {
         _burn(msg.sender, amount);
     }
 
-    function setMinter(address _minter) external onlyOwner {
-        minter = _minter;
+    function setMinter(address _minter, bool isMinter) external onlyOwner {
+        minters[_minter] = isMinter;
     }
 }

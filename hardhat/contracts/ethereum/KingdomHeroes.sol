@@ -4,8 +4,8 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
-import "./ERC721ACustom.sol";
 import '@openzeppelin/contracts/token/ERC1155/IERC1155.sol';
+import "../lib/ERC721ACustom.sol";
 
 /// @title Kingdom Heroes NFT contract
 /// @author agonist (https://github.com/agonist)
@@ -14,8 +14,7 @@ contract KingdomHeroes is ERC721ACustom, Ownable {
     uint256 public immutable maxSupply;
     uint256 public maxMintAtOnce;
     uint256 public maxMintWhitelist;
-    uint256 public price = 0.05 ether;
-    uint256 public presalePrice = 0.03 ether;
+    uint256 public price = 0.08 ether;
     bool public presaleActive;
     bool public saleActive;
     string public baseTokenURI;
@@ -63,13 +62,15 @@ contract KingdomHeroes is ERC721ACustom, Ownable {
         bytes32 leaf = keccak256(abi.encodePacked(msg.sender));
         require(MerkleProof.verify(_merkleProof, whitelistMerkleRoot, leaf), "Not whitelisted");
         require(claimed[msg.sender] + _quantity <= maxMintWhitelist, "Whitelist mint exceeded");
-        require(presalePrice * _quantity == msg.value, "Value sent is incorrect");
+        require(price * _quantity == msg.value, "Value sent is incorrect");
 
         uint256 keyBalance = keysContract.balanceOf(msg.sender, 1);
         uint256 keyExtra = 0;
+
+        // Keys owner get 2 free heroes during presale per key
         if (keyBalance > 0) {
             if (!keyFreeClaimed[msg.sender]) {
-                keyExtra += keyBalance;
+                keyExtra += keyBalance * 2;
                 keyFreeClaimed[msg.sender] = true;
             }
         }
@@ -78,6 +79,11 @@ contract KingdomHeroes is ERC721ACustom, Ownable {
         _safeMint(msg.sender, _quantity + keyExtra);
     }
 
+    /// @notice Check if someone is whitelisted
+    function isWhitelisted(bytes32[] calldata _merkleProof) external view returns (bool) {
+        bytes32 leaf = keccak256(abi.encodePacked(msg.sender));
+        return MerkleProof.verify(_merkleProof, whitelistMerkleRoot, leaf);
+    }
 
     /// @notice toggle the main sale on or off
     function toggleSale() external onlyOwner {
@@ -118,7 +124,7 @@ contract KingdomHeroes is ERC721ACustom, Ownable {
         return 1;
     }
 
-
+    /// Make it rain
     function withdraw() public onlyOwner {
         address payable to = payable(msg.sender);
         to.transfer(address(this).balance);

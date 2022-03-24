@@ -14,10 +14,11 @@ contract KingdomKey is ERC1155Pausable, Ownable {
 
     bool public presaleActive;
     bool public saleActive;
+
     uint256 public immutable maxSupply;
-    uint256 _totalSupply;
-    uint256 public price = 0.05 ether;
-    uint256 public presalePrice = 0.03 ether;
+    uint256 currentSupply;
+
+    uint256 public price = 0.1 ether;
     bytes32 public whitelistMerkleRoot = 0x0;
 
     mapping(address => bool) public claimed;
@@ -32,11 +33,11 @@ contract KingdomKey is ERC1155Pausable, Ownable {
     /// @notice main mint function of the contract
     function mint() external payable {
         require(saleActive, "Sale inactive");
-        require(_totalSupply + 1 <= maxSupply, "Mint exceed max supply");
+        require(currentSupply + 1 <= maxSupply, "Mint exceed max supply");
         require(!claimed[msg.sender], "Max mint exceeded");
         require(price == msg.value, "Value sent is incorrect");
 
-        _totalSupply += 1;
+        currentSupply += 1;
         claimed[msg.sender] = true;
         _mint(msg.sender, KINGDOM_KEY, 1, "");
     }
@@ -45,16 +46,22 @@ contract KingdomKey is ERC1155Pausable, Ownable {
     /// @param _merkleProof Merkle proof coming from the frontend
     function mintPresale(bytes32[] calldata _merkleProof) external payable {
         require(presaleActive, "Presale inactive");
-        require(_totalSupply + 1 <= maxSupply, "Mint exceed max supply");
+        require(currentSupply + 1 <= maxSupply, "Mint exceed max supply");
         require(!claimed[msg.sender], "Whitelist mint exceeded");
-        require(presalePrice == msg.value, "Value sent is incorrect");
+        require(price == msg.value, "Value sent is incorrect");
 
         bytes32 leaf = keccak256(abi.encodePacked(msg.sender));
         require(MerkleProof.verify(_merkleProof, whitelistMerkleRoot, leaf), "Not whitelisted");
 
-        _totalSupply += 1;
+        currentSupply += 1;
         claimed[msg.sender] = true;
         _mint(msg.sender, KINGDOM_KEY, 1, "");
+    }
+
+    /// @notice Check if someone is whitelisted
+    function isWhitelisted(bytes32[] calldata _merkleProof) external view returns (bool) {
+        bytes32 leaf = keccak256(abi.encodePacked(msg.sender));
+        return MerkleProof.verify(_merkleProof, whitelistMerkleRoot, leaf);
     }
 
     /// @notice toggle the main sale on or off
@@ -76,7 +83,7 @@ contract KingdomKey is ERC1155Pausable, Ownable {
     }
 
     function totalSupply() external view returns (uint256){
-        return _totalSupply;
+        return currentSupply;
     }
 
     /// @notice set the merkle hash root for whitelist check
@@ -88,7 +95,7 @@ contract KingdomKey is ERC1155Pausable, Ownable {
     /// @notice for marketing / team
     /// @param _quantity Amount to mint
     function reserve(uint256 _quantity) external onlyOwner {
-        require(_totalSupply + _quantity <= maxSupply, "Mint exceed max supply");
+        require(currentSupply + _quantity <= maxSupply, "Mint exceed max supply");
         _mint(msg.sender, KINGDOM_KEY, _quantity, "");
     }
 
@@ -100,7 +107,7 @@ contract KingdomKey is ERC1155Pausable, Ownable {
         _unpause();
     }
 
-
+    /// Make it rain
     function withdraw() public onlyOwner {
         address payable to = payable(msg.sender);
         to.transfer(address(this).balance);
