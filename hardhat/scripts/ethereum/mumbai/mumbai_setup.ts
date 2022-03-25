@@ -22,9 +22,11 @@ async function main() {
     // when
     // await training.setFxRootTunnel("0x798AA7e2B8c07f3d635Dd7aE7De86F5034195B28")
 
-    await tokensStats.initStats(stats, ids)
+    await training.setCgldContract("0xA65bd3D9B4c113D53B34Dc577879Bb0b4a0845ac")
 
-    await cgld.setMinter(training.address, true)
+    // await tokensStats.initStats(stats, ids)
+
+    // await cgld.setMinter(training.address, true)
 
 }
 

@@ -4,7 +4,7 @@ import {
     AlchemyProvider,
     BigNumber,
     Contract,
-    EthersContract, formatEther, InfuraProvider,
+    EthersContract, formatEther, formatUnits, InfuraProvider,
     InjectContractProvider,
     InjectEthersProvider, logger, StaticJsonRpcProvider
 } from "nestjs-ethers";
@@ -63,12 +63,13 @@ export class MetadataService {
 
     }
 
-    async getCurrentYield(address: string) : Promise<YieldInfos>{
+    async getCurrentYield(address: string): Promise<YieldInfos> {
 
         const yieldd = await this.trainingPolyContract.totalBalance(address)
-        const formated = formatEther(yieldd)
 
-        let y : YieldInfos = {
+        const formated = formatUnits(yieldd, 'ethers')
+
+        let y: YieldInfos = {
             totalYield: formated
         }
 
