@@ -74,7 +74,7 @@ export class MetadataService {
         let y: YieldInfos = {
             totalYield: formatEther(totalYield),
             cgldPerSec: formatEther(cgldPerSec),
-            unclaimedYield: formatEther(unclaimed)
+            unclaimedYield: unclaimed
         }
 
         return y
