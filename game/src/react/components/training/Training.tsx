@@ -38,7 +38,7 @@ export default function Training() {
                     <Stack className={classes.content} width={"30%"}>
                         <Typography paddingY={1} variant={"h5"} color={"white"}>DAILY $CGLD BONUS</Typography>
                         <Stack paddingY={1} width={"100%"} height={"100%"} sx={{backgroundColor: CustomColor.midBg}}>
-                            <Typography color={"white"}>42 $CGLD</Typography>
+                            <Typography color={"white"}>{training.currentYield} $CGLD</Typography>
                         </Stack>
                     </Stack>
 

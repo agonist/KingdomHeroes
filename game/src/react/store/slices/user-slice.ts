@@ -76,6 +76,15 @@ export class API {
             console.log(e)
         }
     }
+
+    async getYield(address: string) : Promise<string | undefined> {
+        try {
+            const response = await axios.get(this.BASE_RUL + "/metadata/yield/" + address)
+            return response.data.totalYield
+        } catch (e) {
+            console.log(e)
+        }
+    }
 }
 
 const api = new API()
