@@ -68,10 +68,12 @@ export class MetadataService {
         const totalYield = await this.trainingPolyContract.totalBalance(address)
         const cgldPerSec = await this.trainingPolyContract.cgldPerSecond(address)
         const unclaimed = await this.trainingPolyContract.unclaimedYield(address)
+        const lastUpdated = await this.trainingPolyContract.lastUpdated(address)
 
         // const formated = formatEther(totalYield)
 
         let y: YieldInfos = {
+            lastupdated: lastUpdated,
             totalYield: formatEther(totalYield),
             cgldPerSec: formatEther(cgldPerSec),
             unclaimedYield: unclaimed
@@ -254,6 +256,7 @@ export interface StatsAttributes extends Attribute {
 }
 
 export interface YieldInfos {
+    lastupdated: number,
     cgldPerSec: string,
     unclaimedYield: string,
     totalYield: string
