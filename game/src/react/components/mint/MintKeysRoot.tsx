@@ -5,10 +5,13 @@ import {useDispatch} from "react-redux";
 import {mintKeys, mintKeysPresale} from "../../store/slices/keys-mint-slice";
 import {Web3Params} from "../../store/utils/params";
 import {hideUi} from "../../store/slices/ui-slice";
+import {CustomColor} from "../../MuiTheme";
+import {GuiStyles} from "../Styles";
 
 
 function MintHeroesRoot() {
     const dispatch = useDispatch();
+    const classes = GuiStyles();
 
     const {provider, chainID} = useWeb3Context();
     const address = useAddress();
@@ -40,31 +43,41 @@ function MintHeroesRoot() {
     }
 
     if (keysMint.saleActive || (keysMint.presaleActive && keysMint.whitelisted)) {
-        let saletxt = "Pre-Sale"
+        let saletxt = "PRE-SALE"
         if (keysMint.saleActive) {
-            saletxt = "Sale"
+            saletxt = "SALE"
         }
 
         return (
-            <Stack alignItems="center" spacing={2}>
-                <Typography color={"white"} variant={"h2"}>Keys {saletxt}</Typography>
-                <Typography variant={"body1"} color={"white"}>
-                    GM adventurer, <br/>welcome to the Kingdom Keys mint. <br/> Minting a key will give you guaranteed
-                    access to the Heroes Whitelist,<br/> a bonus yield and much more.
-                </Typography>
+            <Stack alignItems="center" width={window.innerWidth / 2.7}
+                   height={window.innerHeight / 1.3}>
+                <Typography color={CustomColor.fontYellow} variant={"h3"} paddingY={2}>KEYS {saletxt}</Typography>
 
-                <Typography color={"white"} paddingTop={2} variant={"h4"}>{keysMint.currentMinted} / 500 Keys
-                    minted</Typography>
+                <Stack sx={{backgroundColor: CustomColor.midBg}} width={"100%"} height={"100%"} paddingY={3}
+                       alignItems={"center"} spacing={2}>
+                    <Typography variant={"body1"} color={"white"}>
+                        GM ADVENTURER, <br/>WELCOME TO THE KINGDOM KEYS MINT. <br/> MINTING A KEY WILL GUARANTEE YOU
+                        ACCESS TO THE HEROES WHITELIST,<br/> TWO FREE HEROES, A BONUS YIELD AND MUCH MORE.
+                    </Typography>
 
-                <Stack direction={"row"} spacing={2}>
+                    <Typography color={"white"} paddingTop={4} variant={"h4"}>{keysMint.currentMinted} / 500 KEYS
+                        MINTED</Typography>
 
-                    <Typography color={"white"}>1 per wallet max</Typography>
+                    <Stack direction={"row"} spacing={2} paddingTop={4} paddingBottom={4}>
 
+                        <Typography color={"white"}>1 MAX PER WALLET</Typography>
+
+                    </Stack>
+
+                    <Button className={classes.button} variant={"contained"} onClick={mintSale}>Mint
+                        for {keysMint.mintTotalPrice.toFixed(2)} ETH</Button>
+
+                    <Button onClick={() => dispatch(hideUi())}>
+                        <Typography variant={"button"} color={"white"}>NO THANKS</Typography>
+                    </Button>
                 </Stack>
 
-                <Button variant="contained" onClick={mintSale}>Mint
-                    for {keysMint.mintTotalPrice.toFixed(2)} ETH</Button>
-                <Button onClick={() => dispatch(hideUi())}>Close</Button>
+
             </Stack>
         )
     }

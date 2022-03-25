@@ -6,3 +6,9 @@ export interface Web3Params {
     address: string;
     networkID: Networks;
 }
+
+export interface TrainParams {
+    web3: Web3Params,
+    heroes: number[],
+    keys: number
+}

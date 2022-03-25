@@ -8,6 +8,7 @@ import Sprite = Phaser.Physics.Arcade.Sprite;
 import Group = Phaser.Physics.Arcade.Group;
 import Tilemap = Phaser.Tilemaps.Tilemap;
 import {MintGuy} from "../objects/npc/MintGuy";
+import {MintGuy2} from "../objects/npc/MintGuy2";
 
 export default class GameScene extends Phaser.Scene {
 
@@ -92,11 +93,13 @@ export default class GameScene extends Phaser.Scene {
         });
 
         const mintGuy = new MintGuy(this)
+        const mintGuy2 = new MintGuy2(this)
         const blacksmith = new Blacksmith(this)
         const nurse = new Nurse(this)
         const banker = new Banker(this)
 
         this.npcGroup.add(mintGuy)
+        this.npcGroup.add(mintGuy2)
         this.npcGroup.add(blacksmith)
         this.npcGroup.add(nurse)
         this.npcGroup.add(banker)

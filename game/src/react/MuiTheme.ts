@@ -1,6 +1,7 @@
 import {createTheme} from '@mui/material/styles'
 
-const FONT_PRIMARY = "VT323, monospace"; // Google Font
+const FONT_SECONDARY = "VT323, monospace"; // Google Font
+const FONT_PRIMARY = "Roboto, sans-serif"; // Google Font
 
 const muiTheme = createTheme({
     components: {
@@ -10,7 +11,9 @@ const muiTheme = createTheme({
             }
         }
     },
+
     palette: {
+        mode: "dark",
         primary: {
             main: "#6A5495"
         },
@@ -21,6 +24,7 @@ const muiTheme = createTheme({
     typography: {
         h1: {
             fontSize: 42,
+            fontWeight: 700,
             fontFamily: FONT_PRIMARY
         },
         h2: {
@@ -29,14 +33,22 @@ const muiTheme = createTheme({
         },
         h3: {
             fontSize: 34,
+            fontWeight: 500,
             fontFamily: FONT_PRIMARY
         },
         h4: {
             fontSize: 28,
+            fontWeight: 500,
+            fontFamily: FONT_PRIMARY
+        },
+        h5: {
+            fontSize: 22,
+            fontWeight: 500,
             fontFamily: FONT_PRIMARY
         },
         body1: {
-            fontSize: 22,
+            fontSize: 18,
+            fontWeight: 500,
             fontFamily: FONT_PRIMARY
         },
         body2: {
@@ -49,9 +61,16 @@ const muiTheme = createTheme({
         },
         button: {
             fontSize: 20,
+            fontWeight: 700,
             fontFamily: FONT_PRIMARY
         }
     }
 })
+
+export const CustomColor = {
+    darkBg: "#0c0f27",
+    midBg: "#1C2262",
+    fontYellow: "#FBE24D"
+}
 
 export default muiTheme

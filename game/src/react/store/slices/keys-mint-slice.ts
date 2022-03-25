@@ -60,8 +60,8 @@ export const loadKeysMintDetails = createAsyncThunk("keysMint/init",
             const minted = await keysContract.totalSupply()
             currentMinted = minted.toNumber()
 
-            if (presaleActive) mintPrice = 0.03
-            if (saleActive) mintPrice = 0.05
+            if (presaleActive) mintPrice = 0.1
+            if (saleActive) mintPrice = 0.1
 
             // const hexProof = merkleTree.getHexProof(keccak256(params.address.toString()));
             // whitelisted = hexProof.length > 0
@@ -92,11 +92,10 @@ export const mintKeysPresale = createAsyncThunk("keysMint/mintPresale",
             toast.loading('Minting Kingdom Heroes')
             const hexProof = merkleTree.getHexProof(keccak256(params.address));
 
-            const royalKingdomContract = new ethers.Contract(contracts.KINGDOM_KEY, KingdomKeys.abi, params.provider.getSigner())
+            const keyContract = new ethers.Contract(contracts.KINGDOM_KEY, KingdomKeys.abi, params.provider.getSigner())
             let price = ethers.utils.parseUnits(root.keysMint.mintTotalPrice.toFixed(2), 'ether');
-            console.log(price)
             let tx;
-            tx = await royalKingdomContract.mintPresale(hexProof, {value: price})
+            tx = await keyContract.mintPresale(hexProof, {value: price})
             await tx.wait()
 
         } catch (e) {

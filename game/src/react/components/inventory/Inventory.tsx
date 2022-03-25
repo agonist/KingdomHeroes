@@ -6,9 +6,12 @@ import key from "../../../img/key.png";
 import {styled} from "@mui/styles";
 import React from "react";
 import bgui from "../bgui.png";
+import {GuiStyles} from "../Styles";
+import {CustomColor} from "../../MuiTheme";
 
 
 export default function Inventory() {
+    const classes = GuiStyles();
 
     const user = useAppSelector((state) => state.user)
 
@@ -17,9 +20,11 @@ export default function Inventory() {
         <Tooltip {...props} classes={{popper: className}}/>
     ))(({theme}) => ({
         [`& .${tooltipClasses.tooltip}`]: {
-            backgroundColor: "#273047",
+            backgroundColor: CustomColor.darkBg,
             border: "solid",
-            borderImage: `url("${bgui}") 25 / 10px 10px 10px 10px stretch`,
+            borderWidth: "8px",
+            borderImageSlice: 1,
+            borderImageSource: 'linear-gradient(to bottom, #579AF7, #092274)',
             padding: 2,
             paddingX: 3,
             maxWidth: 420,
@@ -28,28 +33,24 @@ export default function Inventory() {
 
 
     return (
-        <Stack maxWidth={500} sx={{
-            backgroundColor: "#273047",
-            border: "solid",
-            borderImage: `url("${bgui}") 25 / 10px 10px 10px 10px stretch`,
-            padding: 2,
-            paddingX: 3
-        }}>
+        <Stack maxWidth={500} className={classes.frame} justifyContent={"center"} alignItems={"center"}
+        >
 
-            <Typography variant={"h1"} color={"white"} paddingBottom={2}>Inventory</Typography>
+            <Typography variant={"h3"} color={CustomColor.fontYellow} paddingY={2}>INVENTORY</Typography>
 
-            <Box sx={{flexGrow: 1}}>
-                <Grid container spacing={1}>
+            <Box paddingBottom={2}>
+                <Grid container spacing={1} padding={1} justifyContent={"center"} alignItems={"center"}>
 
                     {user.inventory.map((item, index) => (
-                        <Grid item key={index} xs={2}>
+                        <Grid item key={index}
+                        >
                             <Stack sx={{backgroundColor: "#213D73"}} width={64} height={64} alignItems="center"
                                    justifyContent={"center"}>
                                 <HtmlTooltip
                                     title={
                                         <React.Fragment>
                                             <Stack padding={2}>
-                                                <Typography color={"white"} variant={"h4"}>Kingdom Key</Typography>
+                                                <Typography color={CustomColor.fontYellow} variant={"h5"}>Kingdom Key</Typography>
                                                 <Typography color={"white"} variant={"body1"}>A rare item for the
                                                     bravest adventurer</Typography>
                                             </Stack>
@@ -65,8 +66,8 @@ export default function Inventory() {
                     }
 
                     {Array.from(Array(24 - user.inventory.length)).map((_, index) => (
-                        <Grid item key={index} xs={2}>
-                            <Box sx={{backgroundColor: "#213D73"}} width={64} height={64}>
+                        <Grid item key={index}>
+                            <Box sx={{backgroundColor: "#579AF7"}} width={64} height={64}>
                                 <Typography></Typography>
                             </Box>
                         </Grid>

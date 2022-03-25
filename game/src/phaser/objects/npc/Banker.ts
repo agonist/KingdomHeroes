@@ -34,13 +34,9 @@ export class Banker extends Npc {
     }
 
     triggerAction() {
-        const params: BottomDialogActionParams = {
-            title: this.dialogTitle(),
-            messages: this.dialogMessage()
-        }
         const action: UiAction = {
-            show: UI.BOTTOM_DIALOG,
-            params: params
+            show: UI.TRAINING,
+            params: undefined
         }
 
         store.dispatch(showUi(action))
