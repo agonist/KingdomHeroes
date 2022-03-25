@@ -11,13 +11,19 @@ import {hideUi, showUi} from "./react/store/slices/ui-slice";
 import MintHeroes from "./react/components/mint/MintHeroes";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import {useWeb3Context} from "./react/web3/web3-context";
+import {useAddress, useWeb3Context} from "./react/web3/web3-context";
 import MintKeys from "./react/components/mint/MintKeys";
 import Inventory from "./react/components/inventory/Inventory";
 import Heroes from "./react/components/heroes/Heroes";
+import Training from "./react/components/training/Training";
+import {useDispatch} from "react-redux";
+import {Web3Params} from "./react/store/utils/params";
+import {initTraining} from "./react/store/slices/training-slice";
 
 function App() {
-    const {connect, hasCachedProvider, web3Modal} = useWeb3Context();
+    const {connect, hasCachedProvider, web3Modal, provider, chainID} = useWeb3Context();
+    const address = useAddress();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         if (web3Modal === undefined) return
@@ -36,8 +42,12 @@ function App() {
     const uiAction = useAppSelector((state) => state.ui)
 
     const handleClick = useCallback((e) => {
+        if (e.key === 'r') {
+            if (uiAction.show) {
+                store.dispatch(hideUi())
+            }
+        }
         if (e.key === 'i') {
-            console.log(uiAction)
             if (uiAction.show) {
                 store.dispatch(hideUi())
             } else {
@@ -50,7 +60,6 @@ function App() {
         }
 
         if (e.key === 'h') {
-            console.log(uiAction)
             if (uiAction.show) {
                 store.dispatch(hideUi())
             } else {
@@ -134,7 +143,22 @@ function App() {
                 <Heroes/>
             </Stack>
         )
+    }
 
+    function training() {
+        console.log("YOOOOOOOO")
+        let web3: Web3Params = {
+            networkID: chainID, provider: provider, address: address
+        }
+        dispatch(initTraining(web3))
+
+        return (
+            <Stack height={"100%"} direction="column"
+                   justifyContent="center"
+                   alignItems="center">
+                <Training/>
+            </Stack>
+        )
     }
 
     if (uiAction.show && uiAction.current) {
@@ -156,6 +180,9 @@ function App() {
                 break
             case UI.HEROES:
                 ui = heroes()
+                break
+            case UI.TRAINING:
+                ui = training()
                 break
         }
     }

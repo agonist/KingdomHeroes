@@ -7,30 +7,35 @@ import keccak256 from "keccak256";
 async function deployLocal() {
     await hre.run('deploy', {tags: 'KingdomKey'});
     await hre.run('deploy', {tags: 'KingdomHeroes'});
-    await hre.run('deploy', {tags: 'CreethGold'});
-    await hre.run('deploy', {tags: 'KingdomStaking'});
+    await hre.run('deploy', {tags: 'KingdomTraining'});
+
     await hre.run('deploy', {tags: 'TokensStats'});
+    await hre.run('deploy', {tags: 'CreethGold'});
+    await hre.run('deploy', {tags: 'KingdomTrainingPoly'});
 
     const network = await hre.ethers.provider.getNetwork();
 
     const deployments = hre.deployments;
     const KingdomKey = await deployments.get('KingdomKey');
     const KingdomHeroes = await deployments.get('KingdomHeroes');
+    const KingdomTraining = await deployments.get('KingdomTraining');
+
     const CreethGold = await deployments.get('CreethGold');
-    const KingdomStaking = await deployments.get('KingdomStaking');
+    const KingdomTrainingPoly = await deployments.get('KingdomTrainingPoly');
     const TokensStats = await deployments.get('TokensStats');
 
     const kingdomKey = await hre.ethers.getContractAt('KingdomKey', KingdomKey.address);
     const royalKingdom = await hre.ethers.getContractAt('KingdomHeroes', KingdomHeroes.address);
+    const trainingETH = await hre.ethers.getContractAt('KingdomTraining', KingdomTraining.address);
+
     const creethGold = await hre.ethers.getContractAt('CreethGold', CreethGold.address);
-    const kingdomStaking = await hre.ethers.getContractAt('KingdomStaking', KingdomStaking.address);
+    const trainingPoly = await hre.ethers.getContractAt('KingdomTrainingPoly', KingdomTrainingPoly.address);
     const tokensStats = await hre.ethers.getContractAt('TokensStats', TokensStats.address);
 
-    // await kingdomKey.togglePresale()
+    await kingdomKey.togglePresale()
     //await kingdomKey.toggleSale()
     //await royalKingdom.togglePresale()
-    await royalKingdom.toggleSale()
-
+    await royalKingdom.togglePresale()
 
     const whitelist = [
         "0xCBaE0841D72C6e1BDC4e3a85Dea5497822F27d18",
@@ -39,6 +44,7 @@ async function deployLocal() {
         "0xcF6c12BC62604207eBF7c95efd77c8B18519a6e1",
         "0xE032d90BE017B57118eAafaA5826De494D73E39b",
     ];
+
     const leafNodes = whitelist.map((addr) => keccak256(addr));
     const merkleTree = new MerkleTree(leafNodes, keccak256, {
         sortPairs: true,

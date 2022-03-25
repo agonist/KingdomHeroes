@@ -152,10 +152,10 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.currentFacingSign = 0
             this.currentFacingNpc = undefined
         } else if (Phaser.Input.Keyboard.JustUp(this.keyObj)) {
-            if (this.currentFacingSign !== 0) {
-                console.log(this.currentFacingSign)
-                this.showDialogForId(this.currentFacingSign)
-            }
+            // if (this.currentFacingSign !== 0) {
+            //     console.log(this.currentFacingSign)
+            //     this.showDialogForId(this.currentFacingSign)
+            // }
             if (this.currentFacingNpc !== undefined) {
                 this.currentFacingNpc.triggerAction()
             }

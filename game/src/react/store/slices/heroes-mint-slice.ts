@@ -60,8 +60,8 @@ export const loadHeroesMintDetails = createAsyncThunk("heroesMint/init",
             const minted = await royalKingdomContract.totalSupply()
             currentMinted = minted.toNumber()
 
-            if (presaleActive) mintPrice = 0.03
-            if (saleActive) mintPrice = 0.05
+            if (presaleActive) mintPrice = 0.08
+            if (saleActive) mintPrice = 0.08
 
             const hexProof = merkleTree.getHexProof(keccak256(params.address));
             whitelisted = hexProof.length > 0

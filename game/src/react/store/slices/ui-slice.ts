@@ -16,9 +16,16 @@ const uiSlice = createSlice({
     initialState,
     reducers: {
         showUi: (state, action: PayloadAction<UiAction>) => {
-            state.current = action.payload
-            state.show = true
 
+            if (state.current) {
+                if (action.payload.show !== state.current.show) {
+                    state.current = action.payload
+                    state.show = true
+                }
+            } else {
+                state.current = action.payload
+                state.show = true
+            }
         },
         hideUi: (state) => {
             state.current = undefined

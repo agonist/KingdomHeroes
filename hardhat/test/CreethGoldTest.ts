@@ -9,7 +9,7 @@ async function setup() {
 
     await deployments.fixture(["CreethGold"]);
     const contracts = {
-        token: (await ethers.getContract('CreethGold')),
+        token: (await ethers.getContract('CreethGold'))
     };
 
     const {
@@ -24,6 +24,8 @@ async function setup() {
         contracts
     );
 
+    contracts.token.setMinter(owner.address, true)
+
     return {
         ...contracts,
         owner,
@@ -37,10 +39,6 @@ describe('CreethGold', function () {
             // given
             const {token, owner} = await setup();
 
-            // wehn
-            const minter = await token.minter()
-
-            expect(minter).to.be.equal(owner.address);
         })
     })
 
@@ -84,32 +82,16 @@ describe('CreethGold', function () {
 
     })
 
-    describe('burnFrom', function () {
-        it('should be able to burn tokens from another account', async function () {
-            // given
-            const {token, bob, alice} = await setup();
-
-            // when
-            await token.mint(bob.address, parseCoin("1000"))
-            await bob.token.approve(alice.address, ethers.constants.MaxUint256)
-            await alice.token.burnFrom(bob.address, parseCoin("500"))
-
-            // expect
-            expect(await token.balanceOf(bob.address)).to.equal(parseCoin("500"))
-        });
-
-    })
-
     describe('setMinter', function () {
         it('should set a new minter', async function () {
             // given
             const {token, bob} = await setup();
 
             // when
-            await token.setMinter(bob.address)
+            await token.setMinter(bob.address, true)
 
             // then
-            expect(await token.minter()).to.equal(bob.address)
+            expect(await token.minters(bob.address)).to.equal(true)
         })
 
         it('Should be reverted with "Ownable: caller is not the owner"', async function () {
@@ -117,7 +99,7 @@ describe('CreethGold', function () {
             const {token, bob} = await setup();
 
             // when
-            const tx = bob.token.setMinter(bob.address)
+            const tx = bob.token.setMinter(bob.address, true)
 
             // then
             await expect(tx).to.be.revertedWith("Ownable: caller is not the owner");

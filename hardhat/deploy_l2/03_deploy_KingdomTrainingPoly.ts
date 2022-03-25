@@ -8,15 +8,26 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     const {deployer} = await getNamedAccounts();
     const network = await hre.ethers.provider.getNetwork();
 
+    let fxChild = "0x8397259c983751DAf40400790063935a11afa28a"
+
+    if (network.chainId == 80001) {
+        fxChild = "0xCf73231F28B7331BBe3124B907840A94851f9f11"
+    }
+
+    if (network.chainId == 31337) {
+
+    }
+
     const args = [
-        deployer
+        fxChild
     ]
 
-    await deploy('CreethGold', {
+    await deploy('KingdomTrainingPoly', {
         from: deployer,
         args: args,
         log: true,
     });
 };
 export default func;
-func.tags = ['CreethGold'];
+func.dependencies = ['CreethGold']
+func.tags = ['KingdomTrainingPoly'];
