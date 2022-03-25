@@ -49,7 +49,7 @@ contract KingdomTrainingPoly is FxBaseChildTunnel, Ownable, TokensTypes {
         TokenType tokenType,
         uint256 amount
     ) internal {
-        _updateReward(msg.sender);
+        _updateReward(account);
         balances[account][uint256(tokenType)] += amount;
     }
 
@@ -58,7 +58,7 @@ contract KingdomTrainingPoly is FxBaseChildTunnel, Ownable, TokensTypes {
         TokenType tokenType,
         uint256 amount
     ) internal {
-        _updateReward(msg.sender);
+        _updateReward(account);
         balances[account][uint256(tokenType)] -= amount;
     }
 

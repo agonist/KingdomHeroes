@@ -72,6 +72,7 @@ export class MetadataService {
 
         // const formated = formatEther(totalYield)
 
+
         let y: YieldInfos = {
             lastupdated: lastUpdated,
             totalYield: formatEther(totalYield),

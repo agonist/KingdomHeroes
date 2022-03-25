@@ -20,13 +20,13 @@ async function main() {
     }
 
     // when
-    // await training.setFxRootTunnel("0x798AA7e2B8c07f3d635Dd7aE7De86F5034195B28")
+     await training.setFxRootTunnel("0xcD54C124A267FeefF5846e0B53D079432945d625")
 
     await training.setCgldContract("0xA65bd3D9B4c113D53B34Dc577879Bb0b4a0845ac")
 
     // await tokensStats.initStats(stats, ids)
 
-    // await cgld.setMinter(training.address, true)
+     await cgld.setMinter(training.address, true)
 
 }
 
