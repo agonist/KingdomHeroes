@@ -2,10 +2,9 @@ import {useAppSelector} from "../../store/hooks";
 import React, {useEffect, useState} from "react";
 import {Button, Checkbox, List, ListItem, ListItemButton, ListItemIcon, Stack, Typography} from "@mui/material";
 import {CustomColor} from "../../MuiTheme";
-import {InventoryItemType} from "../../model/inventory";
 import {GuiStyles} from "../Styles";
 import {TrainParams, Web3Params} from "../../store/utils/params";
-import {trainNFT, untrainNFT} from "../../store/slices/training-slice";
+import {untrainNFT} from "../../store/slices/training-slice";
 import {useAddress, useWeb3Context} from "../../web3/web3-context";
 import {useDispatch} from "react-redux";
 

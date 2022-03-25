@@ -2,10 +2,8 @@
 import React, {useCallback, useEffect, useState} from "react";
 import Message from "./Message";
 import {makeStyles} from "@mui/styles";
-import dialogBorderBox from './dialogbox.png';
 import {IconButton, Stack, Typography} from "@mui/material";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import bgui from "../bgui.png";
 import {CustomColor} from "../../MuiTheme";
 
 const useStyles = makeStyles((theme) => ({

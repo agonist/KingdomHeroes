@@ -2,14 +2,11 @@ import {useAppSelector} from "../../store/hooks";
 import React, {useEffect, useState} from "react";
 import {Button, Checkbox, List, ListItem, ListItemButton, ListItemIcon, Stack, Typography} from "@mui/material";
 import {CustomColor} from "../../MuiTheme";
-import {InventoryItemType} from "../../model/inventory";
 import {GuiStyles} from "../Styles";
-import trainingSlice, {approveHeroes, approveKeys, trainNFT} from "../../store/slices/training-slice";
+import {approveHeroes, approveKeys, trainNFT} from "../../store/slices/training-slice";
 import {TrainParams, Web3Params} from "../../store/utils/params";
 import {useAddress, useWeb3Context} from "../../web3/web3-context";
 import {useDispatch} from "react-redux";
-import {Reducer} from "@reduxjs/toolkit";
-
 
 export default function Stake() {
 

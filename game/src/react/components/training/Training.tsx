@@ -4,7 +4,7 @@ import {
     Typography
 } from "@mui/material";
 import {CustomColor} from "../../MuiTheme";
-import React, {useState} from "react";
+import React from "react";
 import Stake from "./Stake";
 import UnStake from "./UnStake";
 import {GuiStyles} from "../Styles";

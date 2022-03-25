@@ -2,7 +2,7 @@ import Npc from "./NPC";
 import {Scene} from "phaser";
 import {NPCList} from "../../data/NPCList";
 import {Constants} from "../../Constants";
-import {BottomDialogActionParams, UI, UiAction} from "../../../react/store/ui/UiAction";
+import { UI, UiAction} from "../../../react/store/ui/UiAction";
 import store from "../../../react/store/store";
 import {showUi} from "../../../react/store/slices/ui-slice";
 

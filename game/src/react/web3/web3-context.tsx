@@ -1,9 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useState, ReactElement, useContext, useMemo, useCallback, useEffect} from "react";
 import Web3Modal from "web3modal";
 import {StaticJsonRpcProvider, JsonRpcProvider, Web3Provider} from "@ethersproject/providers";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import {DEFAULT_NETWORK, Networks, NetworksURI} from "./blockchain";
-import {useDispatch} from "react-redux";
 import {swithNetwork} from "./switch-network";
 import {Web3Params} from "../store/utils/params";
 
@@ -31,6 +31,7 @@ const Web3Context = React.createContext<Web3ContextData>(null);
 export const useWeb3Context = () => {
     const web3Context = useContext(Web3Context);
     if (!web3Context) {
+        // eslint-disable-next-line
         throw new Error("useWeb3Context() can only be used inside of <Web3ContextProvider />, " + "please declare it at a higher level.");
     }
     const {onChainProvider} = web3Context;
@@ -45,13 +46,15 @@ export const useAddress = () => {
 };
 
 export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({children}) => {
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
 
     const [connected, setConnected] = useState(false);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [chainID, setChainID] = useState(DEFAULT_NETWORK);
     const [providerChainID, setProviderChainID] = useState(DEFAULT_NETWORK);
     const [address, setAddress] = useState("");
 
+    // eslint-disable-next-line
     const [uri, setUri] = useState(NetworksURI.LOCALHOST);
     const [provider, setProvider] = useState<JsonRpcProvider>(new StaticJsonRpcProvider(uri));
 

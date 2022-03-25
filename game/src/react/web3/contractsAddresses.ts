@@ -1,5 +1,3 @@
-import {Networks} from "./blockchain";
-
 const CONTRACTS = {
     KINGDOM_HEROES: process.env.REACT_APP_KINGDOM_HEROES!,
     KINGDOM_KEY: process.env.REACT_APP_KINGDOM_KEY!,

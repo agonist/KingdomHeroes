@@ -20,7 +20,7 @@ async function main() {
     }
 
     // when
-    // await training.setFxRootTunnel(addressOfTrainingOnETH)
+    // await training.setFxRootTunnel("0x798AA7e2B8c07f3d635Dd7aE7De86F5034195B28")
 
     await tokensStats.initStats(stats, ids)
 

@@ -1,11 +1,9 @@
 import {Box, Grid, Stack, Tooltip, tooltipClasses, TooltipProps, Typography} from "@mui/material";
 import {useAppSelector} from "../../store/hooks";
-import dialogBorderBox from "../dialog/dialogbox.png";
 import key from "../../../img/key.png";
 
 import {styled} from "@mui/styles";
 import React from "react";
-import bgui from "../bgui.png";
 import {GuiStyles} from "../Styles";
 import {CustomColor} from "../../MuiTheme";
 
@@ -50,7 +48,8 @@ export default function Inventory() {
                                     title={
                                         <React.Fragment>
                                             <Stack padding={2}>
-                                                <Typography color={CustomColor.fontYellow} variant={"h5"}>Kingdom Key</Typography>
+                                                <Typography color={CustomColor.fontYellow} variant={"h5"}>Kingdom
+                                                    Key</Typography>
                                                 <Typography color={"white"} variant={"body1"}>A rare item for the
                                                     bravest adventurer</Typography>
                                             </Stack>

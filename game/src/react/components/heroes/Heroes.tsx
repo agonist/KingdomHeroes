@@ -1,12 +1,9 @@
-import bgui from "../bgui.png";
 import {
     Box,
-    Container, Dialog, DialogContent, DialogProps,
     List,
     ListItemAvatar,
     ListItemButton,
-    ListItemIcon,
-    ListItemText, Popper,
+    ListItemText,
     Stack,
     Typography
 } from "@mui/material";
@@ -23,7 +20,6 @@ export default function Heroes() {
     const user = useAppSelector((state) => state.user)
 
     const [selectedIndex, setSelectedIndex] = React.useState(0);
-    const [scroll, setScroll] = React.useState<DialogProps['scroll']>('paper');
 
     const handleListItemClick = (
         event: React.MouseEvent<HTMLDivElement, MouseEvent>,

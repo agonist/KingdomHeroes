@@ -17,8 +17,8 @@ async function main() {
 
     // need to set fxChildTunnel once deployed
 
-    // await kingdomTraining.setFxChildTunnel(addressOfChildOnPolygon)
-    
+    await kingdomTraining.setFxChildTunnel("0x5ad9CE9Ee8657B4e424Dd61A9616C15dB11e0e6d")
+
     const whitelist = [
         "0xCBaE0841D72C6e1BDC4e3a85Dea5497822F27d18",
         "0xE032d90BE017B57118eAafaA5826De494D73E392",
@@ -35,8 +35,8 @@ async function main() {
     await kingdomKey.setWhitelistMerkleRoot(merkleTree.getHexRoot())
     await royalKingdom.setWhitelistMerkleRoot(merkleTree.getHexRoot())
 
-    // await kingdomKey.togglePresale()
-    // await royalKingdom.togglePresale()
+    await kingdomKey.togglePresale()
+    await royalKingdom.togglePresale()
 
     // await kingdomKey.toggleSale()
     // await royalKingdom.toggleSale()

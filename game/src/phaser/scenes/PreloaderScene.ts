@@ -1,6 +1,5 @@
 import {Scene} from "phaser";
 import {Constants} from "../Constants";
-import Sprite = Phaser.Physics.Arcade.Sprite;
 import FilterMode = Phaser.Textures.FilterMode;
 
 export default class PreloaderScene extends Scene {
