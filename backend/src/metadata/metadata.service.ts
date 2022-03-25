@@ -4,12 +4,13 @@ import {
     AlchemyProvider,
     BigNumber,
     Contract,
-    EthersContract, InfuraProvider,
+    EthersContract, formatEther, InfuraProvider,
     InjectContractProvider,
     InjectEthersProvider, logger, StaticJsonRpcProvider
 } from "nestjs-ethers";
 import * as TokenStats from "../web3/abi/TokenStats.json";
 import * as KindgomHeroes from "../web3/abi/KingdomHeroes.json";
+import * as TrainingPoly from "../web3/abi/KingdomTrainingPoly.json";
 
 
 export interface Metadata extends Document {
@@ -31,6 +32,7 @@ export class MetadataService {
 
     private heroesContract: Contract
     private statsContract: Contract
+    private trainingPolyContract: Contract
     private logger = new Logger();
 
     constructor(
@@ -55,9 +57,22 @@ export class MetadataService {
         } else {
             this.heroesContract = this.etherContract.create(process.env.KINGDOM_HEROES, KindgomHeroes.abi)
             this.statsContract = this.mubaiContract.create(process.env.TOKEN_STATS, TokenStats.abi)
+            this.trainingPolyContract = this.mubaiContract.create(process.env.TRAINING_POLY, TrainingPoly.abi)
         }
 
 
+    }
+
+    async getCurrentYield(address: string) : Promise<YieldInfos>{
+
+        const yieldd = await this.trainingPolyContract.totalBalance(address)
+        const formated = formatEther(yieldd)
+
+        let y : YieldInfos = {
+            totalYield: formated
+        }
+
+        return y
     }
 
     async gen() {
@@ -231,4 +246,8 @@ export interface Attribute {
 
 export interface StatsAttributes extends Attribute {
     display_type: string,
+}
+
+export interface YieldInfos {
+    totalYield: string
 }
