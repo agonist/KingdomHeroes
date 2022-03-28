@@ -59,8 +59,6 @@ export class MetadataService {
             this.statsContract = this.mubaiContract.create(process.env.TOKEN_STATS, TokenStats.abi)
             this.trainingPolyContract = this.mubaiContract.create(process.env.TRAINING_POLY, TrainingPoly.abi)
         }
-
-
     }
 
     async getCurrentYield(address: string): Promise<YieldInfos> {
@@ -69,8 +67,6 @@ export class MetadataService {
         const cgldPerSec = await this.trainingPolyContract.cgldPerSecond(address)
         const unclaimed = await this.trainingPolyContract.unclaimedYield(address)
         const lastUpdated = await this.trainingPolyContract.lastUpdated(address)
-
-        // const formated = formatEther(totalYield)
 
 
         let y: YieldInfos = {

@@ -5,6 +5,7 @@ import {AuthService} from "./auth.service";
 
 @Injectable()
 export class Web3Strategy extends PassportStrategy(Strategy, "web3") {
+    private logger = new Logger();
 
     static key = "web3"
 

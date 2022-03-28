@@ -16,6 +16,7 @@ import {loadKeysMintDetails} from "./keys-mint-slice";
 import {buildInventory, InventoryItem} from "../../model/inventory";
 import {MetadataModel} from "../../model/metadata";
 import {default as KingdomTraining} from "../../abi/KingdomTrainingETH.json";
+import {User} from "../../model/user";
 
 interface UserState {
     loading: boolean,
@@ -68,6 +69,17 @@ export class API {
         }
     }
 
+    async getUser(): Promise<User | undefined> {
+        try {
+            const response = await axios.get<User>(this.BASE_RUL + "/users/profile", {
+                headers: {'Authorization': 'Bearer ' + this.getAuthToken()}
+            })
+            return response.data
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     async getMetadata(ids: number[]): Promise<MetadataModel[] | undefined> {
         try {
             const response = await axios.post<MetadataModel[]>(this.BASE_RUL + "/metadata/ids", {ids: ids})
@@ -77,13 +89,19 @@ export class API {
         }
     }
 
-    async getYield(address: string) : Promise<string | undefined> {
+    async getYield(address: string): Promise<string | undefined> {
         try {
             const response = await axios.get(this.BASE_RUL + "/metadata/yield/" + address)
             return response.data.totalYield
         } catch (e) {
             console.log(e)
         }
+    }
+
+    getAuthToken(): string {
+        let token = localStorage.getItem("auth_token")
+        if (token) return token
+        else return ""
     }
 }
 
@@ -101,11 +119,17 @@ export const initUser = createAsyncThunk("user/init",
         let stakedHeroesIds = []
         let stakedKeysAmout = 0
         let keyAmount
+        let user
 
         try {
 
             const token = localStorage.getItem("auth_token")
-            if (!token) {
+
+            if (token) {
+                user = await api.getUser()
+            }
+
+            if (!user) {
 
                 const nonce = await api.getNonce(params.address)
                 if (!nonce) {
@@ -115,12 +139,13 @@ export const initUser = createAsyncThunk("user/init",
                 let signature = await params.provider.getSigner(params.address).signMessage(nonce)
 
                 const authToken = await api.login(params.address, signature)
-                console.log(authToken)
                 if (!authToken) {
                     return Promise.reject()
                 }
 
                 localStorage.setItem("auth_token", authToken)
+
+                user = await api.getUser()
 
             }
 

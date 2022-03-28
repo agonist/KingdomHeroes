@@ -10,7 +10,7 @@ import {Web3Strategy} from "./web3.strategy";
 @Module({
     imports: [UsersModule, PassportModule, JwtModule.register({
         secret: jwtConstants.secret,
-        signOptions: {expiresIn: '60s'},
+        signOptions: {expiresIn: '7d'},
     }),],
     providers: [AuthService, JwtStrategy, Web3Strategy],
     exports: [AuthService],
