@@ -2,7 +2,7 @@ import {NextPage} from "next";
 import {Stack, Typography} from "@mui/material";
 import MintRoot from "../mint/MintRoot";
 import Image from "next/image";
-import PIC from "../../../public/banner_rk.webp";
+import PIC from "../../../public/banner.webp";
 
 function HeadSection() {
 

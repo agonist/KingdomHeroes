@@ -7,7 +7,7 @@ function RoadmapSection() {
 
     return (
         <Stack sx={{backgroundColor: '#f1f1f1'}} paddingTop={6} paddingX={2} width={"100%"}
-               alignItems="center" id="Concept">
+               alignItems="center" id="Roadmap">
             <Stack width={"100%"} alignItems="center" spacing={3}>
                 <Typography variant={"h1"} paddingBottom={2}>Roadmap</Typography>
 

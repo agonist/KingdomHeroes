@@ -1,10 +1,5 @@
 import {Container, Icon, Stack, SvgIcon, Typography} from "@mui/material";
-import ConnectButton from "./ConnectButton";
-import {useState} from "react";
-import Link from 'next/link'
-import {Custom} from "../../styles/Theme";
 import {NextRouter, useRouter} from "next/router";
-import ArrowRightSharpIcon from '@mui/icons-material/ArrowRightSharp';
 import {Link as ScrollLink} from "react-scroll";
 
 export const frgMenuData = [

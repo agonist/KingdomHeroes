@@ -4,6 +4,8 @@ import {color, styled} from "@mui/system";
 import MenuMobile from "./MenuMobile";
 import {useRouter} from "next/router";
 import ConnectButton from "./ConnectButton";
+import Image from "next/image";
+import PIC from "../../../public/logo.webp";
 
 export const DRAWER_WIDTH = 280;
 export const TRANSITION_DURATION = 969;
@@ -34,7 +36,9 @@ function MenuBar(): JSX.Element {
             <ToolbarStyle>
                 <Hidden mdDown>
                     <Stack width={350}>
-                        <Typography>Logo</Typography>
+                        <Stack width={100}>
+                            <Image src={PIC}/>
+                        </Stack>
                     </Stack>
                 </Hidden>
                 <Container

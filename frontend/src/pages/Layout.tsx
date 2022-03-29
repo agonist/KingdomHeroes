@@ -48,8 +48,8 @@ const Layout = ({children}: LayoutProps) => {
     return (
         <Box height="100vh" display="flex" flexDirection="column">
             <Head>
-                <title>Royal Kingdom</title>
-                <meta name="" content="Royal Kingdom"/>
+                <title>Kingdom Heroes</title>
+                <meta name="" content="Kingdom Heroes"/>
                 <link rel="icon" href="/favicon.ico"/>
                 <link rel="preconnect" href="https://fonts.googleapis.com"/>
                 <link rel="preconnect" href="https://fonts.gstatic.com"/>

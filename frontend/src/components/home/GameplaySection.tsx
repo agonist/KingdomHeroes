@@ -5,7 +5,7 @@ function GameplaySection() {
 
     return (
         <Stack sx={{backgroundColor: '#f1f1f1'}} paddingTop={6} paddingX={2}
-               alignItems="center" id="Concept">
+               alignItems="center" id="Gameplay">
             <Stack maxWidth={700} alignItems="center" spacing={3}>
                 <Typography variant={"h1"}>Gameplay</Typography>
 
