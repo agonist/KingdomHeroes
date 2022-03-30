@@ -4,8 +4,6 @@ import {DatabaseModule} from "../db/database.module";
 import {GameService} from "./game.service";
 import {NftModule} from "../nft/nft.module";
 import {UsersModule} from "../users/users.module";
-import {HeroesService} from "../heroes/heroes.service";
-import {heroesProviders} from "../heroes/heroes.providers";
 import {HeroesModule} from "../heroes/heroes.module";
 
 @Module({

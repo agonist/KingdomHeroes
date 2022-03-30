@@ -19,6 +19,7 @@ import Training from "./react/components/training/Training";
 import {useDispatch} from "react-redux";
 import {Web3Params} from "./react/store/utils/params";
 import {initTraining} from "./react/store/slices/training-slice";
+import PIC from "./img/banner.webp";
 
 function App() {
     const {connect, hasCachedProvider, web3Modal, provider, chainID} = useWeb3Context();
@@ -97,7 +98,7 @@ function App() {
     function login() {
         return (
             <Stack height={"100%"} direction="column"
-                   justifyContent="flex-end"
+                   justifyContent="flex-end" sx={{backgroundImage: `url(${PIC})`}}
                    alignItems="center" paddingBottom={8}>
                 <Login/>
             </Stack>

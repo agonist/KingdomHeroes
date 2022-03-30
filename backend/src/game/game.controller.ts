@@ -3,7 +3,6 @@ import {JwtAuthGuard} from "../auth/jwt-auth.guard";
 import {GameService} from "./game.service";
 import {RequestIds} from "../metadata/metadata.controller";
 
-
 @Controller("game")
 export class GameController {
 

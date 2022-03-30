@@ -1,6 +1,5 @@
 import {HttpException, HttpStatus, Injectable} from "@nestjs/common";
 import {UsersService} from "../users/users.service";
-import {JwtService} from "@nestjs/jwt";
 import {NftService} from "../nft/nft.service";
 import {BcCount, Heroes, HeroesService} from "../heroes/heroes.service";
 

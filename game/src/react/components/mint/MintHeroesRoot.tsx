@@ -68,7 +68,7 @@ function MintHeroesRoot() {
 
         return (
             <Stack alignItems="center" width={window.innerWidth / 2.7}
-                   height={window.innerHeight / 1.3}>
+            >
                 <Typography color={CustomColor.fontYellow} variant={"h3"} paddingY={2}>HEROES {saletxt}</Typography>
 
                 <Stack sx={{backgroundColor: CustomColor.midBg}} width={"100%"} height={"100%"} paddingY={3}
