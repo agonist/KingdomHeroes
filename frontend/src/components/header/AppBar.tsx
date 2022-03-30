@@ -3,7 +3,6 @@ import MenuDesktop from "./MenuDesktop";
 import {color, styled} from "@mui/system";
 import MenuMobile from "./MenuMobile";
 import {useRouter} from "next/router";
-import ConnectButton from "./ConnectButton";
 import Image from "next/image";
 import PIC from "../../../public/logo.webp";
 
