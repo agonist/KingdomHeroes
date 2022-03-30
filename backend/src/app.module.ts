@@ -14,11 +14,18 @@ import {metadataProviders} from "./metadata/metadata.providers";
 import {MetadataModule} from "./metadata/metadata.module";
 import {UsersController} from "./users/users.controller";
 import {AuthController} from "./auth/auth.controller";
+import {GameModule} from "./game/game.module";
+import {GameController} from "./game/game.controller";
+import {NftService} from "./nft/nft.service";
+import {GameService} from "./game/game.service";
+import {HeroesModule} from './heroes/heroes.module';
+import {HeroesService} from "./heroes/heroes.service";
+import {heroesProviders} from "./heroes/heroes.providers";
 
 @Module({
-    imports: [ConfigModule.forRoot(), AuthModule, UsersModule, MetadataModule],
-    controllers: [AppController, MetadataController, UsersController, AuthController],
-    providers: [AppService, UsersService, MetadataService, ...userProviders, ...databaseProviders, ...metadataProviders],
+    imports: [ConfigModule.forRoot(), AuthModule, UsersModule, MetadataModule, GameModule, HeroesModule],
+    controllers: [AppController, MetadataController, UsersController, AuthController, GameController],
+    providers: [AppService, UsersService, MetadataService, NftService, GameService, HeroesService, ...userProviders, ...databaseProviders, ...metadataProviders, ...heroesProviders],
 })
 
 export class AppModule implements NestModule {

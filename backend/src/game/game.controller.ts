@@ -1,6 +1,7 @@
-import {Controller, Post, Request, UseGuards} from "@nestjs/common";
+import {Body, Controller, Get, Post, Request, UseGuards} from "@nestjs/common";
 import {JwtAuthGuard} from "../auth/jwt-auth.guard";
 import {GameService} from "./game.service";
+import {RequestIds} from "../metadata/metadata.controller";
 
 
 @Controller("game")
@@ -11,10 +12,20 @@ export class GameController {
 
     @UseGuards(JwtAuthGuard)
     @Post("update/team")
-    updateUserTeam(@Request() req) {
+    async updateUserTeam(@Request() req, @Body() params: RequestIds) {
+        return await this.gameSevice.assignTeam(req.user.address, params.ids)
+    }
 
-        // verify user is the heroes owner
+    @UseGuards(JwtAuthGuard)
+    @Get("bc")
+    async getBcLeft(@Request() req, @Body() params: RequestIds) {
+        return await this.gameSevice.remainingBcFor(params.ids)
+    }
 
+    @UseGuards(JwtAuthGuard)
+    @Get("startgame")
+    async startGame(@Request() req) {
+        return this.gameSevice.startGame(req.user.address)
     }
 
 }
