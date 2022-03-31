@@ -5,7 +5,7 @@ import {default as KingdomTraining} from "../../abi/KingdomTrainingETH.json";
 import {ethers} from "ethers";
 import {toast} from "react-toastify";
 import {sleep} from "../utils/sleep";
-import {API, refreshUser} from "./user-slice";
+import {API, initUser} from "./user-slice";
 import {default as KingdomHeroes} from "../../abi/KingdomHeroes.json";
 import {default as KingdomKeys} from "../../abi/KingdomKeys.json";
 import {setAll} from "../utils/set-all";
@@ -142,7 +142,7 @@ export const trainNFT = createAsyncThunk("training/train",
         }
 
         await sleep(3);
-        await thunkApi.dispatch(refreshUser({
+        await thunkApi.dispatch(initUser({
             address: params.web3.address,
             networkID: params.web3.networkID,
             provider: params.web3.provider
@@ -172,7 +172,7 @@ export const untrainNFT = createAsyncThunk("training/untrain",
         }
 
         await sleep(3);
-        await thunkApi.dispatch(refreshUser({
+        await thunkApi.dispatch(initUser({
             address: params.web3.address,
             networkID: params.web3.networkID,
             provider: params.web3.provider

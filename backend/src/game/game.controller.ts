@@ -16,7 +16,7 @@ export class GameController {
     }
 
     @UseGuards(JwtAuthGuard)
-    @Get("bc")
+    @Post("bc")
     async getBcLeft(@Request() req, @Body() params: RequestIds) {
         return await this.gameSevice.remainingBcFor(params.ids)
     }
@@ -24,7 +24,7 @@ export class GameController {
     @UseGuards(JwtAuthGuard)
     @Get("startgame")
     async startGame(@Request() req) {
-        return this.gameSevice.startGame(req.user.address)
+        return this.gameSevice.startGame(req.user)
     }
 
 }

@@ -20,6 +20,7 @@ import {useDispatch} from "react-redux";
 import {Web3Params} from "./react/store/utils/params";
 import {initTraining} from "./react/store/slices/training-slice";
 import PIC from "./img/banner.webp";
+import Team from "./react/components/team/Team";
 
 function App() {
     const {connect, hasCachedProvider, web3Modal, provider, chainID} = useWeb3Context();
@@ -66,6 +67,18 @@ function App() {
             } else {
                 const a: UiAction = {
                     show: UI.HEROES,
+                    params: undefined
+                }
+                store.dispatch(showUi(a))
+            }
+        }
+
+        if (e.key === 't') {
+            if (uiAction.show) {
+                store.dispatch(hideUi())
+            } else {
+                const a: UiAction = {
+                    show: UI.TEAM,
                     params: undefined
                 }
                 store.dispatch(showUi(a))
@@ -146,8 +159,17 @@ function App() {
         )
     }
 
+    function team() {
+        return (
+            <Stack height={"100%"} direction="column"
+                   justifyContent="center"
+                   alignItems="center">
+                <Team/>
+            </Stack>
+        )
+    }
+
     function training() {
-        console.log("YOOOOOOOO")
         let web3: Web3Params = {
             networkID: chainID, provider: provider, address: address
         }
@@ -184,6 +206,9 @@ function App() {
                 break
             case UI.TRAINING:
                 ui = training()
+                break
+            case UI.TEAM:
+                ui = team()
                 break
         }
     }

@@ -1,3 +1,9 @@
 export interface User {
-    address: string
+    address: string,
+    team: number[]
+}
+
+export interface BC {
+    count: number,
+    id: number
 }

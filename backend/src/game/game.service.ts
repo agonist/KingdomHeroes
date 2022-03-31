@@ -1,7 +1,7 @@
 import {HttpException, HttpStatus, Injectable} from "@nestjs/common";
-import {UsersService} from "../users/users.service";
+import {User, UsersService} from "../users/users.service";
 import {NftService} from "../nft/nft.service";
-import {BcCount, Heroes, HeroesService} from "../heroes/heroes.service";
+import {BcCount, HeroesService} from "../heroes/heroes.service";
 
 @Injectable()
 export class GameService {
@@ -12,7 +12,7 @@ export class GameService {
 
     // Not sensitive, No on-chain involved
     // owner verification is enough to prevent malicious usage
-    async assignTeam(address: string, heroesIds: number[]): Promise<number[]> {
+    async assignTeam(address: string, heroesIds: number[]): Promise<User> {
 
         if (heroesIds.length > 4) {
             throw new HttpException('Max Team size if 4', HttpStatus.FORBIDDEN);
@@ -31,16 +31,14 @@ export class GameService {
         })
 
         await this.usersService.updateTeam(address, heroesIds)
-
-        return heroesIds
+        return await this.usersService.findOne(address)
     }
 
     async remainingBcFor(ids: number[]): Promise<BcCount[]> {
         return await this.heroesService.getBcRemainingFor(ids)
     }
 
-    async startGame(address: string) {
-        const user = await this.usersService.findOne(address)
+    async startGame(user: User) {
         await this.heroesService.consumeBCForCurrentTeam(user.team)
     }
 }
