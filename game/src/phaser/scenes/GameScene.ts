@@ -9,6 +9,7 @@ import Group = Phaser.Physics.Arcade.Group;
 import Tilemap = Phaser.Tilemaps.Tilemap;
 import {MintGuy} from "../objects/npc/MintGuy";
 import {MintGuy2} from "../objects/npc/MintGuy2";
+import {debugDraw} from "../debug/debug";
 
 export default class GameScene extends Phaser.Scene {
 
@@ -43,6 +44,8 @@ export default class GameScene extends Phaser.Scene {
         // Walls
         const wallsLayer = map.createLayer('walls', tileset)
         wallsLayer.setCollisionByProperty({collide: true})
+        map.createLayer('void', tileset)
+
         // debugDraw(wallsLayer, this)
 
         // WL blockers
@@ -61,7 +64,7 @@ export default class GameScene extends Phaser.Scene {
 
 
         // player
-        this.player = new Player(this, 400, 248)
+        this.player = new Player(this, 50 * 16, 54 * 16)
         // if (whitelistLayer) this.physics.add.collider(this.player, whitelistLayer)
 
         this.physics.add.collider(this.player, wallsLayer)
@@ -80,7 +83,7 @@ export default class GameScene extends Phaser.Scene {
             immovable: true
         });
 
-        const forge = new Sprite(this, 310, 210, Constants.KEY_FORGE)
+        const forge = new Sprite(this, 36 * 16, 44 * 16, Constants.KEY_FORGE)
         this.physics.add.existing(forge);
         this.add.existing(forge)
         this.collidingGroup.add(forge)

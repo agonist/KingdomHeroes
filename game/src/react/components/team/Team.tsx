@@ -89,13 +89,14 @@ export default function Team() {
     }
 
     return (
-        <Stack width={window.innerWidth / 1.1} height={window.innerHeight / 1.1}
+        <Stack width={window.innerWidth / 1.1}
                spacing={3}
+
                alignItems={"center"}
                className={classes.frame}>
             <Typography variant={"h1"} color={CustomColor.fontYellow}>TEAM</Typography>
 
-            <Stack direction={"row"} spacing={3} width={"100%"} justifyContent={"center"}>
+            <Stack paddingY={3} direction={"row"} spacing={3} width={"100%"} justifyContent={"center"}>
 
                 <Stack width={window.innerWidth / 4} height={window.innerHeight / 1.7}
                        className={classes.content}>

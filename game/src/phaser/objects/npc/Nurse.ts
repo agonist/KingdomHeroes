@@ -9,7 +9,7 @@ import {showUi} from "../../../react/store/slices/ui-slice";
 
 export class Nurse extends Npc {
     constructor(scene: Scene) {
-        super(scene, 30 * 16, 30 * 16, NPCList.NURSE, Constants.KEY_NURSE, 'nurse-1.png');
+        super(scene, 63 * 16, 68 * 16, NPCList.NURSE, Constants.KEY_NURSE, 'nurse-1.png');
         this.create()
     }
 

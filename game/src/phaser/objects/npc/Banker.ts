@@ -2,14 +2,14 @@ import Npc from "./NPC";
 import {Scene} from "phaser";
 import {NPCList} from "../../data/NPCList";
 import {Constants} from "../../Constants";
-import { UI, UiAction} from "../../../react/store/ui/UiAction";
+import {UI, UiAction} from "../../../react/store/ui/UiAction";
 import store from "../../../react/store/store";
 import {showUi} from "../../../react/store/slices/ui-slice";
 
 
 export class Banker extends Npc {
     constructor(scene: Scene) {
-        super(scene, 18 * 16, 30 * 16, NPCList.BANKER, Constants.KEY_BANKER, 'banker-1.png');
+        super(scene, 67 * 16, 52 * 16, NPCList.BANKER, Constants.KEY_BANKER, 'banker-1.png');
         this.create()
     }
 

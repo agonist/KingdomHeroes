@@ -9,7 +9,7 @@ import {showUi} from "../../../react/store/slices/ui-slice";
 
 export class Blacksmith extends Npc {
     constructor(scene: Scene) {
-        super(scene, 285, 250, NPCList.BLACKSMITH, Constants.KEY_BLACKSMITH, 'blacksmith-1.png');
+        super(scene, 34 * 16, 47 * 16, NPCList.BLACKSMITH, Constants.KEY_BLACKSMITH, 'blacksmith-1.png');
         this.create()
     }
 
