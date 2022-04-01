@@ -9,7 +9,7 @@ import {showUi} from "../../../react/store/slices/ui-slice";
 
 export class Banker extends Npc {
     constructor(scene: Scene) {
-        super(scene, 67 * 16, 52 * 16, NPCList.BANKER, Constants.KEY_BANKER, 'banker-1.png');
+        super(scene, 66 * 16, 50 * 16, NPCList.BANKER, Constants.KEY_BANKER, 'banker-1.png');
         this.create()
     }
 

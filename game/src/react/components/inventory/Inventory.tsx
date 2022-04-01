@@ -1,6 +1,6 @@
 import {Box, Grid, Stack, Tooltip, tooltipClasses, TooltipProps, Typography} from "@mui/material";
 import {useAppSelector} from "../../store/hooks";
-import key from "../../../img/key.png";
+import key from "../../../img/key.gif";
 
 import {styled} from "@mui/styles";
 import React from "react";
@@ -56,7 +56,10 @@ export default function Inventory() {
                                         </React.Fragment>
                                     }
                                 >
-                                    <img src={key} alt={"kingdom key"}/>
+                                    <Stack width={64} height={64}>
+                                        <img src={key} alt={"kingdom key"}/>
+                                    </Stack>
+
                                 </HtmlTooltip>
                             </Stack>
                         </Grid>

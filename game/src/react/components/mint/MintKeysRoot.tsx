@@ -7,6 +7,7 @@ import {Web3Params} from "../../store/utils/params";
 import {hideUi} from "../../store/slices/ui-slice";
 import {CustomColor} from "../../MuiTheme";
 import {GuiStyles} from "../Styles";
+import key from '../../../img/key.gif'
 
 
 function MintHeroesRoot() {
@@ -59,10 +60,14 @@ function MintHeroesRoot() {
                         ACCESS TO THE HEROES WHITELIST,<br/> TWO FREE HEROES, A BONUS YIELD AND MUCH MORE.
                     </Typography>
 
-                    <Typography color={"white"} paddingTop={4} variant={"h4"}>{keysMint.currentMinted} / 500 KEYS
+                    <Stack className={classes.frame} maxWidth={200} maxHeight={200}>
+                        <img src={key} alt={"key"}/>
+                    </Stack>
+
+                    <Typography color={"white"} paddingTop={1} variant={"h4"}>{keysMint.currentMinted} / 500 KEYS
                         MINTED</Typography>
 
-                    <Stack direction={"row"} spacing={2} paddingTop={4} paddingBottom={4}>
+                    <Stack direction={"row"} spacing={2} paddingTop={2} paddingBottom={2}>
 
                         <Typography color={"white"}>1 MAX PER WALLET</Typography>
 
