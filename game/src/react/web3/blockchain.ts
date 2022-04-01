@@ -35,5 +35,6 @@ function getNetwork(): Networks {
             network = Networks.MAINNET
             break
     }
+    console.log(network)
     return network
 }
