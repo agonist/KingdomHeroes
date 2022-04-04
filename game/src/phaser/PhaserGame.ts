@@ -3,6 +3,7 @@ import Phaser from 'phaser'
 import PreloaderScene from "./scenes/PreloaderScene";
 import MainMenuScene from "./scenes/MainMenuScene";
 import GameScene from './scenes/GameScene';
+import DungeonScene from "./scenes/DungeonScene";
 
 const config: Phaser.Types.Core.GameConfig = {
     type: Phaser.AUTO,
@@ -23,7 +24,7 @@ const config: Phaser.Types.Core.GameConfig = {
             debug: false
         },
     },
-    scene: [PreloaderScene, MainMenuScene, GameScene],
+    scene: [PreloaderScene, MainMenuScene, GameScene, DungeonScene],
 }
 
 const phaserGame = new Phaser.Game(config)

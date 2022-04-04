@@ -9,7 +9,7 @@ import {showUi} from "../../../react/store/slices/ui-slice";
 export class MintGuy2 extends Npc {
 
     constructor(scene: Scene) {
-        super(scene, 41 * 16, 62 * 16, NPCList.MINT, Constants.KEY_MINT_NPC, Constants.ASSETS_MINT_NPC);
+        super(scene, 42 * 16, 36 * 16, NPCList.MINT, Constants.KEY_MINT_NPC, Constants.ASSETS_MINT_NPC);
     }
 
     triggerAction() {

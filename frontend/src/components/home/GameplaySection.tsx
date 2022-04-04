@@ -6,21 +6,29 @@ function GameplaySection() {
         <Stack sx={{backgroundColor: '#f1f1f1'}} paddingTop={6} paddingX={2}
                alignItems="center" id="Gameplay">
             <Stack maxWidth={800} alignItems="center" spacing={3}>
-                <Typography variant={"h1"}>Gameplay</Typography>
+                <Typography variant={"h1"}>Lore</Typography>
 
                 <Typography variant={"body1"}>
 
-                    Kingdom Heroes is an NFT based game located in The Royal Kingdom of Creeth.
-                    Kingdom Heroes brings back all the feels and nostalgia of your RPG/strategy
-                    based games and puts them into a collectible NFT. Community members will train
-                    their NFTs- Knights, Wizards, and Elves- against the monsters that lurk outside
-                    the walls of Creeth. Battling against Orcs, Dragons, and Beasts, winning teams will
-                    gain Experience Points (XP) that improves their skills, and at times, find additional
-                    Creeth Gold ($CGLD) that can be used to further improve their in-game experience. After
-                    building the skills of your team, test your strategy and their strength against other community
-                    members in hosted tournaments to claim all of the glory and prizes!
-                    New challenges await and will come as you achieve greater success within the game, so be ready
-                    as your mission will not be soon over.
+                    Times are changing rapidly. The Kingdom of Creeth for centuries has been the leader of the Civilised
+                    World, with Castreia,
+                    its picture perfect port capital being held as the gold standard of cities throughout Creeth and
+                    rival kingdoms. <br/><br/>
+                    As merchants and new travelers come to settle within Castreia, new dangers come as well.
+                    Global expansion has brought the hope of riches and wealth to new settlers which has caused bad
+                    actors to find new ways to harm local citizens.
+                    Monsters from far away lands have been brought outside the city gates,
+                    attacking and stealing Creeth Gold from those not strong enough to fend for themselves.<br/><br/>
+                    It is rumored that the promise of wealth and safety from rival kingdoms is spreading to nearby
+                    cities,
+                    enacting revolts and further tribulations to The Kingdom. As the situation grows dire,
+                    a set of citizens emerge in hopes to fight off the monsters lurking around Castreia and prove their
+                    strength to represent Creeth as The Kingdom Heroes.
+                    This task will not be easy, and it will cause these Heroes to make difficult decisions, some even
+                    having to fight against their brethren.
+                    <br/><br/> Will you have what it takes to defeat these monsters and face the challenges emerging
+                    across the
+                    Kingdom of Creeth?
 
 
                 </Typography>

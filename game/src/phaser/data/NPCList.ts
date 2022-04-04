@@ -3,5 +3,8 @@ export enum NPCList {
     MINT,
     BLACKSMITH,
     NURSE,
-    BANKER
+    BANKER,
+    COOK,
+    FROG,
+    SHEEP
 }

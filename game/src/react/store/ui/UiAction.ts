@@ -11,7 +11,8 @@ export enum UI {
     INVENTORY,
     HEROES,
     TRAINING,
-    TEAM
+    TEAM,
+
 }
 
 export interface UiActionParam {}

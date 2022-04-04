@@ -21,10 +21,12 @@ contract TokensStats is Ownable {
     bool public initialStatsFrozen;
 
     mapping(uint256 => Stats) public tokenStats;
-    address gameMaster;
+    mapping(uint64 => string) public skills;
 
-    modifier onlyGM() {
-        require(gameMaster == msg.sender, "RoyalKingdomPoly: caller is not the gameMaster");
+    mapping(address => bool) public gameMaster;
+
+    modifier onlyGameMaster() {
+        require(gameMaster[msg.sender], 'TokensStats: Only gameMaster is authorized');
         _;
     }
 
@@ -49,7 +51,9 @@ contract TokensStats is Ownable {
         initialStatsFrozen = true;
     }
 
-
+//    function addSkill(uint64 _id, string calldata _name) external onlyOwner {
+    //        skills[_id] = _name;
+    //    }
 
     /// ----- Useful view functions ----- ///
 
@@ -64,6 +68,10 @@ contract TokensStats is Ownable {
         }
 
         return stats;
+    }
+
+    function addGameMaster(address _address) public onlyOwner {
+        gameMaster[_address] = true;
     }
 
 }

@@ -1,6 +1,5 @@
 import {Scene} from "phaser";
 import {Constants} from "../Constants";
-import FilterMode = Phaser.Textures.FilterMode;
 
 export default class PreloaderScene extends Scene {
 
@@ -13,6 +12,9 @@ export default class PreloaderScene extends Scene {
 
         // town asset
         this.load.image(Constants.KEY_TILES_TOWN, Constants.ASSETS_TOWN_ATLAS)
+        this.load.image(Constants.KEY_TILES_FORGE, Constants.ASSETS_FORGE_FULL)
+        this.load.image(Constants.KEY_TILES_SHOP, Constants.ASSETS_SHOP)
+        this.load.image(Constants.KEY_TILES_RING, Constants.ASSETS_RING)
         this.load.tilemapTiledJSON(Constants.KEY_TILEMAP_TOWN, Constants.ASSETS_TOWN_TILED)
 
         // player assets
@@ -23,23 +25,17 @@ export default class PreloaderScene extends Scene {
         this.load.atlas(Constants.KEY_NURSE, Constants.ASSETS_NURSE, Constants.ASSETS_NURSE_ATLAS)
         this.load.atlas(Constants.KEY_BANKER, Constants.ASSETS_BANKER, Constants.ASSETS_BANKER_ATLAS)
 
-        // BUILDING
-        this.load.image(Constants.KEY_FORGE, Constants.ASSETS_FORGE)
-
 
         this.load.image(Constants.KEY_SIGN, Constants.ASSETS_SIGN)
         this.load.image(Constants.KEY_MINT_NPC, Constants.ASSETS_MINT_NPC)
-
-        // this.game.scale.setZoom(1)
+        this.load.image(Constants.KEY_COOK, Constants.ASSETS_COOK)
+        this.load.image(Constants.KEY_FROG, Constants.ASSETS_FROG)
+        this.load.image(Constants.KEY_SHEEP, Constants.ASSETS_SHEEP)
 
     }
 
 
     create() {
-
-        const logo = this.add.sprite((window.innerWidth / 2) / 2, (window.innerHeight / 2) / 2, Constants.KEY_LOGO)
-        // logo.setScale(0.8)
-        logo.texture.setFilter(FilterMode.LINEAR)
         this.scene.start(Constants.SCENE_MENU)
     }
 }

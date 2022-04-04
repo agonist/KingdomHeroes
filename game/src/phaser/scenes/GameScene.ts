@@ -10,6 +10,9 @@ import Tilemap = Phaser.Tilemaps.Tilemap;
 import {MintGuy} from "../objects/npc/MintGuy";
 import {MintGuy2} from "../objects/npc/MintGuy2";
 import {debugDraw} from "../debug/debug";
+import store from "../../react/store/store";
+import {Cook} from "../objects/npc/Cook";
+import {Frog} from "../objects/npc/Frog";
 
 export default class GameScene extends Phaser.Scene {
 
@@ -37,12 +40,17 @@ export default class GameScene extends Phaser.Scene {
         // map
         const map = this.make.tilemap({key: Constants.KEY_TILEMAP_TOWN})
         const tileset = map.addTilesetImage(Constants.TILESET_WORLD, Constants.KEY_TILES_TOWN)
+        const tileset2 = map.addTilesetImage(Constants.TILESET_FORGE, Constants.KEY_TILES_FORGE)
+        const tileset3 = map.addTilesetImage(Constants.TILESET_SHOP, Constants.KEY_TILES_SHOP)
+        const tileset4 = map.addTilesetImage(Constants.TILESET_RING, Constants.KEY_TILES_RING)
+        store.subscribe(() => {
 
+        })
         // Ground
         map.createLayer('ground', tileset)
 
         // Walls
-        const wallsLayer = map.createLayer('walls', tileset)
+        const wallsLayer = map.createLayer('walls', [tileset, tileset2, tileset3, tileset4])
         wallsLayer.setCollisionByProperty({collide: true})
         map.createLayer('void', tileset)
 
@@ -78,15 +86,15 @@ export default class GameScene extends Phaser.Scene {
     }
 
     createBuildings() {
-        this.collidingGroup = this.physics.add.group({
-            allowGravity: false,
-            immovable: true
-        });
-
-        const forge = new Sprite(this, 36 * 16, 44 * 16, Constants.KEY_FORGE)
-        this.physics.add.existing(forge);
-        this.add.existing(forge)
-        this.collidingGroup.add(forge)
+        // this.collidingGroup = this.physics.add.group({
+        //     allowGravity: false,
+        //     immovable: true
+        // });
+        //
+        // const forge = new Sprite(this, 36 * 16, 44 * 16, Constants.KEY_FORGE)
+        // this.physics.add.existing(forge);
+        // this.add.existing(forge)
+        // this.collidingGroup.add(forge)
     }
 
     createNpc() {
@@ -100,12 +108,16 @@ export default class GameScene extends Phaser.Scene {
         const blacksmith = new Blacksmith(this)
         const nurse = new Nurse(this)
         const banker = new Banker(this)
+        const cook = new Cook(this)
+        const frog = new Frog(this)
 
         this.npcGroup.add(mintGuy)
         this.npcGroup.add(mintGuy2)
         this.npcGroup.add(blacksmith)
         this.npcGroup.add(nurse)
         this.npcGroup.add(banker)
+        this.npcGroup.add(cook)
+        this.npcGroup.add(frog)
     }
 
     createInteractableObject(tilemap: Tilemap) {
