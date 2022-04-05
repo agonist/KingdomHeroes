@@ -5,6 +5,7 @@ import TEAM1 from '../../../public/16.png';
 import TEAM2 from '../../../public/1.png';
 import TEAM3 from '../../../public/team3.png';
 import TEAM4 from '../../../public/team4.png';
+import WIZ from '../../../public/wizz.png';
 import twitter from "../../../public/twitter.png";
 
 function TeamSection() {
@@ -17,7 +18,7 @@ function TeamSection() {
             <Grid container rowSpacing={1} columnSpacing={{xs: 1, sm: 2, md: 3}} maxWidth={800} paddingY={6}>
                 <Grid item xs={3}>
                     <Stack direction={"column"} alignItems="center">
-                        <Image src={TEAM1} width={150} height={150}/>
+                        <Image src={WIZ} width={150} height={150}/>
                         <Typography variant={"h3"}>JB</Typography>
                         <Typography variant={"caption"}>Game Creator</Typography>
                         <a href={"https://twitter.com/jonbodin10"} target="_blank" rel="noreferrer">

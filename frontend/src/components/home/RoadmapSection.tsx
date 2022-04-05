@@ -106,6 +106,26 @@ function RoadmapSection() {
                         </Typography>
 
                     </Stack>
+
+
+                    <Stack maxWidth={700}>
+
+                        <Typography paddingTop={2} variant={"h2"}>Phase 5: Rival Kingdoms</Typography>
+
+                        <Typography paddingTop={2} variant={"h4"}>Determine your destiny</Typography>
+
+                        <Typography>
+
+                            • We are being very strategic in terms of what we are releasing at this time,
+                            but we currently have plans defined for users to determine which path they wish to follow,
+                            and allow them to define their own destiny and gameplay as we expand and continue
+                            development.
+                            More to come here, but be very aware that future decisions you make in game will lead to
+                            alternative story lines
+
+                        </Typography>
+
+                    </Stack>
                 </Stack>
 
             </Stack>

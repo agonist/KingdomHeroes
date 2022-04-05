@@ -41,6 +41,46 @@ export class GameService {
     async startGame(user: User) {
         await this.heroesService.consumeBCForCurrentTeam(user.team)
     }
+
+    async createDungeon(user: User) {
+
+        // TODO randomly select a map
+        const dungeonId = 1
+
+        // TODO generate the combat pool
+        const combatsPool = []
+
+        const lootPool = []
+
+    }
+}
+
+interface Dungeon {
+    userAddress: string,
+    status: DungeonStatus,
+    combats: Combat[]
+}
+
+interface DungeonStatus {
+    INPROGRESS,
+    ENDED
+}
+
+interface Combat {
+    enemies: Enemy[]
+}
+
+interface Enemy {
+    type: EnemyType,
+    attack: number,
+    defense: number,
+    speed: number,
+    level: number,
+    hp: number
+}
+
+enum EnemyType {
+    ORC, DRAGON, BEAST
 }
 
 const hasDuplicates = (set, items = []) => {
