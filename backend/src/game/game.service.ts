@@ -2,11 +2,14 @@ import {HttpException, HttpStatus, Injectable} from "@nestjs/common";
 import {User, UsersService} from "../users/users.service";
 import {NftService} from "../nft/nft.service";
 import {BcCount, HeroesService} from "../heroes/heroes.service";
+import {DungeonService} from "../dungeon/dungeon.service";
+import {Dungeon} from "../dungeon/schemas/dungeon.schemas";
 
 @Injectable()
 export class GameService {
 
-    constructor(private usersService: UsersService, private nftService: NftService, private heroesService: HeroesService) {
+    constructor(private usersService: UsersService, private nftService: NftService,
+                private heroesService: HeroesService, private dungeonService: DungeonService) {
 
     }
 
@@ -41,47 +44,8 @@ export class GameService {
     async startGame(user: User) {
         await this.heroesService.consumeBCForCurrentTeam(user.team)
     }
-
-    async createDungeon(user: User) {
-
-        // TODO randomly select a map
-        const dungeonId = 1
-
-        // TODO generate the combat pool
-        const combatsPool = []
-
-        const lootPool = []
-
-    }
 }
 
-interface Dungeon {
-    userAddress: string,
-    status: DungeonStatus,
-    combats: Combat[]
-}
-
-interface DungeonStatus {
-    INPROGRESS,
-    ENDED
-}
-
-interface Combat {
-    enemies: Enemy[]
-}
-
-interface Enemy {
-    type: EnemyType,
-    attack: number,
-    defense: number,
-    speed: number,
-    level: number,
-    hp: number
-}
-
-enum EnemyType {
-    ORC, DRAGON, BEAST
-}
 
 const hasDuplicates = (set, items = []) => {
     return set.reduce((duplicates, item) => {

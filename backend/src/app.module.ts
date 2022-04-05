@@ -21,11 +21,14 @@ import {GameService} from "./game/game.service";
 import {HeroesModule} from './heroes/heroes.module';
 import {HeroesService} from "./heroes/heroes.service";
 import {heroesProviders} from "./heroes/heroes.providers";
+import {dungeonProviders} from "./dungeon/dungeon.providers";
+import {DungeonService} from "./dungeon/dungeon.service";
+import {DungeonModule} from "./dungeon/dungeon.module";
 
 @Module({
-    imports: [ConfigModule.forRoot(), AuthModule, UsersModule, MetadataModule, GameModule, HeroesModule],
+    imports: [ConfigModule.forRoot(), AuthModule, UsersModule, MetadataModule, GameModule, HeroesModule, DungeonModule],
     controllers: [AppController, MetadataController, UsersController, AuthController, GameController],
-    providers: [AppService, UsersService, MetadataService, NftService, GameService, HeroesService, ...userProviders, ...databaseProviders, ...metadataProviders, ...heroesProviders],
+    providers: [AppService, UsersService, MetadataService, NftService, GameService, HeroesService, DungeonService, ...userProviders, ...databaseProviders, ...metadataProviders, ...heroesProviders, ...dungeonProviders],
 })
 
 export class AppModule implements NestModule {
