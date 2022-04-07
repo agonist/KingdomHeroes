@@ -24,10 +24,11 @@ import {heroesProviders} from "./heroes/heroes.providers";
 import {dungeonProviders} from "./dungeon/dungeon.providers";
 import {DungeonService} from "./dungeon/dungeon.service";
 import {DungeonModule} from "./dungeon/dungeon.module";
+import {DungeonController} from "./dungeon/dungeon.controller";
 
 @Module({
     imports: [ConfigModule.forRoot(), AuthModule, UsersModule, MetadataModule, GameModule, HeroesModule, DungeonModule],
-    controllers: [AppController, MetadataController, UsersController, AuthController, GameController],
+    controllers: [AppController, MetadataController, UsersController, AuthController, GameController, DungeonController],
     providers: [AppService, UsersService, MetadataService, NftService, GameService, HeroesService, DungeonService, ...userProviders, ...databaseProviders, ...metadataProviders, ...heroesProviders, ...dungeonProviders],
 })
 

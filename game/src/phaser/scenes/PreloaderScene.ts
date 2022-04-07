@@ -32,6 +32,11 @@ export default class PreloaderScene extends Scene {
         this.load.image(Constants.KEY_FROG, Constants.ASSETS_FROG)
         this.load.image(Constants.KEY_SHEEP, Constants.ASSETS_SHEEP)
 
+        for (let i = 0; i < 3; i++) {
+            this.load.image(Constants.KEY_MOB + i, Constants.ASSETS_MOB + i + ".png")
+
+        }
+
     }
 
 

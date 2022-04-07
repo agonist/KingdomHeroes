@@ -7,7 +7,6 @@ import phaserGame from "../../../phaser/PhaserGame";
 import MainMenuScene from "../../../phaser/scenes/MainMenuScene";
 import {getAddresses} from "../../web3/contractsAddresses";
 import {UpdateTeamParams, Web3Params} from "../utils/params";
-import axios from "axios";
 import store, {RootState} from "../store";
 import {hideUi} from "./ui-slice";
 import {loadHeroesMintDetails} from "./heroes-mint-slice";
@@ -18,6 +17,8 @@ import {MetadataModel} from "../../model/metadata";
 import {default as KingdomTraining} from "../../abi/KingdomTrainingETH.json";
 import {BC, User} from "../../model/user";
 import {Gameinfos} from "../../model/gameinfos";
+import {Api} from "../Api";
+import {loadCurrentDungeon} from "./dungeon-slice";
 
 interface UserState {
     firstInit: boolean,
@@ -32,7 +33,8 @@ interface UserState {
     inventory: Array<InventoryItem>,
     heroes: Array<MetadataModel>,
     user: User | undefined,
-    game: Gameinfos | undefined
+    game: Gameinfos | undefined,
+    dungeonInProgress: boolean
 }
 
 const initialState: UserState = {
@@ -48,93 +50,11 @@ const initialState: UserState = {
     inventory: [],
     heroes: [],
     user: undefined,
-    game: undefined
+    game: undefined,
+    dungeonInProgress: false
 }
 
-
-export class API {
-
-    BASE_RUL?: string = process.env.REACT_APP_API
-
-    async getNonce(address: string): Promise<string | undefined> {
-        try {
-            const response = await axios.get(this.BASE_RUL + "/auth/" + address + "/nonce")
-            return response.data.nonce
-        } catch (error) {
-            console.log(error)
-        }
-
-    }
-
-    async login(address: string, signature: string): Promise<string | undefined> {
-        try {
-            const response = await axios.post(this.BASE_RUL + "/auth/login", {
-                address: address,
-                signature: signature
-            })
-            return response.data.access_token
-        } catch (e) {
-            console.log(e)
-        }
-    }
-
-    async getUser(): Promise<User | undefined> {
-        try {
-            const response = await axios.get<User>(this.BASE_RUL + "/users/profile", {
-                headers: {'Authorization': 'Bearer ' + this.getAuthToken()}
-            })
-            return response.data
-        } catch (e) {
-            console.log(e)
-        }
-    }
-
-    async getMetadata(ids: number[]): Promise<MetadataModel[] | undefined> {
-        try {
-            const response = await axios.post<MetadataModel[]>(this.BASE_RUL + "/metadata/ids", {ids: ids})
-            return response.data
-        } catch (e) {
-            console.log(e)
-        }
-    }
-
-    async getYield(address: string): Promise<string | undefined> {
-        try {
-            const response = await axios.get(this.BASE_RUL + "/metadata/yield/" + address)
-            return response.data.totalYield
-        } catch (e) {
-            console.log(e)
-        }
-    }
-
-    async updateTeam(ids: number[]): Promise<User | undefined> {
-        try {
-            const response = await axios.post<User>(this.BASE_RUL + "/game/update/team", {ids: ids}, {
-                headers: {'Authorization': 'Bearer ' + this.getAuthToken()}
-            })
-            return response.data
-        } catch (e) {
-            console.log(e)
-        }
-    }
-
-    async getRemainingBc(ids: number[]): Promise<BC[] | undefined> {
-        try {
-            const response = await axios.post<BC[]>(this.BASE_RUL + "/game/bc", {ids: ids}, {headers: {'Authorization': 'Bearer ' + this.getAuthToken()}},)
-            return response.data
-        } catch (e) {
-            console.log(e)
-        }
-    }
-
-    getAuthToken(): string {
-        let token = localStorage.getItem("auth_token")
-        if (token) return token
-        else return ""
-    }
-}
-
-const api = new API()
+const api = new Api()
 
 export const initUser = createAsyncThunk("user/init",
     async (params: Web3Params
@@ -151,7 +71,7 @@ export const initUser = createAsyncThunk("user/init",
         let user
         let bc: BC[]
         let game: Gameinfos
-
+        let dungeonInProgress = false
         const state = thunkAPI.getState() as RootState
 
         try {
@@ -208,6 +128,10 @@ export const initUser = createAsyncThunk("user/init",
 
             bc = await api.getRemainingBc(idsArray.concat(stakedHeroesIds)) as BC[]
 
+            const currentDungeon = await api.currentDungeon()
+            if (currentDungeon) {
+                dungeonInProgress = true
+            }
 
         } catch (e) {
             console.log(e)
@@ -245,7 +169,8 @@ export const initUser = createAsyncThunk("user/init",
             inventory: inventory,
             heroes: heroes,
             user: user,
-            game: game
+            game: game,
+            dungeonInProgress: dungeonInProgress
         }
     })
 
@@ -278,7 +203,8 @@ const userSlice = createSlice({
 
                 if (state.firstInit) {
                     const menu = phaserGame.scene.getScene(Constants.SCENE_MENU) as MainMenuScene
-                    menu.startGame(state.canMint)
+
+                    menu.startGame(state.dungeonInProgress)
                     state.firstInit = false
                 }
 

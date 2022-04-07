@@ -4,10 +4,12 @@ import heroesMintSlice from "./slices/heroes-mint-slice";
 import keysMintSlice from "./slices/keys-mint-slice";
 import uiSlice from "./slices/ui-slice";
 import trainingSlice from "./slices/training-slice";
+import dungeonSlice from "./slices/dungeon-slice";
 
 const store = configureStore({
     reducer: {
         user: userReducer,
+        dungeon: dungeonSlice,
         heroesMint: heroesMintSlice,
         keysMint: keysMintSlice,
         training: trainingSlice,

@@ -10,7 +10,7 @@ export class DungeonController {
 
     @UseGuards(JwtAuthGuard)
     @Get("new")
-    async testDungeon(@Request() req) {
+    async newDungeon(@Request() req) {
         return this.dungeonService.newDungeon(req.user)
     }
 

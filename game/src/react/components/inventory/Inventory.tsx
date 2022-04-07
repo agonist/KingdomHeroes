@@ -31,8 +31,7 @@ export default function Inventory() {
 
 
     return (
-        <Stack maxWidth={500} className={classes.frame} justifyContent={"center"} alignItems={"center"}
-        >
+        <Stack maxWidth={500} className={classes.frame} justifyContent={"center"} alignItems={"center"}>
 
             <Typography variant={"h3"} color={CustomColor.fontYellow} paddingY={2}>INVENTORY</Typography>
 

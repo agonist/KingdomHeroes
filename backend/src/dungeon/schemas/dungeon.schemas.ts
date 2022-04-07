@@ -22,11 +22,6 @@ export interface Dungeon extends Document {
     combats: Combat[]
 }
 
-export enum DungeonStatus {
-    INPROGRESS,
-    ENDED
-}
-
 export interface Combat {
     order: number,
     won: boolean,

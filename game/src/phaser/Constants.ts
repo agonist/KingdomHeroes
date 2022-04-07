@@ -25,6 +25,7 @@ export const Constants = {
     KEY_SIGN: "sign",
     KEY_MINT_NPC: "mint_npc",
     KEY_FORGE: "forge",
+    KEY_MOB: "mob",
 
     //ASSETS
     ASSETS_LOGO: "logo.png",
@@ -48,6 +49,7 @@ export const Constants = {
     ASSETS_NURSE_ATLAS: "assets/npc/nurse/nurse.json",
     ASSETS_BANKER: "assets/npc/banker/banker.png",
     ASSETS_BANKER_ATLAS: "assets/npc/banker/banker.json",
+    ASSETS_MOB: "assets/mob/mob",
 
     // TILESET
     TILESET_WORLD: "town",

@@ -55,19 +55,19 @@ function MintHeroesRoot() {
 
                 <Stack sx={{backgroundColor: CustomColor.midBg}} width={"100%"} height={"100%"} paddingY={3}
                        alignItems={"center"} spacing={2}>
-                    <Typography variant={"body1"} color={"white"}>
+                    <Typography variant={"body1"} fontSize={16} color={"white"}>
                         GM ADVENTURER, <br/>WELCOME TO THE KINGDOM KEYS MINT. <br/> MINTING A KEY WILL GUARANTEE YOU
                         ACCESS TO THE HEROES WHITELIST,<br/> TWO FREE HEROES, A BONUS YIELD AND MUCH MORE.
                     </Typography>
 
-                    <Stack className={classes.frame} maxWidth={200} maxHeight={200}>
+                    <Stack className={classes.frame} maxWidth={{md: 120, xl: 200}} maxHeight={{md: 120, xl: 200}}>
                         <img src={key} alt={"key"}/>
                     </Stack>
 
-                    <Typography color={"white"} paddingTop={1} variant={"h4"}>{keysMint.currentMinted} / 500 KEYS
+                    <Typography color={"white"} paddingTop={1} variant={"h5"}>{keysMint.currentMinted} / 500 KEYS
                         MINTED</Typography>
 
-                    <Stack direction={"row"} spacing={2} paddingTop={2} paddingBottom={2}>
+                    <Stack direction={"row"} spacing={2} paddingTop={1} paddingBottom={1}>
 
                         <Typography color={"white"}>1 MAX PER WALLET</Typography>
 
@@ -77,7 +77,7 @@ function MintHeroesRoot() {
                         for {keysMint.mintTotalPrice.toFixed(2)} ETH</Button>
 
                     <Button onClick={() => dispatch(hideUi())}>
-                        <Typography variant={"button"} color={"white"}>NO THANKS</Typography>
+                        <Typography variant={"button"} fontSize={14} color={"white"}>NO THANKS</Typography>
                     </Button>
                 </Stack>
 

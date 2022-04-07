@@ -4,15 +4,16 @@ import {Constants} from "../Constants";
 import {Blacksmith} from "../objects/npc/Blacksmith";
 import {Nurse} from "../objects/npc/Nurse";
 import {Banker} from "../objects/npc/Banker";
-import Sprite = Phaser.Physics.Arcade.Sprite;
 import Group = Phaser.Physics.Arcade.Group;
 import Tilemap = Phaser.Tilemaps.Tilemap;
 import {MintGuy} from "../objects/npc/MintGuy";
 import {MintGuy2} from "../objects/npc/MintGuy2";
-import {debugDraw} from "../debug/debug";
 import store from "../../react/store/store";
 import {Cook} from "../objects/npc/Cook";
 import {Frog} from "../objects/npc/Frog";
+import {Sheep} from "../objects/npc/Sheep";
+import {hideUi, showUi} from "../../react/store/slices/ui-slice";
+import {UI, UiAction} from "../../react/store/ui/UiAction";
 
 export default class GameScene extends Phaser.Scene {
 
@@ -23,14 +24,14 @@ export default class GameScene extends Phaser.Scene {
     private interactableGroup?: Group
     private npcGroup?: Group
 
-    whitelisted: boolean = false
+    dungeonInProgress: boolean = false
 
     constructor() {
         super(Constants.SCENE_GAME);
     }
 
     init(data: any) {
-        this.whitelisted = data.whitelisted
+        this.dungeonInProgress = data.dungeonInProgress
     }
 
     preload() {
@@ -43,9 +44,7 @@ export default class GameScene extends Phaser.Scene {
         const tileset2 = map.addTilesetImage(Constants.TILESET_FORGE, Constants.KEY_TILES_FORGE)
         const tileset3 = map.addTilesetImage(Constants.TILESET_SHOP, Constants.KEY_TILES_SHOP)
         const tileset4 = map.addTilesetImage(Constants.TILESET_RING, Constants.KEY_TILES_RING)
-        store.subscribe(() => {
 
-        })
         // Ground
         map.createLayer('ground', tileset)
 
@@ -83,6 +82,14 @@ export default class GameScene extends Phaser.Scene {
         this.player.setSignOverlap(this.interactableGroup!)
         this.player.setNpcOverlap(this.npcGroup!)
 
+        if (this.dungeonInProgress) {
+            const action: UiAction = {
+                show: UI.CONTINUE_DUNGEON,
+                params: undefined
+            }
+            store.dispatch(showUi(action))
+        }
+
     }
 
     createBuildings() {
@@ -110,6 +117,8 @@ export default class GameScene extends Phaser.Scene {
         const banker = new Banker(this)
         const cook = new Cook(this)
         const frog = new Frog(this)
+        const sheep = new Sheep(this, 49.5 * 16, 67 * 16)
+        const sheep2 = new Sheep(this, 52 * 16, 67 * 16)
 
         this.npcGroup.add(mintGuy)
         this.npcGroup.add(mintGuy2)
@@ -118,6 +127,8 @@ export default class GameScene extends Phaser.Scene {
         this.npcGroup.add(banker)
         this.npcGroup.add(cook)
         this.npcGroup.add(frog)
+        this.npcGroup.add(sheep)
+        this.npcGroup.add(sheep2)
     }
 
     createInteractableObject(tilemap: Tilemap) {
@@ -138,6 +149,10 @@ export default class GameScene extends Phaser.Scene {
         this.player.update()
         // this.blacksmith.update()
 
+    }
+
+    startDungeon() {
+        this.scene.start(Constants.SCENE_DUNGEON)
     }
 
 }

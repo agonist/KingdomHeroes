@@ -6,5 +6,6 @@ export enum NPCList {
     BANKER,
     COOK,
     FROG,
-    SHEEP
+    SHEEP,
+    MOB
 }

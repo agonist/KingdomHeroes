@@ -37,6 +37,15 @@ export class GameService {
         return await this.usersService.findOne(address)
     }
 
+    async checkIfTeamIsUpToDate(user: User): Promise<User> {
+
+        const userHeroes = await this.nftService.getHeroesOf(user.address)
+
+        const currentTeam = user.team.filter(h => userHeroes.includes(h))
+
+        return await this.usersService.updateTeam(user.address, currentTeam)
+    }
+
     async remainingBcFor(ids: number[]): Promise<BcCount[]> {
         return await this.heroesService.getBcRemainingFor(ids)
     }

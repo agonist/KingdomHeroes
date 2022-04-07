@@ -21,6 +21,8 @@ import {Web3Params} from "./react/store/utils/params";
 import {initTraining} from "./react/store/slices/training-slice";
 import PIC from "./img/banner.webp";
 import Team from "./react/components/team/Team";
+import Startdungeon from "./react/components/dungeon/StartDungeon";
+import ContinueDungeon from "./react/components/dungeon/ContinueDungeon";
 
 function App() {
     const {connect, hasCachedProvider, web3Modal, provider, chainID} = useWeb3Context();
@@ -111,7 +113,7 @@ function App() {
     function login() {
         return (
             <Stack height={"100%"} direction="column"
-                   justifyContent="flex-end" sx={{backgroundImage: `url(${PIC})`}}
+                   justifyContent="flex-end" sx={{backgroundImage: `url(${PIC})`, backgroundSize: "cover"}}
                    alignItems="center" paddingBottom={8}>
                 <Login/>
             </Stack>
@@ -147,6 +149,26 @@ function App() {
             </Stack>
         )
 
+    }
+
+    function newDungeon() {
+        return (
+            <Stack height={"100%"} direction="column"
+                   justifyContent="center"
+                   alignItems="center">
+                <Startdungeon/>
+            </Stack>
+        )
+    }
+
+    function continueDungeon() {
+        return (
+            <Stack height={"100%"} direction="column"
+                   justifyContent="center"
+                   alignItems="center">
+                <ContinueDungeon/>
+            </Stack>
+        )
     }
 
     function heroes() {
@@ -209,6 +231,12 @@ function App() {
                 break
             case UI.TEAM:
                 ui = team()
+                break
+            case UI.NEW_DUNGEON:
+                ui = newDungeon()
+                break
+            case UI.CONTINUE_DUNGEON:
+                ui = continueDungeon()
                 break
         }
     }

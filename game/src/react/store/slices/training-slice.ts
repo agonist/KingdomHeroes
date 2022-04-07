@@ -5,10 +5,11 @@ import {default as KingdomTraining} from "../../abi/KingdomTrainingETH.json";
 import {ethers} from "ethers";
 import {toast} from "react-toastify";
 import {sleep} from "../utils/sleep";
-import {API, initUser} from "./user-slice";
+import {initUser} from "./user-slice";
 import {default as KingdomHeroes} from "../../abi/KingdomHeroes.json";
 import {default as KingdomKeys} from "../../abi/KingdomKeys.json";
 import {setAll} from "../utils/set-all";
+import {Api} from "../Api";
 
 interface TrainingState {
     stateLoading: boolean,
@@ -28,7 +29,7 @@ const initialState: TrainingState = {
     currentYield: ""
 }
 
-const api = new API()
+const api = new Api()
 
 export const initTraining = createAsyncThunk("training/init",
     async (params: Web3Params, thunkApi): Promise<TrainingState> => {
@@ -47,7 +48,7 @@ export const initTraining = createAsyncThunk("training/init",
             keysApproved = await keyContract.isApprovedForAll(params.address, contracts.KINGDOM_TRAINING_ETH)
 
 
-             yieldd = await api.getYield(params.address)
+            yieldd = await api.getYield(params.address)
             if (!yieldd) {
                 return Promise.reject("Get yield error")
             }

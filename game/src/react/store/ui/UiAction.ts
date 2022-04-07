@@ -12,6 +12,8 @@ export enum UI {
     HEROES,
     TRAINING,
     TEAM,
+    NEW_DUNGEON,
+    CONTINUE_DUNGEON
 
 }
 

@@ -30,7 +30,7 @@ export class UsersService {
         return this.userModel.findOne({'address': address}).exec()
     }
 
-    async updateTeam(address: string, heroesIds: number[]) {
-        await this.userModel.updateOne({address: address}, {team: heroesIds}).exec()
+    async updateTeam(address: string, heroesIds: number[]) : Promise<User> {
+        return await this.userModel.findOneAndUpdate({address: address}, {team: heroesIds}, {returnOriginal: false}).exec()
     }
 }

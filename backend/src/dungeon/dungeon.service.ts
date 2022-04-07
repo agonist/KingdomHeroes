@@ -25,6 +25,10 @@ export class DungeonService {
             throw new HttpException("Dungeon already in progress", HttpStatus.FORBIDDEN)
         }
 
+        if (user.team.length == 0) {
+            throw new HttpException("Team is empty", HttpStatus.FORBIDDEN)
+        }
+
         await this.heroesService.consumeBCForCurrentTeam(user.team)
 
         const generator = new CombatGenerator()
