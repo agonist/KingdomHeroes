@@ -1,12 +1,12 @@
 const switchRequest = () => {
-    return window.ethereum.request({
+    return (window as any).ethereum.request({
         method: "wallet_switchEthereumChain",
-        params: [{ chainId: "250" }],
+        params: [{chainId: "250"}],
     });
 };
 
 const addChainRequest = () => {
-    return window.ethereum.request({
+    return (window as any).ethereum.request({
         method: "wallet_addEthereumChain",
         params: [
             {
@@ -25,7 +25,7 @@ const addChainRequest = () => {
 };
 
 export const swithNetwork = async () => {
-    if (window.ethereum) {
+    if ((window as any).ethereum) {
         try {
             await switchRequest();
         } catch (error: any) {

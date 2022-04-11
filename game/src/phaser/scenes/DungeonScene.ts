@@ -60,6 +60,7 @@ export default class DungeonScene extends Phaser.Scene {
             this.mobGroup.add(trigger1)
             this.mobGroup.add(trigger2)
         }
+        
     }
 
     update(time: number, delta: number) {
