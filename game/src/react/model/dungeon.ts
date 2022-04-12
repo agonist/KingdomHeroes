@@ -32,8 +32,9 @@ export class Character {
     defense: number
     speed: number
     hp: number
+    alive: boolean
 
-    constructor(name: string, id: number, level: number, attack: number, defense: number, speed: number, hp: number) {
+    constructor(name: string, id: number, level: number, attack: number, defense: number, speed: number, hp: number, alive: boolean) {
         this.name = name
         this.id = id
         this.level = level
@@ -41,6 +42,7 @@ export class Character {
         this.defense = defense
         this.speed = speed
         this.hp = hp
+        this.alive = alive
     }
 }
 
@@ -48,8 +50,8 @@ export class Character {
 export class Enemy extends Character {
     type: EnemyType
 
-    constructor(name: string, id: number, level: number, attack: number, defense: number, speed: number, hp: number, type: EnemyType) {
-        super(name, id, level, attack, defense, speed, hp);
+    constructor(name: string, id: number, level: number, attack: number, defense: number, speed: number, hp: number, type: EnemyType,  alive: boolean) {
+        super(name, id, level, attack, defense, speed, hp, alive);
         this.type = type
     }
 }
@@ -57,8 +59,8 @@ export class Enemy extends Character {
 
 export class Hero extends Character {
 
-    constructor(name: string, id: number, level: number, attack: number, defense: number, speed: number, hp: number) {
-        super(name, id, level, attack, defense, speed, hp);
+    constructor(name: string, id: number, level: number, attack: number, defense: number, speed: number, hp: number, alive: boolean) {
+        super(name, id, level, attack, defense, speed, hp, alive);
     }
 
 }
@@ -72,7 +74,8 @@ function metadataToHero(meta: MetadataModel): Hero {
         attack: getAttack(meta.attributes),
         defense: getDefense(meta.attributes),
         speed: getDefense(meta.attributes),
-        hp: getHP(meta.attributes)
+        hp: getHP(meta.attributes),
+        alive: true
     }
 
 }

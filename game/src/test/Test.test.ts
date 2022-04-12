@@ -1,6 +1,5 @@
 import CombatsManager, {ActionType, Randomizer, TurnType} from "../phaser/core/CombatsManager";
 import {Character, Combat, Enemy, EnemyType, Hero} from "../react/model/dungeon";
-import {MetadataModel} from "../react/model/metadata";
 
 
 let h1: Hero
@@ -330,4 +329,20 @@ describe('CombatManager', () => {
 
         expect(h.hp).toBe(60)
     });
+
+    test('complex fight', () => {
+        const combat: Combat = {
+            enemies: [e1, e2, e3],
+            order: 1,
+            won: false
+        }
+
+        const manager: CombatsManager = new CombatsManager([h1, h2, h3], combat, new TestRandomizer())
+
+        manager.addActionForHeroTurn(h1, ActionType.MAGIC_ATTACK, [e1, e2, e3], undefined)
+        manager.addActionForHeroTurn(h2, ActionType.ATTACK, [e1], undefined)
+        manager.addActionForHeroTurn(h3, ActionType.ATTACK, [e1], undefined)
+
+        manager.playFight()
+    })
 });
