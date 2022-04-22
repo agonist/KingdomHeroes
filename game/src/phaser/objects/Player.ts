@@ -8,6 +8,8 @@ import {DIALOG} from "../../react/components/dialog/DialogConstant";
 import GameObject = Phaser.GameObjects.GameObject;
 import Group = Phaser.Physics.Arcade.Group;
 import Key = Phaser.Input.Keyboard.Key;
+import {EnemyTrigger} from "./mob/EnemyTrigger";
+import {startNextCombat} from "../../react/store/slices/dungeon-slice";
 
 
 class Player extends Phaser.Physics.Arcade.Sprite {
@@ -16,6 +18,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     public detect!: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
     public currentFacingSign!: number
     public currentFacingNpc?: Npc
+    public currentFacingEnemy?: EnemyTrigger
     private keyObj!: Key
     private inventoryKey!: Key
     private heroesKey!: Key
@@ -186,6 +189,17 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         if (this.currentFacingNpc === (npc as Npc)) return
 
         this.currentFacingNpc = (npc as Npc)
+    }
+
+    setEnemyOverlap(group: Group) {
+        this.scene.physics.add.overlap(this.detect, group, this.enemyOverlapped, undefined, this)
+    }
+
+    enemyOverlapped(player: GameObject, enemy: GameObject) {
+        if (this.currentFacingEnemy === (enemy as EnemyTrigger)) return
+
+        this.currentFacingEnemy = (enemy as EnemyTrigger)
+        store.dispatch(startNextCombat())
     }
 
     showInventory() {

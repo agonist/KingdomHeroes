@@ -80,7 +80,7 @@ export class MetadataService {
     }
 
     async gen() {
-        for (let i = 1; i < 30; i += 1) {
+        for (let i = 20; i < 30; i += 1) {
             await this.metadataModel.create({
                 name: "Heroes #" + i,
                 description: "super description",
@@ -88,19 +88,27 @@ export class MetadataService {
                 image: "",
                 attributes: [
                     {
-                        trait_type: "Cloth",
-                        value: "Cloth " + i
+                        trait_type: "Class",
+                        value: "Wizzard"
+                    },
+                    {
+                        trait_type: "Body",
+                        value: "Body " + i
+                    },
+                    {
+                        trait_type: "Armor",
+                        value: "Armor " + i
                     },
                     {
                         trait_type: "Head",
                         value: "Head " + i
                     },
                     {
-                        trait_type: "Shoes",
-                        value: "Shoes " + i
+                        trait_type: "Left Hand",
+                        value: "Weapon " + i
                     },
                     {
-                        trait_type: "Weapon",
+                        trait_type: "Right Hand",
                         value: "Weapon " + i
                     }
                 ]

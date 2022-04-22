@@ -4,6 +4,7 @@ import PreloaderScene from "./scenes/PreloaderScene";
 import MainMenuScene from "./scenes/MainMenuScene";
 import GameScene from './scenes/GameScene';
 import DungeonScene from "./scenes/DungeonScene";
+import CombatScene from "./scenes/CombatScene";
 
 const config: Phaser.Types.Core.GameConfig = {
     type: Phaser.AUTO,
@@ -24,7 +25,7 @@ const config: Phaser.Types.Core.GameConfig = {
             debug: false
         },
     },
-    scene: [PreloaderScene, MainMenuScene, GameScene, DungeonScene],
+    scene: [PreloaderScene, MainMenuScene, GameScene, DungeonScene, CombatScene],
 }
 
 const phaserGame = new Phaser.Game(config)

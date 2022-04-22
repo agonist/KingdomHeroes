@@ -78,6 +78,7 @@ export default class GameScene extends Phaser.Scene {
         this.physics.add.collider(this.player, this.npcGroup!)
         this.physics.add.collider(this.player, this.collidingGroup!)
         this.player.create()
+        this.cameras.main.setZoom(1.5);
         this.cameras.main.startFollow(this.player, true)
         this.player.setSignOverlap(this.interactableGroup!)
         this.player.setNpcOverlap(this.npcGroup!)

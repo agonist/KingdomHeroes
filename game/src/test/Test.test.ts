@@ -34,7 +34,8 @@ describe('CombatManager', () => {
             5,
             5,
             5,
-            100
+            100,
+            true
         )
         h2 = new Hero(
             "Hero 2",
@@ -43,7 +44,8 @@ describe('CombatManager', () => {
             5,
             5,
             7,
-            100
+            100,
+            true
         )
         h3 = new Hero(
             "Hero 3",
@@ -52,7 +54,8 @@ describe('CombatManager', () => {
             5,
             2,
             2,
-            100
+            100,
+            true
         )
         h4 = new Hero(
             "Hero 4",
@@ -61,7 +64,8 @@ describe('CombatManager', () => {
             8,
             2,
             2,
-            100
+            100,
+            true
         )
         e1 = new Enemy(
             "Orc 1",
@@ -71,7 +75,8 @@ describe('CombatManager', () => {
             3,
             3,
             100,
-            EnemyType.ORC
+            EnemyType.ORC,
+            true
         )
         e2 = new Enemy(
             "Orc 2",
@@ -81,7 +86,8 @@ describe('CombatManager', () => {
             3,
             3,
             100,
-            EnemyType.ORC
+            EnemyType.ORC,
+            true
         )
         e3 = new Enemy(
             "Orc 3",
@@ -91,7 +97,8 @@ describe('CombatManager', () => {
             3,
             3,
             100,
-            EnemyType.ORC
+            EnemyType.ORC,
+            true
         )
         e4 = new Enemy(
             "Orc 4",
@@ -101,7 +108,8 @@ describe('CombatManager', () => {
             3,
             3,
             100,
-            EnemyType.ORC
+            EnemyType.ORC,
+            true
         )
 
     })

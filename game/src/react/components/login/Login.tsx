@@ -5,7 +5,6 @@ import {useAddress, useWeb3Context} from "../../web3/web3-context";
 import {useEffect, useState} from "react";
 import {DEFAULT_NETWORK} from "../../web3/blockchain";
 import {Web3Params} from "../../store/utils/params";
-import PIC from "../../../img/banner.webp";
 import {useAppSelector} from "../../store/hooks";
 
 export default function Login() {

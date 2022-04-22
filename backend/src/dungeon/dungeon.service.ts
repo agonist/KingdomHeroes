@@ -1,8 +1,8 @@
 import {HttpException, HttpStatus, Inject, Injectable, Logger} from "@nestjs/common";
 import {Model} from "mongoose";
-import {Dungeon} from "./schemas/dungeon.schemas";
+import {ActionType, Dungeon, Hero} from "./schemas/dungeon.schemas";
 import {User} from "../users/users.service";
-import {MetadataService} from "../metadata/metadata.service";
+import {MetadataService, Stats} from "../metadata/metadata.service";
 import {CombatGenerator} from "./CombatGenerator";
 import {HeroesService} from "../heroes/heroes.service";
 
@@ -41,7 +41,8 @@ export class DungeonService {
             dungeonMap: 1,
             user: user,
             inProgress: true,
-            combats: combatss
+            combats: combatss,
+            heroes: this.statsToHero(heroesData)
         })
 
         return dungeon
@@ -70,6 +71,25 @@ export class DungeonService {
         }, {inProgress: false}, {returnOriginal: false}).exec()
 
         return updated
+    }
+
+    private statsToHero(stats: Stats[]): Hero[] {
+        let heroes: Hero[] = []
+        stats.forEach(s => {
+            heroes.push(
+                {
+                    name: "Hero #" + s.tokenId,
+                    id: s.tokenId,
+                    level: s.level,
+                    hp: s.hp,
+                    attack: s.attack,
+                    defense: s.defense,
+                    speed: s.speed,
+                    skills: [ActionType.ATTACK, ActionType.USE_OBJECT]
+                }
+            )
+        })
+        return heroes
     }
 }
 

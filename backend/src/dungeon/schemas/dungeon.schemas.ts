@@ -11,6 +11,11 @@ export const DungeonSchema = new mongoose.Schema({
         "type": [
             "Mixed"
         ]
+    },
+    heroes: {
+        "type": [
+            "Mixed"
+        ]
     }
 })
 
@@ -19,7 +24,8 @@ export interface Dungeon extends Document {
     user: User,
     dungeonMap: number,
     inProgress: boolean,
-    combats: Combat[]
+    combats: Combat[],
+    heroes: Hero[]
 }
 
 export interface Combat {
@@ -28,13 +34,37 @@ export interface Combat {
     enemies: Enemy[]
 }
 
-export interface Enemy {
-    type: EnemyType,
+export interface Hero {
+    name: string,
+    id: number,
+    level: number,
     attack: number,
     defense: number,
     speed: number,
-    hp: number
+    hp: number,
+    skills: ActionType[]
 }
+
+export interface Enemy {
+    name: string,
+    type: EnemyType,
+    level: number,
+    attack: number,
+    defense: number,
+    speed: number,
+    hp: number,
+    skills: ActionType[]
+}
+
+export enum ActionType {
+    USE_OBJECT,
+
+    ATTACK,
+    DEFENSE,
+    MAGIC_ATTACK,
+    HEAL,
+}
+
 
 export enum EnemyType {
     ORC, DRAGON, BEAST

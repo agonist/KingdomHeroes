@@ -4,6 +4,7 @@ import store from "../../react/store/store";
 import {hideUi} from "../../react/store/slices/ui-slice";
 import {EnemyTrigger} from "../objects/mob/EnemyTrigger";
 import Group = Phaser.Physics.Arcade.Group;
+import {startNextCombat} from "../../react/store/slices/dungeon-slice";
 
 
 export default class DungeonScene extends Phaser.Scene {
@@ -36,6 +37,7 @@ export default class DungeonScene extends Phaser.Scene {
         const d = state.dungeon.currentDungeon
         console.log(d)
         this.populateCombats()
+        this.player.setEnemyOverlap(this.mobGroup!!)
     }
 
     populateCombats() {
@@ -60,12 +62,21 @@ export default class DungeonScene extends Phaser.Scene {
             this.mobGroup.add(trigger1)
             this.mobGroup.add(trigger2)
         }
-        
+
+        //this.launchCombat(1)
     }
 
     update(time: number, delta: number) {
         this.player.update()
         // this.blacksmith.update()
 
+    }
+
+    launchCombat(combatId: number) {
+        store.dispatch(startNextCombat())
+    }
+
+    startCombat() {
+        this.scene.start(Constants.SCENE_COMBAT, {combatId: 1})
     }
 }

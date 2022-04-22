@@ -48,7 +48,7 @@ const muiTheme = createTheme({
         },
         body1: {
             fontSize: 18,
-            fontWeight: 500,
+            fontWeight: 700,
             fontFamily: FONT_PRIMARY
         },
         body2: {

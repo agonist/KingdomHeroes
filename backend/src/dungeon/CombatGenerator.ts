@@ -1,4 +1,4 @@
-import {Combat, Enemy, EnemyType} from "./schemas/dungeon.schemas";
+import {ActionType, Combat, Enemy, EnemyType} from "./schemas/dungeon.schemas";
 import {Stats} from "../metadata/metadata.service";
 import {Logger} from "@nestjs/common";
 
@@ -53,6 +53,10 @@ export class CombatGenerator {
         heroesData.forEach(h => averageHp += h.hp)
         averageHp = averageHp / heroesData.length
 
+        let averageLevel = 0
+        heroesData.forEach(h => averageLevel += h.level)
+        averageLevel = averageLevel / heroesData.length
+
         const combatCount = 8
 
         let minEnnemies = 1
@@ -77,83 +81,86 @@ export class CombatGenerator {
         const combat1: Combat = {
             order: 1,
             won: false,
-            enemies: this.genFirstFight(averageAttack, averageDefense, averageSpeed, averageHp, minEnnemies)
+            enemies: this.genFirstFight(averageAttack, averageDefense, averageSpeed, averageHp, averageLevel, minEnnemies)
         }
 
         const combat2: Combat = {
             order: 2,
             won: false,
-            enemies: this.genSecondFight(averageAttack, averageDefense, averageSpeed, averageHp, maxEnnemies)
+            enemies: this.genSecondFight(averageAttack, averageDefense, averageSpeed, averageHp, averageLevel, maxEnnemies)
         }
-        
+
         return [combat1, combat2]
     }
 
-    genFirstFight(avAttack: number, avDefense: number, avSpeed: number, avHp: number, minEnemy: number): Enemy[] {
+    genFirstFight(avAttack: number, avDefense: number, avSpeed: number, avHp: number, avgLevel: number, minEnemy: number): Enemy[] {
         const enemies = []
         const multiplier = 0.8
         enemies.push(
-            this.generateEnemy(avAttack * multiplier, avDefense * multiplier, avSpeed * multiplier, avHp * multiplier, EnemyType.ORC)
+            this.generateEnemy("Orc 1", avAttack * multiplier, avDefense * multiplier, avSpeed * multiplier, avHp * multiplier, avgLevel, EnemyType.ORC)
         )
 
         if (minEnemy >= 2) {
             enemies.push(
-                this.generateEnemy(avAttack * multiplier, avDefense * multiplier, avSpeed * multiplier, avHp * multiplier, EnemyType.ORC)
+                this.generateEnemy("Orc 2", avAttack * multiplier, avDefense * multiplier, avSpeed * multiplier, avHp * multiplier, avgLevel, EnemyType.ORC)
             )
         }
 
         if (minEnemy >= 3) {
             enemies.push(
-                this.generateEnemy(avAttack * multiplier, avDefense * multiplier, avSpeed * multiplier, avHp * multiplier, EnemyType.ORC)
+                this.generateEnemy("Orc 3", avAttack * multiplier, avDefense * multiplier, avSpeed * multiplier, avHp * multiplier, avgLevel, EnemyType.ORC)
             )
         }
 
         if (minEnemy >= 4) {
             enemies.push(
-                this.generateEnemy(avAttack * multiplier, avDefense * multiplier, avSpeed * multiplier, avHp * multiplier, EnemyType.ORC)
+                this.generateEnemy("Orc 4", avAttack * multiplier, avDefense * multiplier, avSpeed * multiplier, avHp * multiplier, avgLevel, EnemyType.ORC)
             )
         }
 
         return enemies
     }
 
-    genSecondFight(avAttack: number, avDefense: number, avSpeed: number, avHp: number, minEnemy: number): Enemy[] {
+    genSecondFight(avAttack: number, avDefense: number, avSpeed: number, avHp: number, avgLevel: number, minEnemy: number): Enemy[] {
         const enemies = []
         const multiplier = 0.9
         enemies.push(
-            this.generateEnemy(avAttack * multiplier, avDefense * multiplier, avSpeed * multiplier, avHp * multiplier, EnemyType.ORC)
+            this.generateEnemy("Orc 1", avAttack * multiplier, avDefense * multiplier, avSpeed * multiplier, avHp * multiplier, avgLevel, EnemyType.ORC)
         )
 
         if (minEnemy >= 2) {
             enemies.push(
-                this.generateEnemy(avAttack * multiplier, avDefense * multiplier, avSpeed * multiplier, avHp * multiplier, EnemyType.ORC)
+                this.generateEnemy("Orc 2", avAttack * multiplier, avDefense * multiplier, avSpeed * multiplier, avHp * multiplier, avgLevel, EnemyType.ORC)
             )
         }
 
         if (minEnemy >= 3) {
             enemies.push(
-                this.generateEnemy(avAttack * multiplier, avDefense * multiplier, avSpeed * multiplier, avHp * multiplier, EnemyType.ORC)
+                this.generateEnemy("Orc 3", avAttack * multiplier, avDefense * multiplier, avSpeed * multiplier, avHp * multiplier, avgLevel, EnemyType.ORC)
             )
         }
 
         if (minEnemy >= 4) {
             enemies.push(
-                this.generateEnemy(avAttack * multiplier, avDefense * multiplier, avSpeed * multiplier, avHp * multiplier, EnemyType.ORC)
+                this.generateEnemy("Orc 4", avAttack * multiplier, avDefense * multiplier, avSpeed * multiplier, avHp * multiplier, avgLevel, EnemyType.ORC)
             )
         }
 
         return enemies
     }
 
-    private generateEnemy(avAttack: number, avDefense: number, avSpeed: number, avHp: number, type: EnemyType): Enemy {
+    private generateEnemy(name: string, avAttack: number, avDefense: number, avSpeed: number, avHp: number, avLevel: number, type: EnemyType): Enemy {
         const enemyTable = this.enemiesTable.get(type)
 
         const enemy: Enemy = {
+            name: name,
             type: type,
+            level: avLevel,
             attack: avAttack * enemyTable.attackMultiplier,
             defense: avDefense * enemyTable.defenseMultiplier,
             speed: avSpeed * enemyTable.speedMultiplier,
-            hp: avHp * enemyTable.hpMultiplier
+            hp: avHp * enemyTable.hpMultiplier,
+            skills: [ActionType.ATTACK]
         }
         return enemy
     }

@@ -6,7 +6,7 @@ export default class CombatsManager {
 
     public heroes: Array<Character>
     public combat: Combat
-    private turn: Turn
+    public turn: Turn
     private randomizer: Randomizer
     private skillsManager: SkillsManager
     private enemyAI: EnemyAI
@@ -24,8 +24,9 @@ export default class CombatsManager {
         this.enemyAI = new EnemyAI()
     }
 
-    addActionForHeroTurn(from: Hero, type: ActionType, targetEnemy: Enemy[] | undefined, targetAlly: Hero | undefined) {
+    addActionForHeroTurn(from: Hero, type: ActionType, targetEnemy: Character[] | undefined, targetAlly: Hero | undefined) {
 
+        console.log("Action - from: " + from.name + " type: " + type + " Target enemy: " + targetEnemy + " target ally:  " + targetAlly)
         const action: Action = {
             from: from,
             type: type,
@@ -105,6 +106,14 @@ export default class CombatsManager {
             }
         })
     }
+
+    heroActionSelected(hero: Hero): boolean {
+        return this.turn.heroActions.find(a => a.from.id === hero.id) !== undefined
+    }
+
+    heroTurnOk(): boolean {
+        return this.turn.heroActions.length === this.heroes.length
+    }
 }
 
 export interface Randomizer {
@@ -143,12 +152,12 @@ export interface Action {
 
 
 export enum ActionType {
+    USE_OBJECT,
+
     ATTACK,
     DEFENSE,
     MAGIC_ATTACK,
     HEAL,
-
-    USE_OBJECT
 }
 
 export enum TurnType {

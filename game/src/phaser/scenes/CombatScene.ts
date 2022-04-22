@@ -1,11 +1,19 @@
-
+import {Constants} from "../Constants";
+import store from "../../react/store/store";
+import {showUi} from "../../react/store/slices/ui-slice";
+import {UI, UiAction} from "../../react/store/ui/UiAction";
 
 
 export default class CombatScene extends Phaser.Scene {
 
+    private combatId: number = 0
 
-    init() {
+    constructor() {
+        super(Constants.SCENE_COMBAT);
+    }
 
+    init(data: any) {
+        this.combatId = data.combatId
     }
 
     preload() {
@@ -13,7 +21,13 @@ export default class CombatScene extends Phaser.Scene {
     }
 
     create() {
-            
+
+        const action: UiAction = {
+            show: UI.COMBAT,
+            params: undefined
+        }
+        store.dispatch(showUi(action))
+
     }
 
 }

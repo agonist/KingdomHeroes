@@ -21,6 +21,8 @@ contract TokensStats is Ownable {
     bool public initialStatsFrozen;
 
     mapping(uint256 => Stats) public tokenStats;
+    mapping(uint256 => uint64[]) public tokenSkills;
+
     mapping(uint64 => string) public skills;
 
     mapping(address => bool) public gameMaster;
@@ -42,16 +44,26 @@ contract TokensStats is Ownable {
         require(!initialStatsFrozen, "init frozen");
 
         for (uint16 i = 0; i < _stats.length; i++) {
-            tokenStats[_ids[i]] = _stats[i];
+
+            Stats memory stats = Stats(
+                _stats[i].tokenId,
+                _stats[i].attack,
+                _stats[i].defense,
+                _stats[i].speed,
+                _stats[i].level,
+                _stats[i].hp
+            );
+            tokenStats[_ids[i]] = stats;
         }
     }
+
 
     // @notice freeze the initial stats. This can't be undone.
     function frozeInitialStats() external onlyOwner {
         initialStatsFrozen = true;
     }
 
-//    function addSkill(uint64 _id, string calldata _name) external onlyOwner {
+    //    function addSkill(uint64 _id, string calldata _name) external onlyOwner {
     //        skills[_id] = _name;
     //    }
 

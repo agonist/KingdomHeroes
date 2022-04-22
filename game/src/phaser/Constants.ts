@@ -5,6 +5,7 @@ export const Constants = {
     SCENE_MENU: "SCENE_MENU",
     SCENE_GAME: "SCENE_GAME",
     SCENE_DUNGEON: "SCENE_DUNGEON",
+    SCENE_COMBAT : "SCENE_COMBAT",
 
     //KEYS
     KEY_LOGO: "logo",

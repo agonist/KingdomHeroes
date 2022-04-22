@@ -1,14 +1,25 @@
 import {GuiStyles} from "../Styles";
-import {Button, Checkbox, List, ListItem, ListItemButton, ListItemIcon, Stack, Typography} from "@mui/material";
+import {
+    Button,
+    Checkbox,
+    List,
+    ListItem,
+    ListItemAvatar,
+    ListItemButton,
+    ListItemIcon, ListItemText,
+    Stack,
+    Typography
+} from "@mui/material";
 import {CustomColor} from "../../MuiTheme";
-import React, {useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {useAppSelector} from "../../store/hooks";
-import {MetadataModel} from "../../model/metadata";
+import {getLevel, MetadataModel} from "../../model/metadata";
 import {useDispatch} from "react-redux";
 import {updateTeam} from "../../store/slices/user-slice";
 import {UpdateTeamParams} from "../../store/utils/params";
 import {User} from "../../model/user";
 import {bcForId} from "../../model/gameinfos";
+import * as React from "react";
 
 export default function Team() {
 
@@ -91,18 +102,23 @@ export default function Team() {
     return (
         <Stack
             spacing={3}
-            alignItems={"center"}
-            className={classes.frame}>
-            <Typography variant={"h1"} color={CustomColor.fontYellow}>TEAM</Typography>
+            alignItems={"center"}>
 
             <Stack paddingLeft={4} paddingRight={4} paddingY={3} direction={"row"} spacing={3} width={"100%"}
                    justifyContent={"center"}>
 
                 <Stack width={window.innerWidth / 4} height={window.innerHeight / 1.7}
                        className={classes.content}>
-                    <Typography color={"white"} variant={"h4"} paddingY={2}>AVAILABLE</Typography>
+                    <Stack sx={{
+                        backgroundColor: "#8A2439",
+                        borderBottom: "solid",
+                        borderWidth: "2px",
+                        borderColor: "white"
+                    }}>
+                        <Typography color={"white"} variant={"h4"} paddingY={2}>AVAILABLE</Typography>
+                    </Stack>
 
-                    <Stack width={"100%"} height={"100%"} sx={{backgroundColor: CustomColor.midBg}} overflow={"scroll"}>
+                    <Stack width={"100%"} height={"100%"} overflow={"scroll"}>
 
 
                         {user.heroesIds.length === 0 ?
@@ -128,11 +144,29 @@ export default function Team() {
                                                     inputProps={{'aria-labelledby': item.name}}
                                                 />
                                             </ListItemIcon>
-                                            <Stack spacing={2} direction={"row"} width={"100%"}>
-                                                <Typography color={"white"} width={"70%"}>{item.name}</Typography>
-                                                <Typography color={CustomColor.fontYellow}>BC:
-                                                    {bcForId(item.id, user.game!.bc)}</Typography>
+                                            <ListItemAvatar>
+                                                <Stack width={64} height={64}
+                                                       sx={{
+                                                           borderStyle: "solid",
+                                                           borderColor: "white",
+                                                           borderWidth: 1
+                                                       }}>
+                                                    <img src={"wizz.png"}/>
+                                                </Stack>
+                                            </ListItemAvatar>
+                                            <Stack paddingLeft={4} width={"100%"}>
+                                                <ListItemText primary={item.name}
+                                                              secondary={"Lvl " + getLevel(item.attributes) + " - Knight"}
+                                                              sx={{color: 'white'}}/>
+
                                             </Stack>
+                                            <Stack width={100}>
+                                                <Typography paddingBottom={1} color={CustomColor.fontYellow}>
+                                                    BC: {bcForId(item.id, user.game!.bc)}
+                                                </Typography>
+                                                <Typography></Typography>
+                                            </Stack>
+
                                         </ListItemButton>
                                     </ListItem>
                                 ))}
@@ -154,9 +188,16 @@ export default function Team() {
 
                 <Stack width={window.innerWidth / 4} height={window.innerHeight / 1.7}
                        className={classes.content}>
-                    <Typography color={"white"} variant={"h4"} paddingY={2}>YOUR TEAM</Typography>
+                    <Stack sx={{
+                        backgroundColor: "#8A2439",
+                        borderBottom: "solid",
+                        borderWidth: "2px",
+                        borderColor: "white"
+                    }}>
+                        <Typography color={"white"} variant={"h4"} paddingY={2}>YOUR TEAM</Typography>
+                    </Stack>
 
-                    <Stack width={"100%"} height={"100%"} sx={{backgroundColor: CustomColor.midBg}} overflow={"scroll"}>
+                    <Stack width={"100%"} height={"100%"} overflow={"scroll"}>
 
                         {user.user!!.team.length === 0 ?
                             <Stack width={"100%"} height={"100%"} justifyContent={"center"} alignItems={"center"}>
@@ -181,11 +222,29 @@ export default function Team() {
                                                     inputProps={{'aria-labelledby': item.name}}
                                                 />
                                             </ListItemIcon>
-                                            <Stack spacing={2} direction={"row"} width={"100%"}>
-                                                <Typography color={"white"} width={"70%"}>{item.name}</Typography>
-                                                <Typography color={CustomColor.fontYellow}>BC:
-                                                    {bcForId(item.id, user.game!.bc)}</Typography>
-                                            </Stack> </ListItemButton>
+                                            <ListItemAvatar>
+                                                <Stack width={64} height={64}
+                                                       sx={{
+                                                           borderStyle: "solid",
+                                                           borderColor: "white",
+                                                           borderWidth: 1
+                                                       }}>
+                                                    <img src={"wizz.png"}/>
+                                                </Stack>
+                                            </ListItemAvatar>
+                                            <Stack paddingLeft={4} width={"100%"}>
+                                                <ListItemText primary={item.name}
+                                                              secondary={"Lvl " + getLevel(item.attributes) + " - Knight"}
+                                                              sx={{color: 'white'}}/>
+
+                                            </Stack>
+                                            <Stack width={100}>
+                                                <Typography paddingBottom={1} color={CustomColor.fontYellow}>
+                                                    BC: {bcForId(item.id, user.game!.bc)}
+                                                </Typography>
+                                                <Typography></Typography>
+                                            </Stack>
+                                        </ListItemButton>
                                     </ListItem>
                                 ))}
                             </List>

@@ -1,16 +1,13 @@
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {Web3Params} from "../utils/params";
-import {Dungeon} from "../../model/dungeon";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {Combat, Dungeon} from "../../model/dungeon";
 import {Api} from "../Api";
 import {setAll} from "../utils/set-all";
 import phaserGame from "../../../phaser/PhaserGame";
 import {Constants} from "../../../phaser/Constants";
-import MainMenuScene from "../../../phaser/scenes/MainMenuScene";
 import GameScene from "../../../phaser/scenes/GameScene";
 import {toast} from "react-toastify";
-import store from "../store";
-import {hideUi, showUi} from "./ui-slice";
-import {UI, UiAction} from "../ui/UiAction";
+import DungeonScene from "../../../phaser/scenes/DungeonScene";
+import {RootState} from "../store";
 
 
 interface DungeonState {
@@ -84,6 +81,23 @@ export const endDungeon = createAsyncThunk("dungeon/end",
 
     })
 
+export const startNextCombat = createAsyncThunk("dungeon/nextfight", async (params, thunkApi): Promise<DungeonState> => {
+
+    const root = thunkApi.getState() as RootState
+
+    const combats: Combat[] = root.dungeon.currentDungeon!!.combats
+        .filter(c => !c.won)
+    const sorted = combats.sort((a, b) => {
+        return a.order - b.order
+    })
+    console.log(combats[0])
+
+    return {
+        loading: false,
+        currentDungeon: root.dungeon.currentDungeon
+    }
+})
+
 
 const dungeonSlice = createSlice({
     name: 'dungeon-slice',
@@ -92,7 +106,17 @@ const dungeonSlice = createSlice({
         launchDungeon: (state) => {
             const game = phaserGame.scene.getScene(Constants.SCENE_GAME) as GameScene
             game.startDungeon()
-        }
+        },
+        // pushAction: (state, action: PayloadAction<Action>) => {
+        //
+        //     state.currentCombat?.addActionForHeroTurn(action.payload.from, action.payload.type, action.payload.targetEnemy, action.payload.targetAlly)
+        //
+        //     console.log(state.currentCombat?.turn)
+        //
+        //     if (state.currentCombat?.heroTurnOk()) {
+        //         state.currentCombat?.playFight()
+        //     }
+        // }
     },
     extraReducers: builder => {
         builder
@@ -138,8 +162,14 @@ const dungeonSlice = createSlice({
                 state.loading = false
                 console.log(error)
             })
+
+            .addCase(startNextCombat.fulfilled, (state, action) => {
+                setAll(state, action.payload)
+                const game = phaserGame.scene.getScene(Constants.SCENE_DUNGEON) as DungeonScene
+                game.startCombat()
+            })
     }
 })
-export const { launchDungeon } = dungeonSlice.actions
+export const {launchDungeon} = dungeonSlice.actions
 
 export default dungeonSlice.reducer
