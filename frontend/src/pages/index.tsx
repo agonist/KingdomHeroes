@@ -6,6 +6,7 @@ import GameplaySection from "../components/home/GameplaySection";
 import RoadmapSection from "../components/home/RoadmapSection";
 import TeamSection from "../components/home/TeamSection";
 
+
 const Home: NextPage = () => {
     return (
         <Stack>

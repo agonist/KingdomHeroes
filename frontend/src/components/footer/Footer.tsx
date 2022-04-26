@@ -9,7 +9,7 @@ function Footer() {
 
     return (
         <Stack direction="row" justifyContent="center" height="100%"
-               alignItems="center" paddingY={3} spacing={3} sx={{backgroundColor: "#f1f1f1"}}>
+               alignItems="center" paddingY={3} spacing={3} paddingTop={10}>
             <a href={"https://twitter.com/KingdomHeroNFT"} target="_blank" rel="noreferrer">
                 <Image src={twitter} width={42} height={42}/>
             </a>

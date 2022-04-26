@@ -15,7 +15,7 @@ interface IHeader {
 }
 
 const APP_BAR_MOBILE = 40;
-const APP_BAR_DESKTOP = 70;
+const APP_BAR_DESKTOP = 100;
 
 const ToolbarStyle = styled(Toolbar)(({theme}) => ({
     height: APP_BAR_MOBILE,
@@ -30,16 +30,11 @@ function MenuBar(): JSX.Element {
 
     return (
         <AppBar position="sticky" elevation={0} sx={{
-            justifyContent: "space-between", backgroundColor: "#f1f1f1"
+            justifyContent: "space-between", backgroundColor: "rgba(0, 0, 0, 0.6)"
+
         }}>
             <ToolbarStyle>
-                <Hidden mdDown>
-                    <Stack width={350}>
-                        <Stack width={100}>
-                            <Image src={PIC}/>
-                        </Stack>
-                    </Stack>
-                </Hidden>
+
                 <Container
                     maxWidth="xl"
                 >
@@ -52,13 +47,6 @@ function MenuBar(): JSX.Element {
 
 
                 </Container>
-                <Hidden mdDown>
-                    <Stack width={350}>
-                        {/*<ConnectButton/>*/}
-                    </Stack>
-                </Hidden>
-
-
             </ToolbarStyle>
         </AppBar>
     )

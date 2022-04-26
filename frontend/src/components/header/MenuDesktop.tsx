@@ -5,11 +5,11 @@ import {Link as ScrollLink} from "react-scroll";
 export const frgMenuData = [
     {
         href: "/",
-        tabContent: "Home"
+        tabContent: "GAME"
     },
     {
         href: "/concept",
-        tabContent: "Concept"
+        tabContent: "NFT"
     },
     {
         href: "/gameplay",
@@ -36,20 +36,54 @@ function MenuDesktop() {
                 <Stack
                     direction="row"
                     alignItems="center"
-                    spacing={4}
                     justifyItems="center"
                 >
-                    {
-                        frgMenuData.map((menu, index) => (
-                            <Typography variant="h4" color={'black'} component={ScrollLink} to={menu.tabContent} spy
-                                        smooth offset={-100} sx={{
-                                cursor: "pointer",
-                                textTransform: "uppercase",
-                            }} key={index}>
-                                {menu.tabContent}
-                            </Typography>
-                        ))
-                    }
+                    <Stack width={160} alignItems={"center"}>
+                        <Typography variant="h4" color={'white'} component={ScrollLink} to={"/"} spy
+                                    smooth offset={-100} sx={{
+                            cursor: "pointer",
+                            textTransform: "uppercase",
+                            textShadow: "-1px 1px 4px  #000000"
+                        }}>
+                            GAME
+                        </Typography>
+                    </Stack>
+                    <Stack width={160} alignItems={"center"}>
+                        <Typography variant="h4" color={'white'} component={ScrollLink} to={"/concept"} spy
+                                    smooth offset={-100} sx={{
+                            cursor: "pointer",
+                            textTransform: "uppercase",
+                            textShadow: "-1px 1px 4px  #000000"
+
+                        }}>
+                            NFT
+                        </Typography>
+                    </Stack>
+
+                    <Stack>
+                        <img src={"crown.png"}/>
+                    </Stack>
+
+                    <Stack width={160} alignItems={"center"}>
+                        <Typography variant="h4" color={'white'} component={ScrollLink} to={"/roadmap"} spy
+                                    smooth offset={-100} sx={{
+                            cursor: "pointer",
+                            textTransform: "uppercase",
+                            textShadow: "-1px 1px 4px  #000000"
+                        }}>
+                            ROADMAP
+                        </Typography>
+                    </Stack>
+                    <Stack width={160} alignItems={"center"}>
+                        <Typography variant="h4" color={'white'} component={ScrollLink} to={"/team"} spy
+                                    smooth offset={-100} sx={{
+                            cursor: "pointer",
+                            textTransform: "uppercase",
+                            textShadow: "-1px 1px 4px  #000000"
+                        }}>
+                            TEAM
+                        </Typography>
+                    </Stack>
                 </Stack>
             </Stack>
 
