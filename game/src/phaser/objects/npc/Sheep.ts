@@ -10,7 +10,9 @@ export class Sheep extends Npc {
     constructor(scene: Scene, x: number, y: number) {
         super(scene, x, y, NPCList.SHEEP, Constants.KEY_SHEEP, Constants.ASSETS_SHEEP);
     }
-
+    create() {
+        this.setScale(4, 4)
+    }
     triggerAction() {
         const action: UiAction = {
             show: UI.NEW_DUNGEON,

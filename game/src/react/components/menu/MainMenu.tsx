@@ -7,14 +7,14 @@ import {TabContext} from "@mui/lab";
 import Inventory from "../inventory/Inventory";
 import Team from "../team/Team";
 
-const CustomeTabs = styled(Tabs)({
+export const CustomeTabs = styled(Tabs)({
     borderBottom: '1px solid #e8e8e8',
     '& .MuiTabs-indicator': {
         backgroundColor: '#8A2439',
     },
 });
 
-const CustomTab = styled((props: StyledTabProps) => <Tab disableRipple {...props} />)(
+export  const CustomTab = styled((props: StyledTabProps) => <Tab disableRipple {...props} />)(
     ({theme}) => ({
         textTransform: 'none',
         minWidth: 0,
@@ -33,13 +33,13 @@ const CustomTab = styled((props: StyledTabProps) => <Tab disableRipple {...props
     }),
 );
 
-interface StyledTabsProps {
+export interface StyledTabsProps {
     children?: React.ReactNode;
     value: number;
     onChange: (event: React.SyntheticEvent, newValue: number) => void;
 }
 
-interface StyledTabProps {
+export interface StyledTabProps {
     label: string;
     value: string
 }

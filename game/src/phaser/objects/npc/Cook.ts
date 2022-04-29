@@ -9,8 +9,11 @@ import {showUi} from "../../../react/store/slices/ui-slice";
 export class Cook extends Npc {
 
     constructor(scene: Scene) {
-        super(scene, 34 * 16, 46 * 16, NPCList.COOK, Constants.KEY_COOK, Constants.ASSETS_COOK);
+        super(scene, 76 * 64, 48 * 64, NPCList.COOK, Constants.KEY_COOK, Constants.ASSETS_COOK);
+        this.setScale(4, 4)
+
     }
+
 
     triggerAction() {
         const params: BottomDialogActionParams = {

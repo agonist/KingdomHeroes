@@ -67,14 +67,12 @@ function MintHeroesRoot() {
         }
 
         return (
-            <Stack alignItems="center" width={window.innerWidth / 2.7}
+            <Stack alignItems="center"
             >
-                <Typography color={CustomColor.fontYellow} variant={"h3"} paddingY={2}>HEROES {saletxt}</Typography>
-
-                <Stack sx={{backgroundColor: CustomColor.midBg}} width={"100%"} height={"100%"} paddingY={3}
+                <Stack width={"100%"} height={"100%"} paddingY={8}
                        alignItems={"center"} spacing={2}>
                     <Typography color={"white"} variant={"body1"}>
-                        GM ADVENTURER, <br/>WELCOME TO THE HEROES MINT.<br/>KINGDOM KEYS HOLDERS WILL GET TWO FREE
+                        GM ADVENTURER, <br/>WELCOME TO THE HEROES MINT.<br/><br/>KINGDOM KEYS HOLDERS WILL GET TWO FREE
                         HEROES<br/>
                         AUTOMATICALLY DURING THE PRESALE.
                     </Typography>

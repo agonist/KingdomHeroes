@@ -14,6 +14,7 @@ import {Frog} from "../objects/npc/Frog";
 import {Sheep} from "../objects/npc/Sheep";
 import {hideUi, showUi} from "../../react/store/slices/ui-slice";
 import {UI, UiAction} from "../../react/store/ui/UiAction";
+import {debugDraw} from "../debug/debug";
 
 export default class GameScene extends Phaser.Scene {
 
@@ -53,7 +54,7 @@ export default class GameScene extends Phaser.Scene {
         wallsLayer.setCollisionByProperty({collide: true})
         map.createLayer('void', tileset)
 
-        // debugDraw(wallsLayer, this)
+        //debugDraw(wallsLayer, this)
 
         // WL blockers
 
@@ -71,14 +72,14 @@ export default class GameScene extends Phaser.Scene {
 
 
         // player
-        this.player = new Player(this, 50 * 16, 54 * 16)
+        this.player = new Player(this, 54 * 64, 63 * 64)
         // if (whitelistLayer) this.physics.add.collider(this.player, whitelistLayer)
 
         this.physics.add.collider(this.player, wallsLayer)
         this.physics.add.collider(this.player, this.npcGroup!)
         this.physics.add.collider(this.player, this.collidingGroup!)
         this.player.create()
-        this.cameras.main.setZoom(1.5);
+        this.cameras.main.setZoom(0.72);
         this.cameras.main.startFollow(this.player, true)
         this.player.setSignOverlap(this.interactableGroup!)
         this.player.setNpcOverlap(this.npcGroup!)

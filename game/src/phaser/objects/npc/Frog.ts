@@ -9,7 +9,8 @@ import {showUi} from "../../../react/store/slices/ui-slice";
 export class Frog extends Npc {
 
     constructor(scene: Scene) {
-        super(scene, 38 * 16, 46 * 16, NPCList.FROG, Constants.KEY_FROG, Constants.ASSETS_FROG);
+        super(scene, 38 * 64, 36 * 64, NPCList.FROG, Constants.KEY_FROG, Constants.ASSETS_FROG);
+        this.setScale(4, 4)
     }
 
     triggerAction() {

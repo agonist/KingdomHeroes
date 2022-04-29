@@ -88,10 +88,28 @@ function App() {
 
     function login() {
         return (
+
+
             <Stack height={"100%"} direction="column"
-                   justifyContent="flex-end" sx={{backgroundImage: `url(${PIC})`, backgroundSize: "cover"}}
+                   justifyContent="flex-end"
                    alignItems="center" paddingBottom={8}>
-                <Login/>
+                <div className="video-wrapper">
+                    <video
+                        width="100%"
+                        autoPlay
+                        loop
+                        muted
+                        src={"/intro.webm"}
+                    >
+                    </video>
+                    <div className="header">
+                        <Stack>
+                            <img src={"logo.webp"}/>
+                            <Login/>
+                        </Stack>
+
+                    </div>
+                </div>
             </Stack>
         )
     }

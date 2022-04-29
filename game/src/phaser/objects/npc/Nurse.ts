@@ -14,6 +14,8 @@ export class Nurse extends Npc {
     }
 
     create() {
+        this.setScale(4, 4)
+
         this.anims.create({
             key: 'nurse-idle',
             frames: this.anims.generateFrameNames(Constants.KEY_NURSE, {

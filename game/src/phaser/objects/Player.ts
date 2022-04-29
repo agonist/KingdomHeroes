@@ -37,6 +37,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     create() {
+        this.setScale(4, 4)
         this.body.setSize(this.width, this.height)
 
         this.anims.create({
@@ -108,7 +109,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         })
         this.anims.play('player-idle-down')
 
-        this.detect = this.scene.add.rectangle(this.x + 16, this.y + 16, 16, 16, 0xffffff, 0) as unknown as Phaser.Types.Physics.Arcade.ImageWithDynamicBody
+        this.detect = this.scene.add.rectangle(this.x + 64, this.y + 64, 64, 64, 0xffffff, 0) as unknown as Phaser.Types.Physics.Arcade.ImageWithDynamicBody
         this.scene.physics.add.existing(this.detect)
     }
 
@@ -118,7 +119,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             return
         }
         // console.log(this.currentFacingSign)
-        const speed = 70;
+        const speed = 250;
 
         const {x, y} = this
         if (this.cursors.left?.isDown) {
@@ -127,7 +128,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.anims.play('player-run-left-side', true)
 
 
-            this.detect.setPosition(x - 20, y)
+            this.detect.setPosition(x - 60, y)
 
             this.currentFacingSign = 0
             this.currentFacingNpc = undefined
@@ -136,20 +137,20 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.body.offset.x = 0
             this.anims.play('player-run-right-side', true)
 
-            this.detect.setPosition(x + 20, y)
+            this.detect.setPosition(x + 60, y)
 
             this.currentFacingSign = 0
             this.currentFacingNpc = undefined
         } else if (this.cursors.up?.isDown) {
             this.setVelocity(0, -speed)
-            this.detect.setPosition(x, y - 26)
+            this.detect.setPosition(x, y - 106)
             this.anims.play('player-run-up', true)
 
             this.currentFacingSign = 0
             this.currentFacingNpc = undefined
         } else if (this.cursors.down?.isDown) {
             this.setVelocity(0, speed)
-            this.detect.setPosition(x, y + 26)
+            this.detect.setPosition(x, y + 106)
             this.anims.play('player-run-down', true)
 
             this.currentFacingSign = 0

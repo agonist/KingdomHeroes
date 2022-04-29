@@ -5,7 +5,7 @@ export const Constants = {
     SCENE_MENU: "SCENE_MENU",
     SCENE_GAME: "SCENE_GAME",
     SCENE_DUNGEON: "SCENE_DUNGEON",
-    SCENE_COMBAT : "SCENE_COMBAT",
+    SCENE_COMBAT: "SCENE_COMBAT",
 
     //KEYS
     KEY_LOGO: "logo",
@@ -30,12 +30,12 @@ export const Constants = {
 
     //ASSETS
     ASSETS_LOGO: "logo.png",
-    ASSETS_TOWN_ATLAS: "assets/tiles/town/town.png",
-    ASSETS_TOWN_TILED: "assets/tiles/town/town.tmj",
+    ASSETS_TOWN_ATLAS: "assets/tiles/town/townv2.png",
+    ASSETS_TOWN_TILED: "assets/tiles/town/casteria.tmj",
     ASSETS_DUNGEON_ATLAS: "assets/tiles/dungeon/dungeon.png",
     ASSETS_DUNGEON_TILED: "assets/tiles/dungeon/dungeon.tmj",
-    ASSETS_FORGE_FULL: "assets/tiles/building/forge.png",
-    ASSETS_SHOP: "assets/tiles/building/shop.png",
+    ASSETS_FORGE_FULL: "assets/tiles/building/forgev2.png",
+    ASSETS_SHOP: "assets/tiles/building/shopv2.png",
     ASSETS_RING: "assets/tiles/building/ring.png",
     ASSETS_SIGN: "assets/tiles/sign.png",
     ASSETS_MINT_NPC: "assets/npc/kid.png",
@@ -53,10 +53,10 @@ export const Constants = {
     ASSETS_MOB: "assets/mob/mob",
 
     // TILESET
-    TILESET_WORLD: "town",
+    TILESET_WORLD: "townv2",
     TILESET_DUNGEON: "dungeon",
-    TILESET_FORGE: "forge",
-    TILESET_SHOP: "shop",
+    TILESET_FORGE: "forgev2",
+    TILESET_SHOP: "shopv2",
     TILESET_RING: "ring"
 
 }

@@ -50,10 +50,8 @@ function MintHeroesRoot() {
         }
 
         return (
-            <Stack alignItems="center" width={window.innerWidth / 2.7}>
-                <Typography color={CustomColor.fontYellow} variant={"h3"} paddingY={2}>KEYS {saletxt}</Typography>
-
-                <Stack sx={{backgroundColor: CustomColor.midBg}} width={"100%"} height={"100%"} paddingY={3}
+            <Stack alignItems="center">
+                <Stack width={"100%"} height={"100%"} paddingY={3}
                        alignItems={"center"} spacing={2}>
                     <Typography variant={"body1"} fontSize={16} color={"white"}>
                         GM ADVENTURER, <br/>WELCOME TO THE KINGDOM KEYS MINT. <br/> MINTING A KEY WILL GUARANTEE YOU

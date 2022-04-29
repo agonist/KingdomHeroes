@@ -1,58 +1,74 @@
 import {
+    Box,
     CircularProgress,
     Stack,
     Typography
 } from "@mui/material";
-import {CustomColor} from "../../MuiTheme";
-import React from "react";
+import  {useState} from "react";
 import Stake from "./Stake";
 import UnStake from "./UnStake";
 import {GuiStyles} from "../Styles";
 import {useAppSelector} from "../../store/hooks";
+import {TabContext} from "@mui/lab";
+import TabPanel from "@mui/lab/TabPanel";
+import {CustomeTabs, CustomTab} from "../menu/MainMenu";
 
 
 export default function Training() {
     const training = useAppSelector((state) => state.training)
+    const [value, setValue] = useState("1");
 
     const classes = GuiStyles();
 
     return (
-        <Stack
-            width={window.innerWidth / 1.1} height={window.innerHeight / 1.1}
-            spacing={3}
-            alignItems={"center"}
-            className={classes.frame}>
+        <Box height={"100%"} width={"100%"} sx={{
+            backgroundColor: "rgba(0, 0, 0, 0.9)"
+        }} paddingTop={8}>
+            <TabContext value={value}>
+                <CustomeTabs value={value} centered>
+                    <CustomTab label="STAKING" value={"1"}/>
+                </CustomeTabs>
+                <TabPanel value={"1"}>
+                    {training.stateLoading ?
 
-            <Typography variant={"h1"} color={CustomColor.fontYellow}>TRAINING</Typography>
-
-            {training.stateLoading ?
-
-                <Stack width={"100%"} height={"100%"} justifyContent={"center"} alignItems={"center"}>
-                    <CircularProgress/>
-                </Stack>
-
-                :
-
-                <Stack spacing={3}
-                       alignItems={"center"}>
-                    <Stack className={classes.content} width={"30%"}>
-                        <Typography paddingY={1} variant={"h5"} color={"white"}>DAILY $CGLD BONUS</Typography>
-                        <Stack paddingY={1} width={"100%"} height={"100%"} sx={{backgroundColor: CustomColor.midBg}}>
-                            <Typography color={"white"}>{training.currentYield} $CGLD</Typography>
+                        <Stack width={"100%"} height={"100%"} justifyContent={"center"} alignItems={"center"}>
+                            <CircularProgress/>
                         </Stack>
-                    </Stack>
 
-                    <Stack direction={"row"} spacing={3} width={"100%"} justifyContent={"center"}>
+                        :
 
-                        <Stake/>
+                        <Stack spacing={3}
+                               alignItems={"center"}>
+                            <Stack className={classes.content} width={"30%"}>
+                                <Stack sx={{
+                                    backgroundColor: "#8A2439",
+                                    borderBottom: "solid",
+                                    borderWidth: "2px",
+                                    borderColor: "white"
+                                }}>
+                                    <Typography paddingY={1} variant={"h5"} color={"white"}>DAILY $CGLD
+                                        BONUS</Typography>
+                                </Stack>
+                                <Stack paddingY={1} width={"100%"} height={"100%"}>
+                                    <Typography color={"white"}>{training.currentYield} $CGLD</Typography>
+                                </Stack>
+                            </Stack>
 
-                        <UnStake/>
+                            <Stack direction={"row"} spacing={3} width={"100%"} justifyContent={"center"}>
 
-                    </Stack>
-                </Stack>
-            }
+                                <Stake/>
 
+                                <UnStake/>
 
-        </Stack>
+                            </Stack>
+                        </Stack>
+                    }
+
+                </TabPanel>
+            </TabContext>
+
+            <Box sx={{p: 3}}/>
+        </Box>
+
     )
 }

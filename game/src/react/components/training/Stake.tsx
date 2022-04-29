@@ -1,7 +1,6 @@
 import {useAppSelector} from "../../store/hooks";
-import React, {useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {Button, Checkbox, List, ListItem, ListItemButton, ListItemIcon, Stack, Typography} from "@mui/material";
-import {CustomColor} from "../../MuiTheme";
 import {GuiStyles} from "../Styles";
 import {approveHeroes, approveKeys, trainNFT} from "../../store/slices/training-slice";
 import {TrainParams, Web3Params} from "../../store/utils/params";
@@ -177,8 +176,15 @@ export default function Stake() {
     return (
         <Stack width={window.innerWidth / 4} height={window.innerHeight / 1.7}
                className={classes.content}>
-            <Typography color={"white"} variant={"h4"} paddingY={2}>NOT TRAINING</Typography>
-            <Stack width={"100%"} height={"100%"} sx={{backgroundColor: CustomColor.midBg}} overflow={"scroll"}>
+            <Stack sx={{
+                backgroundColor: "#8A2439",
+                borderBottom: "solid",
+                borderWidth: "2px",
+                borderColor: "white"
+            }}>
+                <Typography color={"white"} variant={"h4"} paddingY={2}>UNSTAKED</Typography>
+            </Stack>
+            <Stack width={"100%"} height={"100%"} overflow={"scroll"}>
 
                 {user.heroesIds.length === 0 && user.keysAmount === 0 ?
                     <Stack width={"100%"} height={"100%"} justifyContent={"center"} alignItems={"center"}>

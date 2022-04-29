@@ -10,11 +10,11 @@ const config: Phaser.Types.Core.GameConfig = {
     type: Phaser.AUTO,
     parent: 'phaser-container',
     backgroundColor: '#282c34',
-    width: window.innerWidth / 2,
-    height: window.innerHeight / 2,
+    width: window.innerWidth,
+    height: window.innerHeight,
     pixelArt: true,
     scale: {
-        zoom: 2,
+        zoom: 1,
         mode: Phaser.Scale.ScaleModes.FIT,
     },
 
@@ -22,7 +22,7 @@ const config: Phaser.Types.Core.GameConfig = {
         default: 'arcade',
         arcade: {
             gravity: {y: 0},
-            debug: false
+            debug: true
         },
     },
     scene: [PreloaderScene, MainMenuScene, GameScene, DungeonScene, CombatScene],

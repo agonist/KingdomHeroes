@@ -9,11 +9,13 @@ import {showUi} from "../../../react/store/slices/ui-slice";
 
 export class Blacksmith extends Npc {
     constructor(scene: Scene) {
-        super(scene, 37 * 16, 23 * 16, NPCList.BLACKSMITH, Constants.KEY_BLACKSMITH, 'blacksmith-1.png');
+        super(scene, 11 * 64, 53 * 64, NPCList.BLACKSMITH, Constants.KEY_BLACKSMITH, 'blacksmith-1.png');
         this.create()
     }
 
     create() {
+        this.setScale(4, 4)
+
         this.anims.create({
             key: 'blacksmith-idle',
             frames: this.anims.generateFrameNames(Constants.KEY_BLACKSMITH, {

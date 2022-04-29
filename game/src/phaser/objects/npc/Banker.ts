@@ -9,11 +9,12 @@ import {showUi} from "../../../react/store/slices/ui-slice";
 
 export class Banker extends Npc {
     constructor(scene: Scene) {
-        super(scene, 35 * 16, 53 * 16, NPCList.BANKER, Constants.KEY_BANKER, 'banker-1.png');
+        super(scene, 81 * 64, 65 * 64, NPCList.BANKER, Constants.KEY_BANKER, 'banker-1.png');
         this.create()
     }
 
     create() {
+        this.setScale(4, 4)
         this.anims.create({
             key: 'banker-idle',
             frames: this.anims.generateFrameNames(Constants.KEY_BANKER, {
