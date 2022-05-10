@@ -60,7 +60,7 @@ function MenuDesktop() {
                         </Typography>
                     </Stack>
 
-                    <Stack>
+                    <Stack maxWidth={170}>
                         <img src={"crown.png"}/>
                     </Stack>
 
