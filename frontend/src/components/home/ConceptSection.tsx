@@ -65,7 +65,7 @@ function ConceptSection() {
                             {
                                 items.map((item, i) =>
                                     <Stack alignItems={"center"} justifyContent={"center"} alignContent={"center"}
-                                           width={"100%"}>
+                                           width={"100%"} key={i}>
                                         <Stack width={382} height={299} justifyContent={"center"}>
                                             <Image src={item.image} width={382} height={299}/>
                                         </Stack>

@@ -26,7 +26,7 @@ function RoadmapSection() {
 
     function firstSaga(): JSX.Element {
         return (
-            <Stack alignItems={"center"}
+            <Stack alignItems={"center"} key={1}
                    width={"100%"} height={500}>
                 <Typography variant={"h4"} color={"#F6CB4C"}>1st Saga: The Kingdom Beta</Typography>
 
@@ -95,7 +95,7 @@ function RoadmapSection() {
 
     function secondSaga() {
         return (
-            <Stack alignItems={"center"}
+            <Stack alignItems={"center"} key={2}
                    width={"100%"} height={500}>
                 <Typography variant={"h4"} color={"#F6CB4C"}>2nd Saga: Kingdom Expansion</Typography>
 
