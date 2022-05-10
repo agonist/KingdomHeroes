@@ -22,14 +22,15 @@ export default class PreloaderScene extends Scene {
 
         // NPC
         this.load.atlas(Constants.KEY_BLACKSMITH, Constants.ASSETS_BLACKSMITH, Constants.ASSETS_BLACKSMITH_ATLAS)
+        this.load.atlas(Constants.KEY_COOK, Constants.ASSETS_COOK, Constants.ASSETS_COOK_ATLAS)
+        this.load.atlas(Constants.KEY_FROG, Constants.ASSETS_FROG, Constants.ASSETS_FROG_ATLAS)
         this.load.atlas(Constants.KEY_NURSE, Constants.ASSETS_NURSE, Constants.ASSETS_NURSE_ATLAS)
         this.load.atlas(Constants.KEY_BANKER, Constants.ASSETS_BANKER, Constants.ASSETS_BANKER_ATLAS)
+        this.load.atlas(Constants.KEY_GUARD, Constants.ASSETS_GUARD, Constants.ASSETS_GUARD_ATLAS)
 
 
         this.load.image(Constants.KEY_SIGN, Constants.ASSETS_SIGN)
         this.load.image(Constants.KEY_MINT_NPC, Constants.ASSETS_MINT_NPC)
-        this.load.image(Constants.KEY_COOK, Constants.ASSETS_COOK)
-        this.load.image(Constants.KEY_FROG, Constants.ASSETS_FROG)
         this.load.image(Constants.KEY_SHEEP, Constants.ASSETS_SHEEP)
 
         for (let i = 0; i < 3; i++) {

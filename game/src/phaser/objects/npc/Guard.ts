@@ -6,37 +6,33 @@ import {BottomDialogActionParams, UI, UiAction} from "../../../react/store/ui/Ui
 import store from "../../../react/store/store";
 import {showUi} from "../../../react/store/slices/ui-slice";
 
+export class Guard extends Npc {
 
-export class Blacksmith extends Npc {
     constructor(scene: Scene) {
-        super(scene, 11 * 64, 53 * 64, NPCList.BLACKSMITH, Constants.KEY_BLACKSMITH, 'blacksmith_1.png');
+        super(scene, 46 * 64, 10 * 64, NPCList.GUARD, Constants.KEY_GUARD, Constants.ASSETS_GUARD);
         this.create()
     }
 
     create() {
         this.anims.create({
-            key: 'blacksmith-idle',
-            frames: this.anims.generateFrameNames(Constants.KEY_BLACKSMITH, {
+            key: 'guard-idle',
+            frames: this.anims.generateFrameNames(Constants.KEY_GUARD, {
                 start: 1,
-                end: 14,
-                prefix: 'blacksmith_',
+                end: 30,
+                prefix: 'guard_',
                 suffix: '.png',
             }),
             repeat: -1,
-            frameRate: 10
+            frameRate: 8
         })
-        this.anims.play('blacksmith-idle')
-
-    }
-
-    update() {
+        this.anims.play('guard-idle')
 
     }
 
     triggerAction() {
         const params: BottomDialogActionParams = {
-            title: this.dialogTitle(),
-            messages: this.dialogMessage()
+            title: "Guard",
+            messages: ["HALT !!"]
         }
         const action: UiAction = {
             show: UI.BOTTOM_DIALOG,
@@ -44,16 +40,5 @@ export class Blacksmith extends Npc {
         }
 
         store.dispatch(showUi(action))
-    }
-
-
-    dialogTitle(): string {
-        return "Blacksmith"
-    }
-
-    dialogMessage(): string[] {
-        return [
-            "Come back to see me later and I'll make you brand new equipment."
-        ]
     }
 }

@@ -24,7 +24,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     private heroesKey!: Key
 
     constructor(scene: Scene, x: number, y: number) {
-        super(scene, x, y, 'player', 'walk-down-3.png');
+        super(scene, x, y, 'player', 'idle_front_3.png');
         scene.physics.add.existing(this);
         this.scene.add.existing(this)
         this.cursors = scene.input.keyboard.createCursorKeys()
@@ -37,39 +37,86 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     create() {
-        this.setScale(4, 4)
         this.body.setSize(this.width, this.height)
 
-        this.anims.create({
-            key: 'player-idle-down',
-            frames: [{key: 'player', frame: 'walk-down-1.png'}]
-        })
+        // this.anims.create({
+        //     key: 'player-idle-down',
+        //     frames: [{key: 'player', frame: 'walk-down-1.png'}]
+        // })
+        //
+        // this.anims.create({
+        //     key: 'player-idle-up',
+        //     frames: [{key: 'player', frame: 'walk-up-1.png'}]
+        // })
+        //
+        // this.anims.create({
+        //     key: 'player-idle-left-side',
+        //     frames: [{key: 'player', frame: 'walk-side-left-1.png'}]
+        // })
+        //
+        // this.anims.create({
+        //     key: 'player-idle-right-side',
+        //     frames: [{key: 'player', frame: 'walk-side-right-1.png'}]
+        // })
 
         this.anims.create({
-            key: 'player-idle-up',
-            frames: [{key: 'player', frame: 'walk-up-1.png'}]
+            key: 'player-idle-right-side',
+            frames: this.anims.generateFrameNames('player', {
+                start: 1,
+                end: 19,
+                prefix: 'idle_side_',
+                suffix: '.png',
+            }),
+            repeat: -1,
+            frameRate: 16
         })
 
         this.anims.create({
             key: 'player-idle-left-side',
-            frames: [{key: 'player', frame: 'walk-side-left-1.png'}]
+            frames: this.anims.generateFrameNames('player', {
+                start: 1,
+                end: 19,
+                prefix: 'idle_side_',
+                suffix: '.png',
+            }),
+            repeat: -1,
+            frameRate: 16
         })
 
         this.anims.create({
-            key: 'player-idle-right-side',
-            frames: [{key: 'player', frame: 'walk-side-right-1.png'}]
+            key: 'player-idle-up',
+            frames: this.anims.generateFrameNames('player', {
+                start: 1,
+                end: 24,
+                prefix: 'idle_back_',
+                suffix: '.png',
+            }),
+            repeat: -1,
+            frameRate: 16
+        })
+
+        this.anims.create({
+            key: 'player-idle-down',
+            frames: this.anims.generateFrameNames('player', {
+                start: 1,
+                end: 24,
+                prefix: 'idle_front_',
+                suffix: '.png',
+            }),
+            repeat: -1,
+            frameRate: 16
         })
 
         this.anims.create({
             key: 'player-run-down',
             frames: this.anims.generateFrameNames('player', {
                 start: 1,
-                end: 4,
-                prefix: 'walk-down-',
+                end: 18,
+                prefix: 'run_face_',
                 suffix: '.png',
             }),
             repeat: -1,
-            frameRate: 8
+            frameRate: 16
         })
 
 
@@ -77,35 +124,35 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             key: 'player-run-up',
             frames: this.anims.generateFrameNames('player', {
                 start: 1,
-                end: 4,
-                prefix: 'walk-up-',
+                end: 18,
+                prefix: 'run_back_',
                 suffix: '.png',
             }),
             repeat: -1,
-            frameRate: 8
+            frameRate: 16
         })
 
         this.anims.create({
             key: 'player-run-left-side',
             frames: this.anims.generateFrameNames('player', {
                 start: 1,
-                end: 4,
-                prefix: 'walk-side-left-',
+                end: 14,
+                prefix: 'run_side_',
                 suffix: '.png',
             }),
             repeat: -1,
-            frameRate: 8
+            frameRate: 16
         })
         this.anims.create({
             key: 'player-run-right-side',
             frames: this.anims.generateFrameNames('player', {
                 start: 1,
-                end: 4,
-                prefix: 'walk-side-right-',
+                end: 14,
+                prefix: 'run_side_',
                 suffix: '.png',
             }),
             repeat: -1,
-            frameRate: 8
+            frameRate: 16
         })
         this.anims.play('player-idle-down')
 
@@ -126,7 +173,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.setVelocity(-speed, 0)
             this.body.offset.x = 0
             this.anims.play('player-run-left-side', true)
-
+            this.scaleX = 1
 
             this.detect.setPosition(x - 60, y)
 
@@ -134,7 +181,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             this.currentFacingNpc = undefined
         } else if (this.cursors.right?.isDown) {
             this.setVelocity(speed, 0)
-            this.body.offset.x = 0
+            this.scaleX = -1
+            this.body.offset.x = 92
             this.anims.play('player-run-right-side', true)
 
             this.detect.setPosition(x + 60, y)
@@ -167,7 +215,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             const parts = this.anims.currentAnim.key.split('-')
             parts[1] = 'idle'
             this.setVelocity(0, 0)
-            this.anims.play(parts.join('-'))
+            this.anims.play(parts.join('-'), true)
         }
     }
 

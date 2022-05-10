@@ -15,6 +15,7 @@ import {Sheep} from "../objects/npc/Sheep";
 import {hideUi, showUi} from "../../react/store/slices/ui-slice";
 import {UI, UiAction} from "../../react/store/ui/UiAction";
 import {debugDraw} from "../debug/debug";
+import {Guard} from "../objects/npc/Guard";
 
 export default class GameScene extends Phaser.Scene {
 
@@ -119,6 +120,7 @@ export default class GameScene extends Phaser.Scene {
         const banker = new Banker(this)
         const cook = new Cook(this)
         const frog = new Frog(this)
+        const guard = new Guard(this)
         const sheep = new Sheep(this, 49.5 * 16, 67 * 16)
         const sheep2 = new Sheep(this, 52 * 16, 67 * 16)
 
@@ -129,6 +131,7 @@ export default class GameScene extends Phaser.Scene {
         this.npcGroup.add(banker)
         this.npcGroup.add(cook)
         this.npcGroup.add(frog)
+        this.npcGroup.add(guard)
         this.npcGroup.add(sheep)
         this.npcGroup.add(sheep2)
     }

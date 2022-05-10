@@ -10,7 +10,23 @@ export class Frog extends Npc {
 
     constructor(scene: Scene) {
         super(scene, 38 * 64, 36 * 64, NPCList.FROG, Constants.KEY_FROG, Constants.ASSETS_FROG);
-        this.setScale(4, 4)
+        this.create()
+    }
+
+    create() {
+        this.anims.create({
+            key: 'frog-idle',
+            frames: this.anims.generateFrameNames(Constants.KEY_FROG, {
+                start: 1,
+                end: 31,
+                prefix: 'frog_',
+                suffix: '.png',
+            }),
+            repeat: -1,
+            frameRate: 8
+        })
+        this.anims.play('frog-idle')
+
     }
 
     triggerAction() {

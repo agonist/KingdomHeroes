@@ -9,11 +9,25 @@ import {showUi} from "../../../react/store/slices/ui-slice";
 export class Cook extends Npc {
 
     constructor(scene: Scene) {
-        super(scene, 76 * 64, 48 * 64, NPCList.COOK, Constants.KEY_COOK, Constants.ASSETS_COOK);
-        this.setScale(4, 4)
-
+        super(scene, 76 * 64, 48 * 64, NPCList.COOK, Constants.KEY_COOK, 'cook_1.png');
+        this.create()
     }
 
+    create() {
+        this.anims.create({
+            key: 'cook-idle',
+            frames: this.anims.generateFrameNames(Constants.KEY_COOK, {
+                start: 1,
+                end: 34,
+                prefix: 'cook_',
+                suffix: '.png',
+            }),
+            repeat: -1,
+            frameRate: 8
+        })
+        this.anims.play('cook-idle')
+
+    }
 
     triggerAction() {
         const params: BottomDialogActionParams = {

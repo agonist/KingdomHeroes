@@ -12,7 +12,7 @@ const Home: NextPage = () => {
         <Stack>
             <HeadSection/>
             <ConceptSection/>
-            <GameplaySection/>
+            {/*<GameplaySection/>*/}
             <RoadmapSection/>
             <TeamSection/>
         </Stack>
