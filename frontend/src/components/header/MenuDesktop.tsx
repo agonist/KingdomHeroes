@@ -33,9 +33,9 @@ function MenuDesktop() {
 
         <Stack
             width={"100%"}
-            direction="row"
-            alignItems="center"
-            justifyItems="center"
+            direction={"row"}
+            alignItems={"center"}
+            justifyItems={"center"}
             justifyContent={"center"}
         >
             <Stack width={160} alignItems={"center"}>
