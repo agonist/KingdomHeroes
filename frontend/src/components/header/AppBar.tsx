@@ -26,7 +26,6 @@ const ToolbarStyle = styled(Toolbar)(({theme}) => ({
 
 
 function MenuBar(): JSX.Element {
-    const router = useRouter();
 
     return (
         <AppBar position="sticky" elevation={0} sx={{
@@ -44,7 +43,6 @@ function MenuBar(): JSX.Element {
                     <Hidden mdUp>
                         <MenuMobile/>
                     </Hidden>
-
 
                 </Container>
             </ToolbarStyle>
