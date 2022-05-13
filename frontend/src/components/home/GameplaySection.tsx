@@ -1,40 +1,72 @@
-import {Stack, Typography} from "@mui/material";
+import {NextPage} from "next";
+import {Button, Paper, Stack, Typography} from "@mui/material";
+import PIC from '../../../public/bg_crack.png';
+
+import {Box} from "@mui/system";
+import Image from "next/image";
+import separator from "../../../public/separator.png"
+import knight from "../../../public/Knight.png"
+import Carousel from 'react-material-ui-carousel'
 
 function GameplaySection() {
-
     return (
-        <Stack sx={{backgroundColor: '#f1f1f1'}} paddingTop={6} paddingX={2}
-               alignItems="center" id="Gameplay">
-            <Stack maxWidth={800} alignItems="center" spacing={3}>
-                <Typography variant={"h1"}>Lore</Typography>
 
-                <Typography variant={"body1"}>
+        <Stack paddingY={16} sx={{
+            backgroundImage: `url("/b2.jpg")`,
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center',
+            backgroundSize: 'cover'
 
-                    Times are changing rapidly. The Kingdom of Creeth for centuries has been the leader of the Civilised
-                    World, with Castreia,
-                    its picture perfect port capital being held as the gold standard of cities throughout Creeth and
-                    rival kingdoms. <br/><br/>
-                    As merchants and new travelers come to settle within Castreia, new dangers come as well.
-                    Global expansion has brought the hope of riches and wealth to new settlers which has caused bad
-                    actors to find new ways to harm local citizens.
-                    Monsters from far away lands have been brought outside the city gates,
-                    attacking and stealing Creeth Gold from those not strong enough to fend for themselves.<br/><br/>
-                    It is rumored that the promise of wealth and safety from rival kingdoms is spreading to nearby
-                    cities,
-                    enacting revolts and further tribulations to The Kingdom. As the situation grows dire,
-                    a set of citizens emerge in hopes to fight off the monsters lurking around Castreia and prove their
-                    strength to represent Creeth as The Kingdom Heroes.
-                    This task will not be easy, and it will cause these Heroes to make difficult decisions, some even
-                    having to fight against their brethren.
-                    <br/><br/> Will you have what it takes to defeat these monsters and face the challenges emerging
-                    across the
-                    Kingdom of Creeth?
+        }}>
 
+            <Stack paddingTop={6} paddingX={2}
+                   alignItems="center" id="Concept"
+                   height={650}
+                   sx={{
+                       backgroundImage: `url("/bg_crack.png")`,
+                       backgroundRepeat: 'no-repeat',
+                       backgroundPosition: 'center',
+                       backgroundSize: 'contain'
 
-                </Typography>
+                   }}>
+
+                <Typography variant={"h4"} color={"white"} sx={{
+                    textShadow: "-1px 2px #000000"
+
+                }}>WHAT WILL YOU GET?</Typography>
+                <Image src={separator}/>
+
+                <Stack direction={"row"} maxWidth={1000} paddingTop={2} spacing={0} justifyContent={"center"}>
+
+                    <Stack width={500} height={500} justifyContent={"center"}>
+
+                    </Stack>
+
+                    <Stack maxWidth={500} height={500} justifyContent={"center"}>
+                        <Typography display="inline" variant={"body1"} color={"white"}>
+                            Kingdom Heroes brings back all the feels and nostalgia of your old
+                            JRPG games.
+                            Community members will train their Knights, Wizards, and Elves NFTs against monsters that
+                            lurk
+                            outside the kingom walls.
+                            In battles your team will gain Experience Points to improves their skills, and at times,
+                            find
+                            gold
+                            that can be used to further improve their in-game experience. <br/><br/>
+
+                            To claim all the glory and prizes, you must build your team, test your skills and battle
+                            other
+                            community members in hosted tournaments.
+                            <br/><br/>
+                            Will you have what it takes to defeat these monsters and face challenges emerging across the
+                            Kingdom
+                            of Creeth?
+                        </Typography>
+                    </Stack>
+
+                </Stack>
 
             </Stack>
-
 
         </Stack>
     )

@@ -16,7 +16,7 @@ function TeamSection() {
     return (
 
         <Stack paddingY={16} sx={{
-            backgroundImage: `url("/bg.jpg")`,
+            backgroundImage: `url("/b4.jpg")`,
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center',
             backgroundSize: 'cover'
