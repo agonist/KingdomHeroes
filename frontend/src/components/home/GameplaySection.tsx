@@ -1,27 +1,72 @@
 import {NextPage} from "next";
-import {Stack, Typography} from "@mui/material";
+import {Button, Paper, Stack, Typography} from "@mui/material";
+import PIC from '../../../public/bg_crack.png';
+
+import {Box} from "@mui/system";
+import Image from "next/image";
+import separator from "../../../public/separator.png"
+import knight from "../../../public/Knight.png"
+import Carousel from 'react-material-ui-carousel'
 
 function GameplaySection() {
-
     return (
-        <Stack sx={{backgroundColor: '#f1f1f1'}} paddingTop={6} paddingX={2}
-               alignItems="center" id="Concept">
-            <Stack maxWidth={700} alignItems="center" spacing={3}>
-                <Typography variant={"h1"}>Gameplay</Typography>
 
-                <Typography variant={"body1"}>
+        <Stack paddingY={16} sx={{
+            backgroundImage: `url("/b2.jpg")`,
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center',
+            backgroundSize: 'cover'
 
-                    Community members will train their staked NFTs- Knights, Wizards, and Elves- against the monsters
-                    that lurk outside the walls of Creeth. Battling against Goblins, Dragons, and Beasts, winning teams
-                    will gain Experience Points (XP) that improves their skills, and at times, find additional $CGLD
-                    that can be used to further improve their in-game experience. After building the skills of your
-                    team, test your strategy and their strength against other community members in hosted tournaments to
-                    claim all of the glory and prizes!
+        }}>
 
-                </Typography>
+            <Stack paddingTop={6} paddingX={2}
+                   alignItems="center" id="Concept"
+                   height={650}
+                   sx={{
+                       backgroundImage: `url("/bg_crack.png")`,
+                       backgroundRepeat: 'no-repeat',
+                       backgroundPosition: 'center',
+                       backgroundSize: 'contain'
+
+                   }}>
+
+                <Typography variant={"h4"} color={"white"} sx={{
+                    textShadow: "-1px 2px #000000"
+
+                }}>WHAT WILL YOU GET?</Typography>
+                <Image src={separator}/>
+
+                <Stack direction={"row"} maxWidth={1000} paddingTop={2} spacing={0} justifyContent={"center"}>
+
+                    <Stack width={500} height={500} justifyContent={"center"}>
+
+                    </Stack>
+
+                    <Stack maxWidth={500} height={500} justifyContent={"center"}>
+                        <Typography display="inline" variant={"body1"} color={"white"}>
+                            Kingdom Heroes brings back all the feels and nostalgia of your old
+                            JRPG games.
+                            Community members will train their Knights, Wizards, and Elves NFTs against monsters that
+                            lurk
+                            outside the kingom walls.
+                            In battles your team will gain Experience Points to improves their skills, and at times,
+                            find
+                            gold
+                            that can be used to further improve their in-game experience. <br/><br/>
+
+                            To claim all the glory and prizes, you must build your team, test your skills and battle
+                            other
+                            community members in hosted tournaments.
+                            <br/><br/>
+                            Will you have what it takes to defeat these monsters and face challenges emerging across the
+                            Kingdom
+                            of Creeth?
+                        </Typography>
+                    </Stack>
+
+                </Stack>
 
             </Stack>
-
 
         </Stack>
     )

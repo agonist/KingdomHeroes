@@ -1,7 +1,5 @@
 import {Scene} from "phaser";
 import {Constants} from "../Constants";
-import Sprite = Phaser.Physics.Arcade.Sprite;
-import FilterMode = Phaser.Textures.FilterMode;
 
 export default class PreloaderScene extends Scene {
 
@@ -14,6 +12,9 @@ export default class PreloaderScene extends Scene {
 
         // town asset
         this.load.image(Constants.KEY_TILES_TOWN, Constants.ASSETS_TOWN_ATLAS)
+        this.load.image(Constants.KEY_TILES_FORGE, Constants.ASSETS_FORGE_FULL)
+        this.load.image(Constants.KEY_TILES_SHOP, Constants.ASSETS_SHOP)
+        this.load.image(Constants.KEY_TILES_RING, Constants.ASSETS_RING)
         this.load.tilemapTiledJSON(Constants.KEY_TILEMAP_TOWN, Constants.ASSETS_TOWN_TILED)
 
         // player assets
@@ -21,26 +22,26 @@ export default class PreloaderScene extends Scene {
 
         // NPC
         this.load.atlas(Constants.KEY_BLACKSMITH, Constants.ASSETS_BLACKSMITH, Constants.ASSETS_BLACKSMITH_ATLAS)
+        this.load.atlas(Constants.KEY_COOK, Constants.ASSETS_COOK, Constants.ASSETS_COOK_ATLAS)
+        this.load.atlas(Constants.KEY_FROG, Constants.ASSETS_FROG, Constants.ASSETS_FROG_ATLAS)
         this.load.atlas(Constants.KEY_NURSE, Constants.ASSETS_NURSE, Constants.ASSETS_NURSE_ATLAS)
         this.load.atlas(Constants.KEY_BANKER, Constants.ASSETS_BANKER, Constants.ASSETS_BANKER_ATLAS)
-
-        // BUILDING
-        this.load.image(Constants.KEY_FORGE, Constants.ASSETS_FORGE)
+        this.load.atlas(Constants.KEY_GUARD, Constants.ASSETS_GUARD, Constants.ASSETS_GUARD_ATLAS)
 
 
         this.load.image(Constants.KEY_SIGN, Constants.ASSETS_SIGN)
         this.load.image(Constants.KEY_MINT_NPC, Constants.ASSETS_MINT_NPC)
+        this.load.image(Constants.KEY_SHEEP, Constants.ASSETS_SHEEP)
 
-        // this.game.scale.setZoom(1)
+        for (let i = 0; i < 3; i++) {
+            this.load.image(Constants.KEY_MOB + i, Constants.ASSETS_MOB + i + ".png")
+
+        }
 
     }
 
 
     create() {
-
-        const logo = this.add.sprite((window.innerWidth / 2) / 2, (window.innerHeight / 2) / 2, Constants.KEY_LOGO)
-        // logo.setScale(0.8)
-        logo.texture.setFilter(FilterMode.LINEAR)
         this.scene.start(Constants.SCENE_MENU)
     }
 }

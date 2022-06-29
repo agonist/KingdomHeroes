@@ -7,6 +7,7 @@ import {Web3Params} from "../../store/utils/params";
 import {hideUi} from "../../store/slices/ui-slice";
 import {CustomColor} from "../../MuiTheme";
 import {GuiStyles} from "../Styles";
+import key from '../../../img/key.gif'
 
 
 function MintHeroesRoot() {
@@ -49,21 +50,22 @@ function MintHeroesRoot() {
         }
 
         return (
-            <Stack alignItems="center" width={window.innerWidth / 2.7}
-                   height={window.innerHeight / 1.3}>
-                <Typography color={CustomColor.fontYellow} variant={"h3"} paddingY={2}>KEYS {saletxt}</Typography>
-
-                <Stack sx={{backgroundColor: CustomColor.midBg}} width={"100%"} height={"100%"} paddingY={3}
+            <Stack alignItems="center">
+                <Stack width={"100%"} height={"100%"} paddingY={3}
                        alignItems={"center"} spacing={2}>
-                    <Typography variant={"body1"} color={"white"}>
+                    <Typography variant={"body1"} fontSize={16} color={"white"}>
                         GM ADVENTURER, <br/>WELCOME TO THE KINGDOM KEYS MINT. <br/> MINTING A KEY WILL GUARANTEE YOU
                         ACCESS TO THE HEROES WHITELIST,<br/> TWO FREE HEROES, A BONUS YIELD AND MUCH MORE.
                     </Typography>
 
-                    <Typography color={"white"} paddingTop={4} variant={"h4"}>{keysMint.currentMinted} / 500 KEYS
+                    <Stack className={classes.frame} maxWidth={{md: 120, xl: 200}} maxHeight={{md: 120, xl: 200}}>
+                        <img src={key} alt={"key"}/>
+                    </Stack>
+
+                    <Typography color={"white"} paddingTop={1} variant={"h5"}>{keysMint.currentMinted} / 500 KEYS
                         MINTED</Typography>
 
-                    <Stack direction={"row"} spacing={2} paddingTop={4} paddingBottom={4}>
+                    <Stack direction={"row"} spacing={2} paddingTop={1} paddingBottom={1}>
 
                         <Typography color={"white"}>1 MAX PER WALLET</Typography>
 
@@ -73,7 +75,7 @@ function MintHeroesRoot() {
                         for {keysMint.mintTotalPrice.toFixed(2)} ETH</Button>
 
                     <Button onClick={() => dispatch(hideUi())}>
-                        <Typography variant={"button"} color={"white"}>NO THANKS</Typography>
+                        <Typography variant={"button"} fontSize={14} color={"white"}>NO THANKS</Typography>
                     </Button>
                 </Stack>
 

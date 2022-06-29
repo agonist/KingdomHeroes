@@ -4,14 +4,14 @@ import hre = require("hardhat");
 import {MerkleTree} from "merkletreejs";
 
 async function main() {
-    await hre.run('deploy', {tags: 'TokensStats'});
-    await hre.run('deploy', {tags: 'CreethGold'});
+    // await hre.run('deploy', {tags: 'TokensStats'});
+    // await hre.run('deploy', {tags: 'CreethGold'});
     await hre.run('deploy', {tags: 'KingdomTrainingPoly'});
 
 
     const deployments = hre.deployments;
-    const TokensStats = await deployments.get('TokensStats');
-    const tokensStats = await hre.ethers.getContractAt('TokensStats', TokensStats.address);
+    // const TokensStats = await deployments.get('TokensStats');
+    // const tokensStats = await hre.ethers.getContractAt('TokensStats', TokensStats.address);
 
     let stats = Array()
     let ids = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
@@ -20,7 +20,7 @@ async function main() {
     }
 
     // when
-    await tokensStats.initStats(stats, ids)
+   // await tokensStats.initStats(stats, ids)
 }
 
 main()

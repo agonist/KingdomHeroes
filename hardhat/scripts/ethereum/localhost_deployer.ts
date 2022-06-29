@@ -33,9 +33,9 @@ async function deployLocal() {
     const tokensStats = await hre.ethers.getContractAt('TokensStats', TokensStats.address);
 
     await kingdomKey.togglePresale()
-    //await kingdomKey.toggleSale()
-    //await royalKingdom.togglePresale()
+    await kingdomKey.toggleSale()
     await royalKingdom.togglePresale()
+    await royalKingdom.toggleSale()
 
     const whitelist = [
         "0xCBaE0841D72C6e1BDC4e3a85Dea5497822F27d18",
@@ -55,7 +55,7 @@ async function deployLocal() {
     // do stuff
 
     let stats = Array()
-    let ids = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+    let ids = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
     for (let i = 1; i < 19; i += 1) {
         stats.push({tokenId: i, attack: 1 + i, defense: 2 + i, speed: 3 + i, level: 2 + i, hp: 100 + i})
     }

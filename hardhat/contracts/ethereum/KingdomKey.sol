@@ -96,6 +96,7 @@ contract KingdomKey is ERC1155Pausable, Ownable {
     /// @param _quantity Amount to mint
     function reserve(uint256 _quantity) external onlyOwner {
         require(currentSupply + _quantity <= maxSupply, "Mint exceed max supply");
+        currentSupply += _quantity;
         _mint(msg.sender, KINGDOM_KEY, _quantity, "");
     }
 

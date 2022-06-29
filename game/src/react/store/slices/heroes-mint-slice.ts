@@ -9,7 +9,7 @@ import {toast} from "react-toastify";
 import {sleep} from "../utils/sleep";
 import {MerkleTree} from "merkletreejs";
 import keccak256 from "keccak256";
-import {refreshUser} from "./user-slice";
+import {initUser} from "./user-slice";
 import {hideUi} from "./ui-slice";
 import {devWhitelist} from "../whitelist";
 
@@ -113,7 +113,7 @@ export const mintPresale = createAsyncThunk("heroesMint/mintPresale",
         }))
 
         await sleep(2);
-        await thunkApi.dispatch(refreshUser({
+        await thunkApi.dispatch(initUser({
             address: params.address,
             networkID: params.networkID,
             provider: params.provider

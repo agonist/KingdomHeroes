@@ -4,366 +4,219 @@
 			"image": "blacksmith.png",
 			"format": "RGBA8888",
 			"size": {
-				"w": 105,
-				"h": 39
+				"w": 1000,
+				"h": 180
 			},
 			"scale": 1,
 			"frames": [
 				{
-					"filename": "blacksmith-0.png",
+					"filename": "blacksmith_13.png",
 					"rotated": false,
-					"trimmed": false,
+					"trimmed": true,
 					"sourceSize": {
-						"w": 33,
-						"h": 37
+						"w": 176,
+						"h": 192
 					},
 					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 33,
-						"h": 37
+						"x": 3,
+						"y": 7,
+						"w": 158,
+						"h": 178
 					},
 					"frame": {
 						"x": 1,
 						"y": 1,
-						"w": 33,
-						"h": 37
+						"w": 158,
+						"h": 178
 					}
 				},
 				{
-					"filename": "blacksmith-1.png",
+					"filename": "blacksmith_14.png",
 					"rotated": false,
-					"trimmed": false,
+					"trimmed": true,
 					"sourceSize": {
-						"w": 33,
-						"h": 37
+						"w": 176,
+						"h": 192
 					},
 					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 33,
-						"h": 37
+						"x": 3,
+						"y": 7,
+						"w": 158,
+						"h": 178
 					},
 					"frame": {
-						"x": 1,
+						"x": 161,
 						"y": 1,
-						"w": 33,
-						"h": 37
+						"w": 158,
+						"h": 178
 					}
 				},
 				{
-					"filename": "blacksmith-2.png",
+					"filename": "blacksmith_1.png",
 					"rotated": false,
-					"trimmed": false,
+					"trimmed": true,
 					"sourceSize": {
-						"w": 33,
-						"h": 37
+						"w": 176,
+						"h": 192
 					},
 					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 33,
-						"h": 37
+						"x": 27,
+						"y": 7,
+						"w": 134,
+						"h": 178
 					},
 					"frame": {
-						"x": 1,
+						"x": 321,
 						"y": 1,
-						"w": 33,
-						"h": 37
+						"w": 134,
+						"h": 178
 					}
 				},
 				{
-					"filename": "blacksmith-3.png",
+					"filename": "blacksmith_2.png",
 					"rotated": false,
-					"trimmed": false,
+					"trimmed": true,
 					"sourceSize": {
-						"w": 33,
-						"h": 37
+						"w": 176,
+						"h": 192
 					},
 					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 33,
-						"h": 37
+						"x": 27,
+						"y": 7,
+						"w": 134,
+						"h": 178
 					},
 					"frame": {
-						"x": 1,
+						"x": 321,
 						"y": 1,
-						"w": 33,
-						"h": 37
+						"w": 134,
+						"h": 178
 					}
 				},
 				{
-					"filename": "blacksmith-4.png",
+					"filename": "blacksmith_3.png",
 					"rotated": false,
-					"trimmed": false,
+					"trimmed": true,
 					"sourceSize": {
-						"w": 33,
-						"h": 37
+						"w": 176,
+						"h": 192
 					},
 					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 33,
-						"h": 37
+						"x": 27,
+						"y": 7,
+						"w": 134,
+						"h": 178
 					},
 					"frame": {
-						"x": 1,
+						"x": 321,
 						"y": 1,
-						"w": 33,
-						"h": 37
+						"w": 134,
+						"h": 178
 					}
 				},
 				{
-					"filename": "blacksmith-5.png",
+					"filename": "blacksmith_10.png",
 					"rotated": false,
-					"trimmed": false,
+					"trimmed": true,
 					"sourceSize": {
-						"w": 33,
-						"h": 37
+						"w": 176,
+						"h": 192
 					},
 					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 33,
-						"h": 37
+						"x": 27,
+						"y": 7,
+						"w": 134,
+						"h": 178
 					},
 					"frame": {
-						"x": 1,
+						"x": 457,
 						"y": 1,
-						"w": 33,
-						"h": 37
+						"w": 134,
+						"h": 178
 					}
 				},
 				{
-					"filename": "blacksmith-6.png",
+					"filename": "blacksmith_11.png",
 					"rotated": false,
-					"trimmed": false,
+					"trimmed": true,
 					"sourceSize": {
-						"w": 33,
-						"h": 37
+						"w": 176,
+						"h": 192
 					},
 					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 33,
-						"h": 37
+						"x": 27,
+						"y": 7,
+						"w": 134,
+						"h": 178
 					},
 					"frame": {
-						"x": 1,
+						"x": 457,
 						"y": 1,
-						"w": 33,
-						"h": 37
+						"w": 134,
+						"h": 178
 					}
 				},
 				{
-					"filename": "blacksmith-10.png",
+					"filename": "blacksmith_12.png",
 					"rotated": false,
-					"trimmed": false,
+					"trimmed": true,
 					"sourceSize": {
-						"w": 33,
-						"h": 37
+						"w": 176,
+						"h": 192
 					},
 					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 33,
-						"h": 37
+						"x": 27,
+						"y": 7,
+						"w": 134,
+						"h": 178
 					},
 					"frame": {
-						"x": 36,
+						"x": 593,
 						"y": 1,
-						"w": 33,
-						"h": 37
+						"w": 134,
+						"h": 178
 					}
 				},
 				{
-					"filename": "blacksmith-11.png",
+					"filename": "blacksmith_6.png",
 					"rotated": false,
-					"trimmed": false,
+					"trimmed": true,
 					"sourceSize": {
-						"w": 33,
-						"h": 37
+						"w": 176,
+						"h": 192
 					},
 					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 33,
-						"h": 37
+						"x": 27,
+						"y": 7,
+						"w": 134,
+						"h": 178
 					},
 					"frame": {
-						"x": 36,
+						"x": 729,
 						"y": 1,
-						"w": 33,
-						"h": 37
+						"w": 134,
+						"h": 178
 					}
 				},
 				{
-					"filename": "blacksmith-12.png",
+					"filename": "blacksmith_8.png",
 					"rotated": false,
-					"trimmed": false,
+					"trimmed": true,
 					"sourceSize": {
-						"w": 33,
-						"h": 37
+						"w": 176,
+						"h": 192
 					},
 					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 33,
-						"h": 37
+						"x": 27,
+						"y": 7,
+						"w": 134,
+						"h": 178
 					},
 					"frame": {
-						"x": 36,
+						"x": 865,
 						"y": 1,
-						"w": 33,
-						"h": 37
-					}
-				},
-				{
-					"filename": "blacksmith-13.png",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 33,
-						"h": 37
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 33,
-						"h": 37
-					},
-					"frame": {
-						"x": 36,
-						"y": 1,
-						"w": 33,
-						"h": 37
-					}
-				},
-				{
-					"filename": "blacksmith-14.png",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 33,
-						"h": 37
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 33,
-						"h": 37
-					},
-					"frame": {
-						"x": 36,
-						"y": 1,
-						"w": 33,
-						"h": 37
-					}
-				},
-				{
-					"filename": "blacksmith-15.png",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 33,
-						"h": 37
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 33,
-						"h": 37
-					},
-					"frame": {
-						"x": 36,
-						"y": 1,
-						"w": 33,
-						"h": 37
-					}
-				},
-				{
-					"filename": "blacksmith-8.png",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 33,
-						"h": 37
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 33,
-						"h": 37
-					},
-					"frame": {
-						"x": 36,
-						"y": 1,
-						"w": 33,
-						"h": 37
-					}
-				},
-				{
-					"filename": "blacksmith-9.png",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 33,
-						"h": 37
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 33,
-						"h": 37
-					},
-					"frame": {
-						"x": 36,
-						"y": 1,
-						"w": 33,
-						"h": 37
-					}
-				},
-				{
-					"filename": "blacksmith-16.png",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 33,
-						"h": 37
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 33,
-						"h": 37
-					},
-					"frame": {
-						"x": 71,
-						"y": 1,
-						"w": 33,
-						"h": 37
-					}
-				},
-				{
-					"filename": "blacksmith-7.png",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 33,
-						"h": 37
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 33,
-						"h": 37
-					},
-					"frame": {
-						"x": 71,
-						"y": 1,
-						"w": 33,
-						"h": 37
+						"w": 134,
+						"h": 178
 					}
 				}
 			]
@@ -372,6 +225,6 @@
 	"meta": {
 		"app": "https://www.codeandweb.com/texturepacker",
 		"version": "3.0",
-		"smartupdate": "$TexturePacker:SmartUpdate:20ecd8059fc88f774bd7f8ed7134b241:646eff1a962d712e885f8f32079b4c2e:b343c5534f7c56ac8f67136ff80b674e$"
+		"smartupdate": "$TexturePacker:SmartUpdate:84183f79b0eeb5a8ab360ccf45bcff1f:82bae7ac32f5a307d754800b875bb79d:b343c5534f7c56ac8f67136ff80b674e$"
 	}
 }

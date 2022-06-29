@@ -1,26 +1,12 @@
-import {Button, Drawer, IconButton, Stack, Typography} from "@mui/material";
-import {list} from "postcss";
+import {Drawer, IconButton, Stack, Typography} from "@mui/material";
 import {Fragment, useState} from "react";
 import {frgMenuData} from "./MenuDesktop";
-import Link from "next/link";
-import {Custom} from "../../styles/Theme";
 import MenuIcon from "@mui/icons-material/Menu";
-import ConnectButton from "./ConnectButton";
-import {useRouter} from "next/router";
 import {Link as ScrollLink} from "react-scroll/modules";
 
 
 function MenuMobile() {
     const [state, setState] = useState(false);
-    const router = useRouter();
-
-    const [selected, setSelected] = useState(0)
-
-    function handleSelect(index: number) {
-        console.log(index)
-        setState(false)
-        setSelected(index)
-    }
 
     function toggleDrawer() {
         setState(!state)

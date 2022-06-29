@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useCallback, useEffect} from 'react'
+import {useCallback, useEffect} from 'react'
 import './App.css'
 import {Box, Stack} from "@mui/material";
 import DialogBox from "./react/components/dialog/Dialog";
@@ -13,12 +13,15 @@ import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import {useAddress, useWeb3Context} from "./react/web3/web3-context";
 import MintKeys from "./react/components/mint/MintKeys";
-import Inventory from "./react/components/inventory/Inventory";
-import Heroes from "./react/components/heroes/Heroes";
 import Training from "./react/components/training/Training";
 import {useDispatch} from "react-redux";
 import {Web3Params} from "./react/store/utils/params";
 import {initTraining} from "./react/store/slices/training-slice";
+import PIC from "./img/banner.webp";
+import Startdungeon from "./react/components/dungeon/StartDungeon";
+import ContinueDungeon from "./react/components/dungeon/ContinueDungeon";
+import {CombatUi} from "./react/components/combat/CombatUi";
+import MainMenu from "./react/components/menu/MainMenu";
 
 function App() {
     const {connect, hasCachedProvider, web3Modal, provider, chainID} = useWeb3Context();
@@ -47,24 +50,13 @@ function App() {
                 store.dispatch(hideUi())
             }
         }
-        if (e.key === 'i') {
-            if (uiAction.show) {
-                store.dispatch(hideUi())
-            } else {
-                const a: UiAction = {
-                    show: UI.INVENTORY,
-                    params: undefined
-                }
-                store.dispatch(showUi(a))
-            }
-        }
 
-        if (e.key === 'h') {
+        if (e.key === 'm') {
             if (uiAction.show) {
                 store.dispatch(hideUi())
             } else {
                 const a: UiAction = {
-                    show: UI.HEROES,
+                    show: UI.MENU,
                     params: undefined
                 }
                 store.dispatch(showUi(a))
@@ -96,10 +88,28 @@ function App() {
 
     function login() {
         return (
+
+
             <Stack height={"100%"} direction="column"
                    justifyContent="flex-end"
                    alignItems="center" paddingBottom={8}>
-                <Login/>
+                <div className="video-wrapper">
+                    <video
+                        width="100%"
+                        autoPlay
+                        loop
+                        muted
+                        src={"/intro.webm"}
+                    >
+                    </video>
+                    <div className="header">
+                        <Stack>
+                            <img src={"logo.webp"}/>
+                            <Login/>
+                        </Stack>
+
+                    </div>
+                </div>
             </Stack>
         )
     }
@@ -124,29 +134,27 @@ function App() {
         )
     }
 
-    function inventory() {
+    function newDungeon() {
         return (
             <Stack height={"100%"} direction="column"
                    justifyContent="center"
                    alignItems="center">
-                <Inventory/>
+                <Startdungeon/>
             </Stack>
         )
-
     }
 
-    function heroes() {
+    function continueDungeon() {
         return (
             <Stack height={"100%"} direction="column"
                    justifyContent="center"
                    alignItems="center">
-                <Heroes/>
+                <ContinueDungeon/>
             </Stack>
         )
     }
 
     function training() {
-        console.log("YOOOOOOOO")
         let web3: Web3Params = {
             networkID: chainID, provider: provider, address: address
         }
@@ -157,6 +165,24 @@ function App() {
                    justifyContent="center"
                    alignItems="center">
                 <Training/>
+            </Stack>
+        )
+    }
+
+    function combat() {
+        return (
+            <Stack height={"100%"} width={"100%"} direction="column"
+            >
+                <CombatUi combatId={1}/>
+            </Stack>
+        )
+    }
+
+    function menu() {
+        return (
+            <Stack height={"100%"} width={"100%"} direction="column"
+            >
+                <MainMenu/>
             </Stack>
         )
     }
@@ -175,14 +201,20 @@ function App() {
             case UI.MINT_KEYS:
                 ui = mintKeys()
                 break
-            case UI.INVENTORY:
-                ui = inventory()
-                break
-            case UI.HEROES:
-                ui = heroes()
-                break
             case UI.TRAINING:
                 ui = training()
+                break
+            case UI.NEW_DUNGEON:
+                ui = newDungeon()
+                break
+            case UI.CONTINUE_DUNGEON:
+                ui = continueDungeon()
+                break
+            case UI.COMBAT:
+                ui = combat()
+                break
+            case UI.MENU:
+                ui = menu()
                 break
         }
     }

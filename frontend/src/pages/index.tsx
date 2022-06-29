@@ -5,8 +5,7 @@ import ConceptSection from "../components/home/ConceptSection";
 import GameplaySection from "../components/home/GameplaySection";
 import RoadmapSection from "../components/home/RoadmapSection";
 import TeamSection from "../components/home/TeamSection";
-import MintRoot from "../components/mint/MintRoot";
-import MintSection from "../components/home/MintSection";
+
 
 const Home: NextPage = () => {
     return (

@@ -1,7 +1,9 @@
-import {Module} from '@nestjs/common';
+import {Module} from "@nestjs/common";
 import {NftService} from "./nft.service";
-import {NftController} from "./nft.controller";
-import {EthersModule, GOERLI_NETWORK, MUMBAI_NETWORK} from 'nestjs-ethers';
+import {EthersModule, GOERLI_NETWORK, MUMBAI_NETWORK} from "nestjs-ethers";
+import {DatabaseModule} from "../db/database.module";
+import {MAINNET_NETWORK, MATIC_NETWORK} from "nestjs-ethers/dist/ethers.constants";
+
 
 @Module({
     imports: [
@@ -12,23 +14,49 @@ import {EthersModule, GOERLI_NETWORK, MUMBAI_NETWORK} from 'nestjs-ethers';
                 useDefaultProvider: false,
 
             }),
-        EthersModule.forRoot({
-            token: 'mumbai',
-            network: MUMBAI_NETWORK,
-            alchemy: 'm1MYV4kRLcvJKke67On0lFxNW84NIkBJ',
-            useDefaultProvider: false,
-        }),
-        EthersModule.forRoot({
-            token: 'goerli',
-            network: GOERLI_NETWORK,
-            alchemy: 'e4te75ZmUsKlE6GU1bRd82F7_FUDDF0F',
-            useDefaultProvider: false,
-        })
+        getPolyModule(),
+        getEthModule()
     ],
-    controllers: [NftController],
+    exports: [NftService],
     providers: [NftService]
 })
-
 export class NftModule {
 
+}
+
+
+export function getPolyModule() {
+    if (process.env.POLY_CONTRACT_PROVIDER === "dev") {
+        return EthersModule.forRoot({
+            token: 'poly',
+            network: MUMBAI_NETWORK,
+            infura: '9323d47f2a0c4745b63f255c0feaae14',
+            useDefaultProvider: false,
+        })
+    } else {
+        return EthersModule.forRoot({
+            token: 'poly',
+            network: MATIC_NETWORK,
+            infura: '9323d47f2a0c4745b63f255c0feaae14',
+            useDefaultProvider: false,
+        })
+    }
+}
+
+export function getEthModule() {
+    if (process.env.POLY_CONTRACT_PROVIDER === "dev") {
+        return EthersModule.forRoot({
+            token: 'eth',
+            network: GOERLI_NETWORK,
+            infura: '9323d47f2a0c4745b63f255c0feaae14',
+            useDefaultProvider: false,
+        })
+    } else {
+        return EthersModule.forRoot({
+            token: 'eth',
+            network: MAINNET_NETWORK,
+            infura: '9323d47f2a0c4745b63f255c0feaae14',
+            useDefaultProvider: false,
+        })
+    }
 }

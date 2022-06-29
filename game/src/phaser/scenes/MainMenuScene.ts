@@ -20,8 +20,8 @@ export default class MainMenuScene extends Scene {
         store.dispatch(showUi(a))
     }
 
-    startGame(whitelisted: boolean) {
-        this.scene.start(Constants.SCENE_GAME, {whitelisted: whitelisted})
+    startGame(dungeonInProgress: boolean) {
+        this.scene.start(Constants.SCENE_GAME, {dungeonInProgress: dungeonInProgress})
     }
 
 }

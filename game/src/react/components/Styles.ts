@@ -4,16 +4,14 @@ import {CustomColor} from "../MuiTheme";
 export const GuiStyles = makeStyles((theme) => ({
 
     content: () => ({
-        backgroundColor: CustomColor.darkBg,
         border: "solid",
-        borderWidth: "6px",
-        borderColor: "#579AF7",
+        borderWidth: "2px",
+        borderColor: "white",
     }),
 
     frame: () => ({
-        backgroundColor: CustomColor.darkBg,
         border: "solid",
-        borderWidth: "8px",
+        borderWidth: "1px",
         borderImageSlice: 1,
         borderImageSource: 'linear-gradient(to bottom, #579AF7, #092274)',
         padding: 2,

@@ -65,7 +65,7 @@ describe('TokensStats', function () {
             // given
             const {tokensStats} = await setup();
             let stats = Array()
-            stats.push({tokenId: 1,attack: 1, defense: 2, speed: 3, level: 2, hp: 100})
+            stats.push({tokenId: 1, attack: 1, defense: 2, speed: 3, level: 2, hp: 100})
 
             // when
             await tokensStats.initStats(stats, [1])

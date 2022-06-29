@@ -5,17 +5,19 @@ import {default as KingdomTraining} from "../../abi/KingdomTrainingETH.json";
 import {ethers} from "ethers";
 import {toast} from "react-toastify";
 import {sleep} from "../utils/sleep";
-import {refreshUser} from "./user-slice";
+import {initUser} from "./user-slice";
 import {default as KingdomHeroes} from "../../abi/KingdomHeroes.json";
 import {default as KingdomKeys} from "../../abi/KingdomKeys.json";
 import {setAll} from "../utils/set-all";
+import {Api} from "../Api";
 
 interface TrainingState {
     stateLoading: boolean,
     heroesNeedApproval: boolean,
     keysNeedApproval: boolean,
     heroesSelected: number[],
-    keyAmount: number
+    keyAmount: number,
+    currentYield: string
 }
 
 const initialState: TrainingState = {
@@ -24,7 +26,10 @@ const initialState: TrainingState = {
     keysNeedApproval: true,
     heroesSelected: [],
     keyAmount: 0,
+    currentYield: ""
 }
+
+const api = new Api()
 
 export const initTraining = createAsyncThunk("training/init",
     async (params: Web3Params, thunkApi): Promise<TrainingState> => {
@@ -33,6 +38,7 @@ export const initTraining = createAsyncThunk("training/init",
 
         let heroesApproved
         let keysApproved
+        let yieldd
 
         try {
             const royalKingdomContract = new ethers.Contract(contracts.KINGDOM_HEROES, KingdomHeroes.abi, params.provider.getSigner())
@@ -40,6 +46,12 @@ export const initTraining = createAsyncThunk("training/init",
 
             heroesApproved = await royalKingdomContract.isApprovedForAll(params.address, contracts.KINGDOM_TRAINING_ETH)
             keysApproved = await keyContract.isApprovedForAll(params.address, contracts.KINGDOM_TRAINING_ETH)
+
+
+            yieldd = await api.getYield(params.address)
+            if (!yieldd) {
+                return Promise.reject("Get yield error")
+            }
 
         } catch (e) {
             console.log(e)
@@ -50,7 +62,8 @@ export const initTraining = createAsyncThunk("training/init",
             heroesNeedApproval: !heroesApproved,
             keysNeedApproval: !keysApproved,
             heroesSelected: [],
-            keyAmount: 0
+            keyAmount: 0,
+            currentYield: yieldd as string
         }
     })
 
@@ -130,7 +143,7 @@ export const trainNFT = createAsyncThunk("training/train",
         }
 
         await sleep(3);
-        await thunkApi.dispatch(refreshUser({
+        await thunkApi.dispatch(initUser({
             address: params.web3.address,
             networkID: params.web3.networkID,
             provider: params.web3.provider
@@ -160,7 +173,7 @@ export const untrainNFT = createAsyncThunk("training/untrain",
         }
 
         await sleep(3);
-        await thunkApi.dispatch(refreshUser({
+        await thunkApi.dispatch(initUser({
             address: params.web3.address,
             networkID: params.web3.networkID,
             provider: params.web3.provider

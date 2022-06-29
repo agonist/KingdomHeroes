@@ -4,12 +4,13 @@ import {
     AlchemyProvider,
     BigNumber,
     Contract,
-    EthersContract, InfuraProvider,
+    EthersContract, formatEther, InfuraProvider,
     InjectContractProvider,
     InjectEthersProvider, logger, StaticJsonRpcProvider
 } from "nestjs-ethers";
 import * as TokenStats from "../web3/abi/TokenStats.json";
 import * as KindgomHeroes from "../web3/abi/KingdomHeroes.json";
+import * as TrainingPoly from "../web3/abi/KingdomTrainingPoly.json";
 
 
 export interface Metadata extends Document {
@@ -31,6 +32,7 @@ export class MetadataService {
 
     private heroesContract: Contract
     private statsContract: Contract
+    private trainingPolyContract: Contract
     private logger = new Logger();
 
     constructor(
@@ -55,13 +57,30 @@ export class MetadataService {
         } else {
             this.heroesContract = this.etherContract.create(process.env.KINGDOM_HEROES, KindgomHeroes.abi)
             this.statsContract = this.mubaiContract.create(process.env.TOKEN_STATS, TokenStats.abi)
+            this.trainingPolyContract = this.mubaiContract.create(process.env.TRAINING_POLY, TrainingPoly.abi)
+        }
+    }
+
+    async getCurrentYield(address: string): Promise<YieldInfos> {
+
+        const totalYield = await this.trainingPolyContract.totalBalance(address)
+        const cgldPerSec = await this.trainingPolyContract.cgldPerSecond(address)
+        const unclaimed = await this.trainingPolyContract.unclaimedYield(address)
+        const lastUpdated = await this.trainingPolyContract.lastUpdated(address)
+
+
+        let y: YieldInfos = {
+            lastupdated: lastUpdated,
+            totalYield: formatEther(totalYield),
+            cgldPerSec: formatEther(cgldPerSec),
+            unclaimedYield: unclaimed
         }
 
-
+        return y
     }
 
     async gen() {
-        for (let i = 1; i < 30; i += 1) {
+        for (let i = 20; i < 30; i += 1) {
             await this.metadataModel.create({
                 name: "Heroes #" + i,
                 description: "super description",
@@ -69,19 +88,27 @@ export class MetadataService {
                 image: "",
                 attributes: [
                     {
-                        trait_type: "Cloth",
-                        value: "Cloth " + i
+                        trait_type: "Class",
+                        value: "Wizzard"
+                    },
+                    {
+                        trait_type: "Body",
+                        value: "Body " + i
+                    },
+                    {
+                        trait_type: "Armor",
+                        value: "Armor " + i
                     },
                     {
                         trait_type: "Head",
                         value: "Head " + i
                     },
                     {
-                        trait_type: "Shoes",
-                        value: "Shoes " + i
+                        trait_type: "Left Hand",
+                        value: "Weapon " + i
                     },
                     {
-                        trait_type: "Weapon",
+                        trait_type: "Right Hand",
                         value: "Weapon " + i
                     }
                 ]
@@ -231,4 +258,11 @@ export interface Attribute {
 
 export interface StatsAttributes extends Attribute {
     display_type: string,
+}
+
+export interface YieldInfos {
+    lastupdated: number,
+    cgldPerSec: string,
+    unclaimedYield: string,
+    totalYield: string
 }

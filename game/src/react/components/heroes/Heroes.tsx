@@ -1,29 +1,23 @@
-import bgui from "../bgui.png";
 import {
-    Box,
-    Container, Dialog, DialogContent, DialogProps,
     List,
     ListItemAvatar,
     ListItemButton,
-    ListItemIcon,
-    ListItemText, Popper,
+    ListItemText,
     Stack,
     Typography
 } from "@mui/material";
 import {useAppSelector} from "../../store/hooks";
-import React from "react";
 import {getAttack, getDefense, getEquipment, getHP, getLevel, getSpeed} from "../../model/metadata";
-import EquipmentItem from "./EquipmentItem";
 import {GuiStyles} from "../Styles";
-import {CustomColor} from "../../MuiTheme";
+import {useState} from "react";
+import * as React from 'react';
 
 export default function Heroes() {
     const classes = GuiStyles();
 
     const user = useAppSelector((state) => state.user)
 
-    const [selectedIndex, setSelectedIndex] = React.useState(0);
-    const [scroll, setScroll] = React.useState<DialogProps['scroll']>('paper');
+    const [selectedIndex, setSelectedIndex] = useState(0);
 
     const handleListItemClick = (
         event: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -34,29 +28,35 @@ export default function Heroes() {
 
     if (user.heroes.length === 0) {
         return (
-            <Typography>No heroes</Typography>
+            <Typography>You don't own any heroes</Typography>
         )
     }
 
     return (
-        <Stack width={window.innerWidth / 1.5} height={window.innerHeight / 1.3} className={classes.frame}
-        >
-            <Typography variant={"h1"} paddingY={2} color={CustomColor.fontYellow}>HEROES</Typography>
-
+        <Stack width={window.innerWidth} height={window.innerHeight / 1.3}>
             <Stack direction={"row"} justifyContent={"center"} spacing={3} paddingY={4} paddingX={2}>
 
-                <Stack className={classes.content} width={window.innerWidth / 4} height={window.innerHeight / 1.7}>
-                    <Typography color={"white"} variant={"h4"} paddingY={2}>All</Typography>
+                <Stack width={window.innerWidth / 5} height={window.innerHeight / 1.7}>
 
-                    <Stack width={"100%"} height={"100%"} sx={{backgroundColor: CustomColor.midBg}} overflow={"scroll"}>
+                    <Stack width={"100%"} height={"100%"} overflow={"scroll"}>
                         <List component="nav" aria-label="main">
                             {user.heroes.map((item, index) => (
                                 <ListItemButton sx={{marginBottom: 2}} key={index}
                                                 selected={selectedIndex === index}
                                                 onClick={(event) => handleListItemClick(event, index)}
                                 >
-                                    <ListItemAvatar/>
-                                    <ListItemText primary={item.name} sx={{color: 'white'}}/>
+                                    <ListItemAvatar>
+                                        <Stack width={64} height={64}
+                                               sx={{borderStyle: "solid", borderColor: "white", borderWidth: 1}}>
+                                            <img src={"wizz.png"}/>
+                                        </Stack>
+                                    </ListItemAvatar>
+                                    <Stack paddingLeft={4}>
+                                        <ListItemText primary={item.name}
+                                                      secondary={"Lvl " + getLevel(item.attributes) + " - Knight"}
+                                                      sx={{color: 'white'}}/>
+
+                                    </Stack>
                                 </ListItemButton>
                             ))}
 
@@ -64,65 +64,56 @@ export default function Heroes() {
                     </Stack>
                 </Stack>
 
-                <Stack className={classes.content} width={window.innerWidth / 3} height={window.innerHeight / 1.7}>
-                    <Typography color={"white"} variant={"h4"}
-                                paddingY={2}>{user.heroes[selectedIndex].name}</Typography>
-
-                    <Stack width={"100%"} height={"100%"} sx={{backgroundColor: CustomColor.midBg}} overflow={"scroll"}>
-
-                        <Stack direction={"row"} spacing={2} justifyContent={"center"} paddingTop={2}>
-                            <Box width={160} height={160} sx={{backgroundColor: '#213D73'}}/>
-
-                            <Stack>
-                                <Stack direction={"row"}>
-                                    <Typography color={"white"}>Level:</Typography>
-                                    <Typography
-                                        color={"white"}>{getLevel(user.heroes[selectedIndex].attributes)}</Typography>
-                                </Stack>
-                                <Stack direction={"row"}>
-                                    <Typography color={"white"}>HP:</Typography>
-                                    <Typography
-                                        color={"white"}>{getHP(user.heroes[selectedIndex].attributes)}</Typography>
-                                </Stack>
-                                <Stack direction={"row"}>
-                                    <Typography color={"white"}>Attack:</Typography>
-                                    <Typography
-                                        color={"white"}>{getAttack(user.heroes[selectedIndex].attributes)}</Typography>
-                                </Stack>
-                                <Stack direction={"row"}>
-                                    <Typography color={"white"}>Defense:</Typography>
-                                    <Typography
-                                        color={"white"}>{getDefense(user.heroes[selectedIndex].attributes)}</Typography>
-                                </Stack>
-                                <Stack direction={"row"}>
-                                    <Typography color={"white"}>Speed:</Typography>
-                                    <Typography
-                                        color={"white"}>{getSpeed(user.heroes[selectedIndex].attributes)}</Typography>
-                                </Stack>
-                            </Stack>
-                        </Stack>
-
-
-                        <Stack spacing={2} paddingTop={3}>
-
-                            <Stack direction={"row"} spacing={2} justifyContent={"center"}>
-                                <EquipmentItem title={"Head"}
-                                               value={getEquipment(user.heroes[selectedIndex].attributes, "Head")}/>
-                                <EquipmentItem title={"Cloth"}
-                                               value={getEquipment(user.heroes[selectedIndex].attributes, "Cloth")}/>
-                            </Stack>
-                            <Stack direction={"row"} spacing={2} justifyContent={"center"}>
-                                <EquipmentItem title={"Shoes"}
-                                               value={getEquipment(user.heroes[selectedIndex].attributes, "Shoes")}/>
-                                <EquipmentItem title={"Weapon"}
-                                               value={getEquipment(user.heroes[selectedIndex].attributes, "Weapon")}/>
-                            </Stack>
-
-                        </Stack>
-
+                <Stack className={classes.content} width={200} height={250}>
+                    <Stack sx={{
+                        backgroundColor: "#8A2439",
+                        borderBottom: "solid",
+                        borderWidth: "2px",
+                        borderColor: "white"
+                    }}>
+                        <Typography color={"white"} variant={"body1"}
+                                    paddingY={2}>STATS</Typography>
                     </Stack>
 
+                    <Stack direction={"row"} paddingTop={2}>
+                        <Stack width={"100%"} alignItems={"start"} paddingLeft={2}>
+                            <Typography color={"white"}>LVL</Typography>
+                            <Typography color={"white"}>ATK</Typography>
+                            <Typography color={"white"}>DEF</Typography>
+                            <Typography color={"white"}>SPEED</Typography>
+                            <Typography color={"white"}>HP</Typography>
+                        </Stack>
 
+                        <Stack alignItems={"start"} paddingRight={2}>
+                            <Typography color={"white"}>{getLevel(user.heroes[selectedIndex].attributes)}</Typography>
+                            <Typography color={"white"}>{getAttack(user.heroes[selectedIndex].attributes)}</Typography>
+                            <Typography color={"white"}>{getDefense(user.heroes[selectedIndex].attributes)}</Typography>
+                            <Typography color={"white"}>{getSpeed(user.heroes[selectedIndex].attributes)}</Typography>
+                            <Typography color={"white"}>{getHP(user.heroes[selectedIndex].attributes)}</Typography>
+                        </Stack>
+                    </Stack>
+                </Stack>
+
+                <Stack className={classes.content} width={200} height={250}>
+                    <Stack sx={{
+                        backgroundColor: "#8A2439", borderBottom: "solid",
+                        borderWidth: "2px",
+                        borderColor: "white"
+                    }}>
+                        <Typography color={"white"} variant={"body1"}
+                                    paddingY={2}>EQUIPMENT</Typography>
+                    </Stack>
+
+                    <Stack alignItems={"center"} paddingRight={2} paddingTop={2}>
+                        <Typography
+                            color={"white"}>{getEquipment(user.heroes[selectedIndex].attributes, "Armor")}</Typography>
+                        <Typography
+                            color={"white"}>{getEquipment(user.heroes[selectedIndex].attributes, "Head")}</Typography>
+                        <Typography
+                            color={"white"}>{getEquipment(user.heroes[selectedIndex].attributes, "Left Hand")}</Typography>
+                        <Typography
+                            color={"white"}>{getEquipment(user.heroes[selectedIndex].attributes, "Right Hand")}</Typography>
+                    </Stack>
                 </Stack>
 
             </Stack>

@@ -9,11 +9,13 @@ import {showUi} from "../../../react/store/slices/ui-slice";
 
 export class Nurse extends Npc {
     constructor(scene: Scene) {
-        super(scene, 30 * 16, 30 * 16, NPCList.NURSE, Constants.KEY_NURSE, 'nurse-1.png');
+        super(scene, 63 * 16, 43 * 16, NPCList.NURSE, Constants.KEY_NURSE, 'nurse-1.png');
         this.create()
     }
 
     create() {
+        this.setScale(4, 4)
+
         this.anims.create({
             key: 'nurse-idle',
             frames: this.anims.generateFrameNames(Constants.KEY_NURSE, {

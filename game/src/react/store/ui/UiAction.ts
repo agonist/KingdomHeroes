@@ -10,7 +10,13 @@ export enum UI {
     MINT_KEYS,
     INVENTORY,
     HEROES,
-    TRAINING
+    TRAINING,
+    TEAM,
+    NEW_DUNGEON,
+    CONTINUE_DUNGEON,
+    COMBAT,
+    MENU
+
 }
 
 export interface UiActionParam {}

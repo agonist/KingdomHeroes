@@ -26,6 +26,12 @@ export class MetadataController {
         return await this.metadataService.getMetadataForId(params.id)
     }
 
+    @Get('yield/:address')
+    async getYield(@Request() req, @Param() params) {
+
+        return await this.metadataService.getCurrentYield(params.address)
+
+    }
 
 }
 

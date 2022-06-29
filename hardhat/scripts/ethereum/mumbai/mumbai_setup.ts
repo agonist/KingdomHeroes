@@ -20,11 +20,13 @@ async function main() {
     }
 
     // when
-    // await training.setFxRootTunnel(addressOfTrainingOnETH)
+     await training.setFxRootTunnel("0xcD54C124A267FeefF5846e0B53D079432945d625")
 
-    await tokensStats.initStats(stats, ids)
+    await training.setCgldContract("0xA65bd3D9B4c113D53B34Dc577879Bb0b4a0845ac")
 
-    await cgld.setMinter(training.address, true)
+    // await tokensStats.initStats(stats, ids)
+
+     await cgld.setMinter(training.address, true)
 
 }
 

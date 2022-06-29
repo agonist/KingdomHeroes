@@ -1,20 +1,15 @@
 import {Container, Icon, Stack, SvgIcon, Typography} from "@mui/material";
-import ConnectButton from "./ConnectButton";
-import {useState} from "react";
-import Link from 'next/link'
-import {Custom} from "../../styles/Theme";
 import {NextRouter, useRouter} from "next/router";
-import ArrowRightSharpIcon from '@mui/icons-material/ArrowRightSharp';
 import {Link as ScrollLink} from "react-scroll";
 
 export const frgMenuData = [
     {
         href: "/",
-        tabContent: "Home"
+        tabContent: "GAME"
     },
     {
         href: "/concept",
-        tabContent: "Concept"
+        tabContent: "NFT"
     },
     {
         href: "/gameplay",
@@ -35,31 +30,63 @@ function MenuDesktop() {
     const router = useRouter();
 
     return (
-        <Container>
 
-            <Stack alignItems="center" justifyItems="center">
-                <Stack
-                    direction="row"
-                    alignItems="center"
-                    spacing={4}
-                    justifyItems="center"
-                >
-                    {
-                        frgMenuData.map((menu, index) => (
-                            <Typography variant="h4" color={'black'} component={ScrollLink} to={menu.tabContent} spy
-                                        smooth offset={-100} sx={{
-                                cursor: "pointer",
-                                textTransform: "uppercase",
-                            }} key={index}>
-                                {menu.tabContent}
-                            </Typography>
-                        ))
-                    }
-                </Stack>
+        <Stack
+            width={"100%"}
+            direction={"row"}
+            alignItems={"center"}
+            justifyItems={"center"}
+            justifyContent={"center"}
+        >
+            <Stack width={160} alignItems={"center"}>
+                <Typography variant="h4" color={'white'} component={ScrollLink} to={"/"} spy
+                            smooth offset={-100} sx={{
+                    cursor: "pointer",
+                    textTransform: "uppercase",
+                    textShadow: "-1px 1px 4px  #000000"
+                }}>
+                    GAME
+                </Typography>
+            </Stack>
+            <Stack width={160} alignItems={"center"}>
+                <Typography variant="h4" color={'white'} component={ScrollLink} to={"/concept"} spy
+                            smooth offset={-100} sx={{
+                    cursor: "pointer",
+                    textTransform: "uppercase",
+                    textShadow: "-1px 1px 4px  #000000"
+
+                }}>
+                    NFT
+                </Typography>
             </Stack>
 
+            <Stack maxWidth={170}>
+                <img src={"crown.png"}/>
+            </Stack>
 
-        </Container>
+            <Stack width={160} alignItems={"center"}>
+                <Typography variant="h4" color={'white'} component={ScrollLink} to={"/roadmap"} spy
+                            smooth offset={-100} sx={{
+                    cursor: "pointer",
+                    textTransform: "uppercase",
+                    textShadow: "-1px 1px 4px  #000000"
+                }}>
+                    ROADMAP
+                </Typography>
+            </Stack>
+            <Stack width={160} alignItems={"center"}>
+                <Typography variant="h4" color={'white'} component={ScrollLink} to={"/team"} spy
+                            smooth offset={-100} sx={{
+                    cursor: "pointer",
+                    textTransform: "uppercase",
+                    textShadow: "-1px 1px 4px  #000000"
+                }}>
+                    TEAM
+                </Typography>
+            </Stack>
+        </Stack>
+
+
     )
 
 }

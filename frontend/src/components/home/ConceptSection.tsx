@@ -1,36 +1,105 @@
 import {NextPage} from "next";
-import {Stack, Typography} from "@mui/material";
+import {Button, Paper, Stack, Typography} from "@mui/material";
+import PIC from '../../../public/bg_crack.png';
+
+import {Box} from "@mui/system";
+import Image from "next/image";
+import separator from "../../../public/separator.png"
+import knight from "../../../public/Knight.png"
+import Carousel from 'react-material-ui-carousel'
 
 function ConceptSection() {
+    var items = [
+        {
+            image: "/Knight.png",
+        },
+        {
+            image: "/Wizard.png",
+        },
+        {
+            image: "/Elf.png",
+        }
+    ]
 
     return (
-        <Stack sx={{backgroundColor: '#f1f1f1'}} paddingTop={6} paddingX={2}
-               alignItems="center" id="Concept">
-            <Stack maxWidth={700} alignItems="center" spacing={3}>
-                <Typography variant={"h1"}>Concept</Typography>
 
-                <Typography>
+        <Stack paddingY={16} sx={{
+            backgroundImage: `url("/b1.jpg")`,
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center',
+            backgroundSize: 'cover'
 
-                    Kingdom Heroes is an NFT based game located in The Royal Kingdom of Creeth where knights, wizards,
-                    and elves battle monsters to train and gain experience to battle other users, earning Creeth Gold ($CGLD)
-                    and additional prizes. $CGLD is a utility token used to improve the attributes of knights, wizards,
-                    and elves by trading $CGLD for items such as hats, armor, shoes, accessories, and food.
+        }}>
 
+            <Stack paddingTop={6} paddingX={2}
+                   alignItems="center" id="Concept"
+                   height={650}
+                   sx={{
+                       backgroundImage: `url("/bg_crack.png")`,
+                       backgroundRepeat: 'no-repeat',
+                       backgroundPosition: 'center',
+                       backgroundSize: 'contain'
 
-                </Typography>
+                   }}>
 
-                <Typography>
+                <Typography variant={"h4"} color={"white"} sx={{
+                    textShadow: "-1px 2px #000000"
 
-                    Kingdom Heroes brings back all the feels and nostalgia of your RPG/strategy based games and puts them into
-                    a collectible NFT. The game focuses on the strategy of training and battling your team against wild monsters
-                    which will allow you as trainers to improve your team&aposs skills before taking to the Creeth Tiltyard where Project
-                    Tournaments are hosted for Eth prizes!
+                }}>WHAT IS KINGDOM HEROES?</Typography>
+                <Image src={separator}/>
 
+                <Stack direction={"row"} maxWidth={1000} paddingTop={2} spacing={0} justifyContent={"center"}>
 
-                </Typography>
+                    <Stack width={500} height={500} justifyContent={"center"}>
+                        <Carousel
+                            navButtonsProps={{
+                                style: {
+                                    backgroundColor: 'transparent',
+                                    borderRadius: 0
+                                }
+                            }}
+                            navButtonsAlwaysVisible={true}
+                            NextIcon={<img src="arrow_right.png"/>}
+                            PrevIcon={<img src="arrow_left.png"/>}
+                        >
+                            {
+                                items.map((item, i) =>
+                                    <Stack alignItems={"center"} justifyContent={"center"} alignContent={"center"}
+                                           width={"100%"} key={i}>
+                                        <Stack width={382} height={299} justifyContent={"center"}>
+                                            <Image src={item.image} width={382} height={299}/>
+                                        </Stack>
+                                    </Stack>
+                                )
+                            }
+                        </Carousel>
+                    </Stack>
+
+                    <Stack maxWidth={500} height={500} justifyContent={"center"}>
+                        <Typography display="inline" variant={"body1"} color={"white"}>
+                            Kingdom Heroes brings back all the feels and nostalgia of your old
+                            JRPG games.
+                            Community members will train their Knights, Wizards, and Elves NFTs against monsters that
+                            lurk
+                            outside the kingom walls.
+                            In battles your team will gain Experience Points to improves their skills, and at times,
+                            find
+                            gold
+                            that can be used to further improve their in-game experience. <br/><br/>
+
+                            To claim all the glory and prizes, you must build your team, test your skills and battle
+                            other
+                            community members in hosted tournaments.
+                            <br/><br/>
+                            Will you have what it takes to defeat these monsters and face challenges emerging across the
+                            Kingdom
+                            of Creeth?
+                        </Typography>
+                    </Stack>
+
+                </Stack>
 
             </Stack>
-
 
         </Stack>
     )

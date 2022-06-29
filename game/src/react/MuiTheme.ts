@@ -1,6 +1,6 @@
 import {createTheme} from '@mui/material/styles'
 
-const FONT_SECONDARY = "VT323, monospace"; // Google Font
+// const FONT_SECONDARY = "VT323, monospace"; // Google Font
 const FONT_PRIMARY = "Roboto, sans-serif"; // Google Font
 
 const muiTheme = createTheme({
@@ -48,7 +48,7 @@ const muiTheme = createTheme({
         },
         body1: {
             fontSize: 18,
-            fontWeight: 500,
+            fontWeight: 700,
             fontFamily: FONT_PRIMARY
         },
         body2: {

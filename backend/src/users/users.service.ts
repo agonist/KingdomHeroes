@@ -5,6 +5,7 @@ import {Model} from 'mongoose';
 export interface User extends Document {
     readonly address: string;
     readonly nonce: string;
+    readonly team: number[];
 }
 
 @Injectable()
@@ -27,5 +28,9 @@ export class UsersService {
     async findOne(address: string): Promise<User | undefined> {
 
         return this.userModel.findOne({'address': address}).exec()
+    }
+
+    async updateTeam(address: string, heroesIds: number[]) : Promise<User> {
+        return await this.userModel.findOneAndUpdate({address: address}, {team: heroesIds}, {returnOriginal: false}).exec()
     }
 }

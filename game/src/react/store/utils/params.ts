@@ -12,3 +12,7 @@ export interface TrainParams {
     heroes: number[],
     keys: number
 }
+
+export interface UpdateTeamParams {
+    heroes: number[],
+}

@@ -1,16 +1,17 @@
 import {Injectable, Logger} from '@nestjs/common';
-import {UsersService} from "../users/users.service";
+import {User, UsersService} from "../users/users.service";
 import {JwtService} from "@nestjs/jwt";
 import {recoverPersonalSignature} from "@metamask/eth-sig-util";
 
 @Injectable()
 export class AuthService {
+    private logger = new Logger();
 
     constructor(private usersService: UsersService, private jwtService: JwtService) {
 
     }
 
-    async validateUser(address: string, signature: string): Promise<any> {
+    async validateUser(address: string, signature: string): Promise<User> {
         const user = await this.usersService.findOne(address);
 
         if (user) {
@@ -22,9 +23,7 @@ export class AuthService {
 
             if (user.address.toLowerCase() == recoveredAddress.toLowerCase()) {
                 await this.usersService.generateNewNonce(address)
-
-                const {...result} = user;
-                return result;
+                return user;
             }
 
         }
